@@ -1,101 +1,107 @@
-import Image from "next/image";
+import { Benefits, Carousel, Footer, Introduce, Navbar, Partner, Ranking, Subscribe, WarningNetwork } from "@/components/ui";
+import { ArrowRightIcon, BuildingStorefrontIcon, PhotoIcon, Squares2X2Icon, WalletIcon } from "@heroicons/react/16/solid";
 
 export default function Home() {
-  return (
-    <div className="grid grid-rows-[20px_1fr_20px] items-center justify-items-center min-h-screen p-8 pb-20 gap-16 sm:p-20 font-[family-name:var(--font-geist-sans)]">
-      <main className="flex flex-col gap-8 row-start-2 items-center sm:items-start">
-        <Image
-          className="dark:invert"
-          src="https://nextjs.org/icons/next.svg"
-          alt="Next.js logo"
-          width={180}
-          height={38}
-          priority
-        />
-        <ol className="list-inside list-decimal text-sm text-center sm:text-left font-[family-name:var(--font-geist-mono)]">
-          <li className="mb-2">
-            Get started by editing{" "}
-            <code className="bg-black/[.05] dark:bg-white/[.06] px-1 py-0.5 rounded font-semibold">
-              src/app/page.tsx
-            </code>
-            .
-          </li>
-          <li>Save and see your changes instantly.</li>
-        </ol>
 
-        <div className="flex gap-4 items-center flex-col sm:flex-row">
-          <a
-            className="rounded-full border border-solid border-transparent transition-colors flex items-center justify-center bg-foreground text-background gap-2 hover:bg-[#383838] dark:hover:bg-[#ccc] text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="https://nextjs.org/icons/vercel.svg"
-              alt="Vercel logomark"
-              width={20}
-              height={20}
-            />
-            Deploy now
-          </a>
-          <a
-            className="rounded-full border border-solid border-black/[.08] dark:border-white/[.145] transition-colors flex items-center justify-center hover:bg-[#f2f2f2] dark:hover:bg-[#1a1a1a] hover:border-transparent text-sm sm:text-base h-10 sm:h-12 px-4 sm:px-5 sm:min-w-44"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Read our docs
-          </a>
+  const carouselImgSrc = ["/images/carousel1.png", "/images/carousel2.png", "/images/carousel3.png", "/images/carousel4.png", "/images/carousel5.png"];
+
+  const features = [
+    {
+      name: "Thiết lập ví",
+      description: "Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.",
+      icon: WalletIcon,
+    },
+    {
+      name: "Tạo bộ sưu tập",
+      description: "Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.",
+      icon: Squares2X2Icon,
+    },
+    {
+      name: "Thêm NFT",
+      description: "Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.",
+      icon: PhotoIcon,
+    },
+    {
+      name: "Đưa lên sàn bán",
+      description: "Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.",
+      icon: BuildingStorefrontIcon,
+    },
+  ];
+
+
+  return (
+    <>
+      <Navbar />
+      <div className="text-gray-600 body-font bg-gradient-to-r from-violet-600 via-purple-500 to-black w-full h-auto">
+        <section className="relative h-[650px] overflow-hidden">
+          <video autoPlay muted loop preload="none" poster="images/bg-black.jpg" className="w-full h-full object-cover">
+            <source src="videos/video5.mp4" type="video/mp4" />
+          </video>
+          <div className="hero absolute top-0 bottom-0 left-0 right-0">
+            <div className="hero-content flex-col lg:flex-row-reverse gap-20 px-4 sm:px-6">
+              <div className="hidden lg:flex flex-2 justify-center">
+                <div className="w-[450px] h-[450px] border-spacing-2 border-2 rounded-md overflow-hidden shadow-md shadow-white/60">
+                  <Carousel images={carouselImgSrc} width={450} height={450} />
+                </div>
+              </div>
+              <div className="flex-1 text-center lg:text-left">
+                <p className="text-xl font-bold special-text">☂ Tìm kiếm NFT bạn cần trong một thị trường</p>
+                <h1 className="text-4xl font-bold text-white leading-normal not-select">
+                  Nơi Tốt Nhất Để Thu Thập, Mua Bán
+                  <span className="special-text"> Awesome NFTs</span>
+                </h1>
+                <p className="py-6 text-white">Provident cupiditate voluptatem et in. Quaerat fugiat ut assumenda excepturi exercitationem quasi. In deleniti eaque aut repudiandae et a id nisi. Provident cupiditate voluptatem et in.</p>
+                <div className="flex justify-center lg:justify-start gap-5">
+                  <a className="btn border-0 special-button">Khám phá</a>
+                  <a className="btn border-0 special-button">Tạo NFT</a>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <div className="w-full mx-auto px-4 pt-10 sm:px-6 lg:pt-24">
+          <div className="mx-auto max-w-2xl text-center">
+            <WarningNetwork />
+          </div>
         </div>
-      </main>
-      <footer className="row-start-3 flex gap-6 flex-wrap items-center justify-center">
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/file.svg"
-            alt="File icon"
-            width={16}
-            height={16}
-          />
-          Learn
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/window.svg"
-            alt="Window icon"
-            width={16}
-            height={16}
-          />
-          Examples
-        </a>
-        <a
-          className="flex items-center gap-2 hover:underline hover:underline-offset-4"
-          href="https://nextjs.org?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          <Image
-            aria-hidden
-            src="https://nextjs.org/icons/globe.svg"
-            alt="Globe icon"
-            width={16}
-            height={16}
-          />
-          Go to nextjs.org →
-        </a>
-      </footer>
-    </div>
+      </div>
+
+      <Ranking />
+
+      <section className="text-gray-600 body-font bg-gradient-to-r from-violet-600 via-purple-500 to-black pt-8 sm:pt-20 mx-auto">
+        <div className="mx-auto max-w-2xl text-center">
+          <p className="text-pretty text-3xl font-semibold text-white lg:text-balance">Tạo và bán NFT của bạn</p>
+          <p className="mt-4 text-base leading-6 text-white/80">Dưới đây là bốn bước dễ dàng để tạo và bán NFT của bạn trên FINTECH.</p>
+        </div>
+        <div className="mx-auto mt-8 sm:mt-12 lg:mt-16 px-4">
+          <dl className="grid max-w-xl grid-cols-1 gap-x-16 gap-y-8 lg:max-w-none lg:grid-cols-4 lg:gap-y-2">
+            {features.map((feature) => (
+              <div key={feature.name} className="relative">
+                <dt className="text-lg font-semibold leading-7 text-white flex gap-4 items-center">
+                  <div className="relative left-0 top-0 flex h-10 w-10 items-center justify-center rounded-md mb-2 bg-gradient-to-r from-indigo-600 via-fuchsia-600 to-red-600">
+                    <feature.icon aria-hidden="true" className="h-6 w-6 text-white" />
+                  </div>
+                  {feature.name}
+                </dt>
+                <dd className="mt-1 text-base leading-7 text-white/80">{feature.description}</dd>
+                <dd className="mt-1 text-base leading-7">
+                  <a className="link text-[#4568dc] no-underline hover:underline">
+                    Tìm hiểu thêm
+                    <ArrowRightIcon className="h-4 w-4 inline-block ml-2"></ArrowRightIcon>
+                  </a>
+                </dd>
+              </div>
+            ))}
+          </dl>
+        </div>
+      </section>
+
+      <Partner />
+      <Benefits />
+      <Subscribe />
+      <Introduce />
+      <Footer />
+    </>
   );
 }

@@ -12,7 +12,7 @@ const Signup = () => {
         name: "",
         email: "",
         password: "",
-        confirmPassword: "",
+        confirmPassword: ""
     });
 
     const validateInput = (name: string, value: string) => {
@@ -47,7 +47,7 @@ const Signup = () => {
     const onFinish = async (e: React.FormEvent<HTMLFormElement>) => {
         e.preventDefault();
         const formData = new FormData(e.currentTarget);
-        const { name, email, password, confirmPassword } =
+        const { name, email, password, confirmPassword, accountType } =
             Object.fromEntries(formData);
 
         const newErrors = {
@@ -70,7 +70,9 @@ const Signup = () => {
             body: {
                 email,
                 password,
+                confirmPassword,
                 name,
+                accountType
             },
         });
 
@@ -95,15 +97,15 @@ const Signup = () => {
             </h2>
             <div className="flex mt-10">
                 <div className="w-1/2 flex gap-2">
-                    <input type="radio" name="radio-1" className="radio" />
+                    <input type="radio" name="accountType" value="PERSONAL" className="radio" />
                     <label htmlFor="remember" className="text-md font-medium text-white">
-                        Individual
+                        Personal
                     </label>
                 </div>
                 <div className="w-1/2 flex gap-2">
-                    <input type="radio" name="radio-1" className="radio" defaultChecked />
+                    <input type="radio" name="accountType" value="ORGANIZATIONAL" className="radio" defaultChecked />
                     <label htmlFor="remember" className="text-md font-medium text-white">
-                        Business
+                        Organizational
                     </label>
                 </div>
             </div>

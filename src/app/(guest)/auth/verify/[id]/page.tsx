@@ -1,9 +1,6 @@
 import { BaseLayout, Verify } from "@/components/ui";
-import { useParams } from "next/navigation";
 
 const VerifyPage = () => {
-    const params = useParams<{ id: string }>();
-
     return (
         <BaseLayout>
 
@@ -24,7 +21,7 @@ const VerifyPage = () => {
                 </div>
 
                 <div className="flex-1 box aspect-square align-center gap-y-2 px-10 py-20">
-                    <Verify id={params?.id} />
+                    <Verify />
                 </div>
             </div>
         </BaseLayout>

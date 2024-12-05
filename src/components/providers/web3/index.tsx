@@ -33,19 +33,21 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
         const provider = new BrowserProvider(ethereum);
         const contract = await loadContract("NftMarketplace", provider);
 
-        const accounts = await provider.listAccounts();
-        let signedContract;
+        console.log("Connected to Ethereum network", contract);
 
-        if (accounts.length !== 0) {
-          const signer = await provider.getSigner();
-          signedContract = contract.connect(signer);
-        }
+        // const accounts = await provider.listAccounts();
+        // let signedContract;
+
+        // if (accounts.length !== 0) {
+        //   const signer = await provider.getSigner();
+        //   signedContract = contract.connect(signer);
+        // }
 
         setTimeout(() => setGlobalListeners(ethereum), 500);
         setWeb3(
           createWeb3State({
             ethereum: ethereum,
-            contract: (signedContract ?? contract) as unknown as NftMarketplace,
+            contract: contract as unknown as NftMarketplace,
             provider,
             isLoading: false,
           })

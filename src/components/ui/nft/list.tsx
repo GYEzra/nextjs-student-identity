@@ -1,3 +1,5 @@
+"use client";
+
 import { useListedNfts } from "@/components/hooks/web3";
 import NftItem from "./item";
 

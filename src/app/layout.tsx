@@ -8,6 +8,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Suspense } from 'react';
 import Loading from './loading';
+import React from 'react';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,14 +26,16 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <Suspense fallback={<Loading />}>
+        <React.StrictMode>
           <ToastContainer />
-          <NextAuthWrapper session={session}>
-            <Web3Provider>
-              {children}
-            </Web3Provider>
-          </NextAuthWrapper>
-        </Suspense>
+          <Suspense fallback={<Loading />}>
+            <NextAuthWrapper session={session}>
+              <Web3Provider>
+                {children}
+              </Web3Provider>
+            </NextAuthWrapper>
+          </Suspense>
+        </React.StrictMode>
       </body>
     </html>
   );

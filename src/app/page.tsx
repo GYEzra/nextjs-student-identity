@@ -1,34 +1,8 @@
-import { Benefits, Carousel, Footer, Introduce, Navbar, Partner, Ranking, Subscribe, WarningNetwork } from "@/components/ui";
-import { ArrowRightIcon, BuildingStorefrontIcon, PhotoIcon, Squares2X2Icon, WalletIcon } from "@heroicons/react/16/solid";
+import { Benefits, Carousel, Footer, Introduce, Navbar, NftList, Partner, Ranking, Subscribe, WarningNetwork } from "@/components/ui";
+import { carouselImgSrc, features } from "../../public/meta";
+import { ArrowRightIcon } from "@heroicons/react/16/solid";
 
 export default function Home() {
-
-  const carouselImgSrc = ["/images/carousel1.png", "/images/carousel2.png", "/images/carousel3.png", "/images/carousel4.png", "/images/carousel5.png"];
-
-  const features = [
-    {
-      name: "Thiết lập ví",
-      description: "Morbi viverra dui mi arcu sed. Tellus semper adipiscing suspendisse semper morbi. Odio urna massa nunc massa.",
-      icon: WalletIcon,
-    },
-    {
-      name: "Tạo bộ sưu tập",
-      description: "Sit quis amet rutrum tellus ullamcorper ultricies libero dolor eget. Sem sodales gravida quam turpis enim lacus amet.",
-      icon: Squares2X2Icon,
-    },
-    {
-      name: "Thêm NFT",
-      description: "Quisque est vel vulputate cursus. Risus proin diam nunc commodo. Lobortis auctor congue commodo diam neque.",
-      icon: PhotoIcon,
-    },
-    {
-      name: "Đưa lên sàn bán",
-      description: "Arcu egestas dolor vel iaculis in ipsum mauris. Tincidunt mattis aliquet hac quis. Id hac maecenas ac donec pharetra eget.",
-      icon: BuildingStorefrontIcon,
-    },
-  ];
-
-
   return (
     <>
       <Navbar />
@@ -62,7 +36,7 @@ export default function Home() {
 
         <div className="w-full mx-auto px-4 pt-10 sm:px-6 lg:pt-24">
           <div className="mx-auto max-w-2xl text-center">
-            <WarningNetwork />
+            <NftList />
           </div>
         </div>
       </div>

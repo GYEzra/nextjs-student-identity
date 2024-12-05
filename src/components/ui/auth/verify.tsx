@@ -3,12 +3,13 @@
 import { sendRequest } from "@/utils/api";
 import { toast } from "react-toastify";
 import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import Link from "next/link";
 
-const Verify = (props: { id: string }) => {
+const Verify = () => {
     const router = useRouter();
-    const id = props?.id;
+    const params = useParams<{ id: string }>();
+    const id = params.id;
     const [code, setCode] = useState("");
 
     const onFinish = async () => {

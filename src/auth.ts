@@ -12,31 +12,35 @@ const authOptions: NextAuthOptions = {
         password: {},
       },
       authorize: async (credentials) => {
-        const res = await sendRequest<IBackendRes<ILogin>>({
-          method: "POST",
-          url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/login`,
-          body: {
-            email: credentials?.email,
-            password: credentials?.password,
-          },
-        });
+        try {
+          const res = await sendRequest<IBackendRes<ILogin>>({
+            method: "POST",
+            url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/login`,
+            body: {
+              email: credentials?.email,
+              password: credentials?.password,
+            },
+          });
 
-        if (res.statusCode === 201) {
-          const { user, access_token } = res.data!;
+          if (res.statusCode === 201) {
+            const { user, access_token } = res.data!;
 
-          return {
-            _id: user?._id,
-            name: user?.name,
-            email: user?.email,
-            image: user?.image,
-            accountType: user.accountType,
-            access_token,
-          } as any;
-        } else if (+res.statusCode === 401) {
-          throw new Error("Wrong password or email");
-        } else if (+res.statusCode === 400) {
-          throw new Error("Account not active");
-        } else {
+            return {
+              _id: user?._id,
+              name: user?.name,
+              email: user?.email,
+              image: user?.image,
+              accountType: user.accountType,
+              access_token,
+            } as any;
+          } else if (+res.statusCode === 401) {
+            throw new Error("Wrong password or email");
+          } else if (+res.statusCode === 400) {
+            throw new Error("Account not active");
+          } else {
+            throw new Error("Internal server error");
+          }
+        } catch (error) {
           throw new Error("Internal server error");
         }
       },

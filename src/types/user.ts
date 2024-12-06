@@ -9,15 +9,16 @@ export type UserM = {
   bio?: string;
   role: RoleType;
   accountType: AccountType;
+  createdAt: Date;
 };
 
 export type Organizational = {
-  adddress: string;
-  establish_license: string;
-  operate_license: string;
+  adddress?: string;
+  establish_license?: string;
+  operate_license?: string;
 } & UserM;
 
 export type Personal = {
-  phone: string;
-  identity_card: string;
+  phone?: string;
+  identity_card?: string;
 } & UserM;

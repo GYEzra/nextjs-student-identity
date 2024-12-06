@@ -1,4 +1,4 @@
-import { Benefits, Carousel, Footer, Introduce, Navbar, NftList, Partner, Ranking, Subscribe, WarningNetwork } from "@/components/ui";
+import { Benefits, Carousel, Footer, Introduce, Navbar, NftList, Partner, Ranking, Subscribe } from "@/components/ui";
 import { carouselImgSrc, features } from "../../public/meta";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 
@@ -8,8 +8,8 @@ export default function Home() {
       <Navbar />
       <div className="text-gray-600 body-font bg-gradient-to-r from-violet-600 via-purple-500 to-black w-full h-auto">
         <section className="relative h-[650px] overflow-hidden">
-          <video autoPlay muted loop preload="none" poster="images/bg-black.jpg" className="w-full h-full object-cover">
-            <source src="videos/video5.mp4" type="video/mp4" />
+          <video autoPlay muted loop className="w-full h-full object-cover">
+            <source src="/videos/video5.mp4" type="video/mp4" />
           </video>
           <div className="hero absolute top-0 bottom-0 left-0 right-0">
             <div className="hero-content flex-col lg:flex-row-reverse gap-20 px-4 sm:px-6">

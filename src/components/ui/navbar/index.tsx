@@ -14,10 +14,6 @@ const navigation = [
 ];
 
 const Navbar = () => {
-    const { data: session } = useSession();
-    const { account } = useAccount();
-    const { network } = useNetwork();
-
     return (
         <div className="navbar bg-black">
             <div className="navbar-start">
@@ -69,30 +65,7 @@ const Navbar = () => {
                 </ul>
             </div>
             <div className="navbar-end">
-                <div className="text-gray-300 self-center mr-2 hidde">
-                    <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-purple-100 text-purple-800">
-                        <svg
-                            className="-ml-0.5 mr-1.5 h-2 w-2 text-indigo-400"
-                            fill="currentColor"
-                            viewBox="0 0 8 8"
-                        >
-                            <circle cx={4} cy={4} r={3} />
-                        </svg>
-                        {network.isLoading
-                            ? "Loading..."
-                            : account.isInstalled
-                                ? network.data
-                                : "Not connected"}
-                    </span>
-                </div>
-                {
-                    <Walletbar
-                        session={session}
-                        address={account.data}
-                        isInstalled={account.isInstalled}
-                        connect={account.connect}
-                    />
-                }
+                <Walletbar />
             </div>
         </div>
     );

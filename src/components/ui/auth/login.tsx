@@ -60,7 +60,8 @@ const Login = () => {
             toast.success("Login successfully!");
             router.replace("/");
         } else {
-            toast.error(response?.error || "An error occurred");
+            console.log("check error", response);
+            toast.error(response?.error ?? "An error occurred");
         }
     };
 

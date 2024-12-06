@@ -1,4 +1,4 @@
-import '@/app/globals.css';
+import '@/app/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { getSession } from "@/auth";
@@ -7,8 +7,8 @@ import NextAuthWrapper from "@/lib/next.auth.wrapper";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Suspense } from 'react';
-import Loading from './loading';
 import React from 'react';
+import Loader from './loader';
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -25,16 +25,20 @@ export default async function RootLayout({
   const session = await getSession();
   return (
     <html lang="en">
+      <head>
+        <link rel="icon" href="/public/favicon.ico" />
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+      </head>
       <body className={inter.className}>
         <React.StrictMode>
           <ToastContainer />
-          <Suspense fallback={<Loading />}>
-            <NextAuthWrapper session={session}>
-              <Web3Provider>
+          <NextAuthWrapper session={session}>
+            <Web3Provider>
+              <Suspense fallback={<Loader />}>
                 {children}
-              </Web3Provider>
-            </NextAuthWrapper>
-          </Suspense>
+              </Suspense>
+            </Web3Provider>
+          </NextAuthWrapper>
         </React.StrictMode>
       </body>
     </html>

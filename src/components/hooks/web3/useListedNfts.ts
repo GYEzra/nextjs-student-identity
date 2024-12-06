@@ -2,7 +2,6 @@ import { EthereumHookFactory } from "@/types/hooks";
 import { Nft, NftMeta } from "@/types/nft";
 import { ethers } from "ethers";
 import { useCallback } from "react";
-import { toast } from "react-toastify";
 import useSWR from "swr";
 
 type UseListedNftsResponse = {

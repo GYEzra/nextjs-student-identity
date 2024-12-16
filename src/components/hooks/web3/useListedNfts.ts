@@ -19,6 +19,8 @@ export const hookFactory: ListedNftsHookFactory =
       const nftsContract = await contract!.getAllNftsOnSale();
       const nftsContractLength = nftsContract.length;
 
+      console.log("Listed NFTs: ", nftsContract);
+
       for (let i = 0; i < nftsContractLength; i++) {
         const item = nftsContract[i];
         const tokenURI = await contract!.tokenURI(item.tokenId);
@@ -48,8 +50,8 @@ export const hookFactory: ListedNftsHookFactory =
         //   error: "Đã xảy ra lỗi khi mua",
         // });
         // await res.wait();
-      } catch (error) {
-        console.error("Error buying NFT:", error);
+      } catch (error: any) {
+        throw new Error("Error buying NFT:", error.message);
       }
     }, []);
 

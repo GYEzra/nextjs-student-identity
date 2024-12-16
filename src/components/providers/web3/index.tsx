@@ -3,10 +3,10 @@ import { createContext, FunctionComponent, useContext, useEffect, useState } fro
 import { BrowserProvider } from "ethers";
 import React from "react";
 import { MetaMaskInpageProvider } from "@metamask/providers";
-import { loadContract } from "@/helpers/contract.helper";
 import { createDefaultWeb3State, createWeb3State } from "@/utils/web3";
 import { Web3State } from "@/types/web3";
 import { NftMarketplace } from "@/types/contract-type";
+import { loadContract } from "@/helpers/web3.helper";
 
 type Web3ProviderProps = {
   children: React.ReactNode;

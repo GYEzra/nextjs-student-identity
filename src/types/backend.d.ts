@@ -38,5 +38,6 @@ declare global {
       accountType: string;
     };
     access_token: string;
+    expiresIn: Date;
   }
 }

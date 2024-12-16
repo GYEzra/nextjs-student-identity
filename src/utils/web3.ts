@@ -1,6 +1,7 @@
 import { setupHooks } from "@/components/hooks/web3/setupHooks";
 import { Web3Dependencies } from "@/types/hooks";
 import { Web3State } from "@/types/web3";
+import { AddressLike, ethers } from "ethers";
 
 export const createDefaultWeb3State = (): Web3State => {
   return {

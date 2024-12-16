@@ -1,3 +1,5 @@
+export type WhoPayGasFee = "RECEIVER" | "SENDER" | "NONE";
+
 export type NftProperties = {
   key: string;
   value: string;
@@ -21,10 +23,12 @@ export type Nft = {
   meta: NftMeta;
 } & NftContract;
 
-export type FileReq = {
-  bytes: Uint8Array;
-  contentType: string;
-  fileName: string;
+export type MintNftData = {
+  addressTo: string;
+  tokenURI: string;
+  price: number;
+  isListed: boolean;
+  whoPayGasFee: WhoPayGasFee;
 };
 
 export type PinataRes = {

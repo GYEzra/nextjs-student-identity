@@ -7,7 +7,6 @@ import { Organizational, Personal, UserM } from "@/types/user";
 import { useHasMounted } from "@/utils/customHook";
 import { useParams, useRouter } from "next/navigation";
 import { PersonalInfo, OrganizationalInfo } from "./info";
-import Loader from "@/app/loader";
 
 
 const Profile = () => {

@@ -7,8 +7,6 @@ const Walletbar = () => {
   const { account } = useAccount();
   const { network } = useNetwork();
 
-  console.log("Session:", account);
-
   if (!session) {
     return (
       <button onClick={() => signIn()} className="btn border-0 special-button">

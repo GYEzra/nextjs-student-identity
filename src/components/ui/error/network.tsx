@@ -5,7 +5,7 @@ import { targetNetwork } from "@/components/hooks/web3/useNetwork";
 import { ExclamationTriangleIcon } from "@heroicons/react/16/solid";
 import NftList from "../nft/list";
 
-const WarningNetwork: React.FC = () => {
+const ErrorNetwork: React.FC = () => {
     const { network } = useNetwork();
 
     if (network.isConnectedToNetwork) {
@@ -34,4 +34,4 @@ const WarningNetwork: React.FC = () => {
 
 }
 
-export default WarningNetwork;
+export default ErrorNetwork;

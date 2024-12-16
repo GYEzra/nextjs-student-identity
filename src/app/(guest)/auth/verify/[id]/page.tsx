@@ -3,12 +3,11 @@ import { BaseLayout, Verify } from "@/components/ui";
 const VerifyPage = () => {
     return (
         <BaseLayout>
-
             <div className="flex flex-grow gap-8">
                 <div className="flex-1 hidden lg:flex w-full lg:w-1/2 bg-[url('/images/nft.jpg')] bg-cover bg-center items-center justify-center rounded aspect-square">
                     <div className="flex flex-col gap-3 bg-black bg-opacity-70 text-white p-6 md:p-10 lg:p-16">
                         <h1 className="text-2xl md:text-3xl font-extrabold">
-                            Kiểm Tra Hộp Thư Điện Tử/SMS
+                            Kiểm Tra Hộp Thư Điện Tử / SMS
                         </h1>
                         <p className="text-sm md:text-base">
                             Kiểm tra hộp thư điện tử hoặc tin nhắn SMS của bạn. Bạn sẽ nhận

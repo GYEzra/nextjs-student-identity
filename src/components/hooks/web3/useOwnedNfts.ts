@@ -46,7 +46,7 @@ export const hookFactory: OwnedNftsHookFactory =
         // });
         // await result?.wait();
       } catch (e: any) {
-        console.error(e.message);
+        throw new Error(e.message);
       }
     }, []);
 

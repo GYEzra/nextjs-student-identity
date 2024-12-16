@@ -16,3 +16,17 @@ export type Web3State = {
   hooks: Web3Hooks;
   isLoading: boolean;
 } & Nullable<Web3Dependencies>;
+
+export type SignedRes = {
+  id: string;
+  timestamp: Date;
+};
+
+export type SignedData = {
+  account: string;
+  signedData: any;
+};
+
+export type VerifyRes = {
+  message: string;
+};

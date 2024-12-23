@@ -1,9 +1,9 @@
 "use client";
 import React from "react";
-import { BaseLayout } from "@/components/ui";
 import { FaFacebook } from "react-icons/fa6";
 import { FaTelegramPlane } from "react-icons/fa";
 import { useState } from "react";
+import { BaseLayout } from "@/components/layouts";
 
 const DetailNftPage = () => {
   const relatedItems = [
@@ -279,7 +279,7 @@ const DetailNftPage = () => {
                     Attributes:
                   </p>
                   <ul className="list-disc pl-5 text-gray-700">
-                    {selectedItem?.meta?.properties?.map((property:any) => (
+                    {selectedItem?.meta?.properties?.map((property: any) => (
                       <li
                         key={property.key}
                         className="text-gray-600 text-sm sm:text-base"

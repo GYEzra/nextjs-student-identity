@@ -1,4 +1,5 @@
-import { BaseLayout, Verify } from "@/components/ui";
+import { Verify } from "@/components/auth";
+import { BaseLayout } from "@/components/layouts";
 
 const VerifyPage = () => {
     return (

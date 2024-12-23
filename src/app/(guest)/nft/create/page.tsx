@@ -7,7 +7,6 @@ import { useAccount } from "@/hooks/web3";
 import { MintNftProvider } from "@/providers";
 import { useState } from "react";
 
-
 const CreateNftPage = () => {
     const { account } = useAccount();
     let [isTokenURI, setIsTokenURI] = useState(false);

@@ -1,4 +1,5 @@
-import { BaseLayout, Login } from "@/components/ui";
+import { Login } from "@/components/auth";
+import { BaseLayout } from "@/components/layouts";
 
 const LoginPage = () => {
     return (

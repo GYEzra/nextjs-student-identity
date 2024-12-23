@@ -1,4 +1,5 @@
-import { BaseLayout, ForgetPassword } from "@/components/ui";
+import { ForgetPassword } from "@/components/auth";
+import { BaseLayout } from "@/components/layouts";
 
 const ForgetPasswordPage = () => {
     return (

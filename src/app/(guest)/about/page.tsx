@@ -1,13 +1,8 @@
 import React from "react";
 import { NextPage } from "next";
-import {
-  Map,
-  Side,
-  Navbar,
-  Footer,
-  TeamSection,
-  StatsSection,
-} from "@/components/ui/";
+import { Navbar } from "@/components/ui";
+import { Side, StatsSection, TeamSection, Map } from "@/components/about";
+import { Footer } from "@/components/layouts";
 const About: NextPage = () => {
   return (
     <div>

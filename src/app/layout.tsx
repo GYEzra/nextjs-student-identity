@@ -2,13 +2,13 @@ import '@/app/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
 import { getSession } from "@/auth";
-import { Web3Provider } from '@/components/providers';
 import NextAuthWrapper from "@/lib/next.auth.wrapper";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { Suspense } from 'react';
 import React from 'react';
 import Loader from './loader';
+import { Web3Provider } from '@/providers';
 
 const inter = Inter({ subsets: ["latin"] });
 

@@ -5,3 +5,10 @@ export interface ResponseData<T> {
   data?: T;
   error?: string;
 }
+
+export interface PinataRes {
+  IpfsHash: string;
+  PinSize: number;
+  Timestamp: string;
+  isDuplicate: boolean;
+}

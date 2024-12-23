@@ -1,4 +1,4 @@
-import { useAccount, useNetwork } from "@/components/hooks/web3";
+import { useAccount, useNetwork } from "@/hooks/web3";
 import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 

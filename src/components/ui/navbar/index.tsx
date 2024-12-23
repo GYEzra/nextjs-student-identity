@@ -1,9 +1,6 @@
 "use client"
-
-import { useSession } from "next-auth/react";
 import Link from "next/link";
 import Walletbar from "../wallet-bar";
-import { useAccount, useNetwork } from "@/components/hooks/web3";
 
 const navigation = [
     { label: "Create NFT", href: "/nft/create", activeClass: "" },

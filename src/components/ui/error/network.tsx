@@ -1,9 +1,9 @@
 "use client";
 
-import { useNetwork } from "@/components/hooks/web3";
-import { targetNetwork } from "@/components/hooks/web3/useNetwork";
+import { NftList } from "@/components/nft";
+import { useNetwork } from "@/hooks/web3";
+import { targetNetwork } from "@/hooks/web3/useNetwork";
 import { ExclamationTriangleIcon } from "@heroicons/react/16/solid";
-import NftList from "../nft/list";
 
 const ErrorNetwork: React.FC = () => {
     const { network } = useNetwork();

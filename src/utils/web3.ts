@@ -1,24 +1,23 @@
-import { setupHooks } from "@/components/hooks/web3/setupHooks";
-import { Web3Dependencies } from "@/types/hooks";
-import { Web3State } from "@/types/web3";
 import { AddressLike, ethers } from "ethers";
+import moment from "moment";
+import { PINATA_DOMAIN } from "./api";
 
-export const createDefaultWeb3State = (): Web3State => {
-  return {
-    isLoading: true,
-    ethereum: null,
-    contract: null,
-    provider: null,
-    hooks: setupHooks({ isLoading: true } as any),
-  };
+export const formatEthAddress = (address: string): string => {
+  const formatStr = address.substring(0, 7) + "..." + address.substring(address.length - 5);
+  return formatStr;
 };
 
-export const createWeb3State = ({ ethereum, provider, contract, isLoading }: Web3Dependencies): Web3State => {
-  return {
-    isLoading,
-    ethereum,
-    contract,
-    provider,
-    hooks: setupHooks({ ethereum, provider, contract, isLoading }),
-  };
+export const convertToAddressLike = (address: string): AddressLike => {
+  const ethAddress = ethers.getAddress(address) as AddressLike;
+  return ethAddress;
+};
+
+export const formatDate = (date: Date): string => {
+  const formattedDate = moment(date).utc().format("DD/MM/YYYY");
+  return formattedDate;
+};
+
+export const displayPinataCID = (cid: string): string => {
+  const pinataLink = `${PINATA_DOMAIN}/ipfs/${cid}`;
+  return pinataLink;
 };

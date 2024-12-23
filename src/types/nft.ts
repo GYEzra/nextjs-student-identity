@@ -31,9 +31,14 @@ export type MintNftData = {
   whoPayGasFee: WhoPayGasFee;
 };
 
-export type PinataRes = {
-  IpfsHash: string;
-  PinSize: number;
-  Timestamp: string;
-  isDuplicate: boolean;
+export type NftMetaState = {
+  nftMeta: NftMeta;
+  setNftMeta: React.Dispatch<React.SetStateAction<NftMeta>>;
 };
+
+export type MintNftDataState = {
+  mintNftData: MintNftData;
+  setMintNftData: React.Dispatch<React.SetStateAction<MintNftData>>;
+};
+
+export type MintNftState = {} & MintNftDataState & NftMetaState;

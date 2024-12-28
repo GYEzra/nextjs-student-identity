@@ -1,146 +1,81 @@
-import { PinataRes, ResponseData } from "@/types/api";
+import { getAuthSession } from "@/auth";
+import { PinataRes } from "@/types/api";
 import { NftMeta } from "@/types/nft";
 import { SignedData, SignedRes, VerifyRes } from "@/types/web3";
-import { sendRequest, sendRequestFile } from "@/utils/api";
+import { BACKEND_URL, sendRequest, sendRequestFile } from "@/utils/api";
 import { MetaMaskInpageProvider } from "@metamask/providers";
 
-const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL;
+export const getSignedData = async (ethereum: MetaMaskInpageProvider): Promise<SignedData> => {
+  const session = await getAuthSession();
+  const signatureResponse = await sendRequest<IBackendRes<SignedRes>>({
+    method: "GET",
+    url: `${BACKEND_URL}/api/v1/nfts/message-signature`,
+    headers: {
+      Authorization: `Bearer ${session?.access_token}`,
+    },
+    useCredentials: true,
+  });
 
-export const getSignedData = async (ethereum: MetaMaskInpageProvider, accessToken: string): Promise<ResponseData<SignedData>> => {
-  try {
-    const res = await sendRequest<IBackendRes<SignedRes>>({
-      method: "GET",
-      url: `${BACKEND_URL}/api/v1/nfts/message-signature`,
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      useCredentials: true,
-    });
+  if (signatureResponse.statusCode !== 200) throw new Error(signatureResponse.message);
 
-    if (res.statusCode === 200 && res.data) {
-      const accounts = (await ethereum?.request({ method: "eth_requestAccounts" })) as string[];
-      const account = accounts[0];
-      const signedData = await ethereum?.request({
-        method: "personal_sign",
-        params: [JSON.stringify(res.data), account, res.data.id],
-      });
+  const accounts = (await ethereum?.request({ method: "eth_requestAccounts" })) as string[];
+  const account = accounts[0];
+  const signedData = await ethereum?.request({
+    method: "personal_sign",
+    params: [JSON.stringify(signatureResponse.data), account, signatureResponse.data!.id],
+  });
 
-      return {
-        EC: 0,
-        data: { account, signedData },
-      };
-    } else {
-      return {
-        EC: -1,
-        error: res.message,
-      };
-    }
-  } catch (error: any) {
-    return {
-      EC: -2,
-      error: error.message,
-    };
-  }
+  return { account, signedData };
 };
 
-export const verifySignature = async (signature: string, signerAddress: string, accessToken: string): Promise<ResponseData<VerifyRes>> => {
-  try {
-    const res = await sendRequest<IBackendRes<VerifyRes>>({
-      method: "POST",
-      url: `${BACKEND_URL}/api/v1/nfts/verify-signature`,
-      body: {
-        signature,
-        signerAddress,
-      },
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-      useCredentials: true,
-    });
+export const verifySignature = async (signature: string, signerAddress: string): Promise<VerifyRes> => {
+  const session = await getAuthSession();
+  const signatureResponse = await sendRequest<IBackendRes<VerifyRes>>({
+    method: "POST",
+    url: `${BACKEND_URL}/api/v1/nfts/verify-signature`,
+    body: {
+      signature,
+      signerAddress,
+    },
+    headers: {
+      Authorization: `Bearer ${session?.access_token}`,
+    },
+    useCredentials: true,
+  });
 
-    if (res.statusCode === 201) {
-      return {
-        EC: 0,
-        data: res.data!,
-      };
-    } else {
-      return {
-        EC: -1,
-        error: res.message,
-      };
-    }
-  } catch (error: any) {
-    return {
-      EC: -2,
-      error: error.message,
-    };
-  }
+  if (signatureResponse.statusCode === 201) return signatureResponse.data!;
+
+  throw new Error(signatureResponse.message);
 };
 
-export const uploadNftImage = async (formData: FormData, token?: string): Promise<ResponseData<PinataRes>> => {
-  try {
-    debugger;
-    const res = await sendRequestFile<IBackendRes<PinataRes>>({
-      method: "POST",
-      url: `${BACKEND_URL}/api/v1/nfts/upload-image`,
-      body: formData,
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-      useCredentials: true,
-    });
+export const uploadNftImage = async (formData: FormData): Promise<PinataRes> => {
+  const session = await getAuthSession();
+  const uploadResponse = await sendRequestFile<IBackendRes<PinataRes>>({
+    method: "POST",
+    url: `${BACKEND_URL}/api/v1/nfts/upload-image`,
+    body: formData,
+    headers: {
+      Authorization: `Bearer ${session?.access_token}`,
+    },
+    useCredentials: true,
+  });
 
-    if (res.statusCode === 201) {
-      return {
-        EC: 0,
-        data: res.data,
-      };
-    } else {
-      return {
-        EC: -1,
-        error: res.message,
-      };
-    }
-  } catch (error: any) {
-    debugger;
-    return {
-      EC: -2,
-      error: error.message,
-    };
-  }
+  if (uploadResponse.statusCode === 201) return uploadResponse.data!;
+  throw new Error(uploadResponse.message);
 };
 
-export const uploadNftMeta = async (nftMeta: NftMeta, token: string) => {
-  try {
-    const res = await sendRequest<IBackendRes<PinataRes>>({
-      method: "POST",
-      url: `${BACKEND_URL}/api/v1/nfts/upload-metadata`,
-      body: {
-        name: nftMeta.name,
-        image: nftMeta.image,
-        description: nftMeta.description,
-        properties: nftMeta.properties,
-      },
-      headers: {
-        Authorization: `Bearer ${token}`,
-      },
-    });
+export const uploadNftMeta = async (nftMeta: NftMeta): Promise<PinataRes> => {
+  const session = await getAuthSession();
+  const uploadResponse = await sendRequest<IBackendRes<PinataRes>>({
+    method: "POST",
+    url: `${BACKEND_URL}/api/v1/nfts/upload-metadata`,
+    body: nftMeta,
+    headers: {
+      Authorization: `Bearer ${session?.access_token}`,
+    },
+  });
 
-    if (res.statusCode === 201) {
-      return {
-        EC: 0,
-        data: res.data,
-      };
-    }
+  if (uploadResponse.statusCode === 201) return uploadResponse.data!;
 
-    return {
-      EC: -1,
-      error: res.message,
-    };
-  } catch (error: any) {
-    return {
-      EC: -2,
-      error: error.message,
-    };
-  }
+  throw new Error(uploadResponse.message);
 };

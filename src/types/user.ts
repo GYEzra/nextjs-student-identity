@@ -1,4 +1,7 @@
-export type AccountType = "PERSONAL" | "ORGANIZATIONAL";
+export enum AccountType {
+  Personal = "Personal",
+  Organizational = "Organizational",
+}
 export type RoleType = "ADMIN" | "USER";
 
 export type UserM = {

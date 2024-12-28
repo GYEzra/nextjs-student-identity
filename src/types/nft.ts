@@ -1,44 +1,31 @@
-export type WhoPayGasFee = "RECEIVER" | "SENDER" | "NONE";
-
-export type NftProperties = {
+export interface NftProperties {
   key: string;
   value: string;
-};
+}
 
-export type NftMeta = {
+export interface NftMeta {
   name: string;
   image: string;
   description: string;
   properties?: NftProperties[];
-};
+}
 
-export type NftContract = {
+export interface Nft {
   tokenId: number;
   price: number;
   owner: string;
   isListed: boolean;
-};
-
-export type Nft = {
   meta: NftMeta;
-} & NftContract;
+}
 
-export type MintNftData = {
-  addressTo: string;
-  tokenURI: string;
+export interface PreviewNftData {
+  image: string;
+  name: string;
+  description: string;
   price: number;
-  isListed: boolean;
-  whoPayGasFee: WhoPayGasFee;
-};
+}
 
-export type NftMetaState = {
-  nftMeta: NftMeta;
-  setNftMeta: React.Dispatch<React.SetStateAction<NftMeta>>;
-};
-
-export type MintNftDataState = {
-  mintNftData: MintNftData;
-  setMintNftData: React.Dispatch<React.SetStateAction<MintNftData>>;
-};
-
-export type MintNftState = {} & MintNftDataState & NftMetaState;
+export interface PreviewNftState {
+  data: PreviewNftData;
+  update(newData: Partial<PreviewNftData>): void;
+}

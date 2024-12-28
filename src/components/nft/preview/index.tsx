@@ -1,9 +1,9 @@
 import { FormLayout } from "@/components/layouts";
-import { useMintNft } from "@/providers/nft";
+import { usePreviewNft } from "@/providers/preview-nft";
 import { displayPinataCID } from "@/utils/web3";
 
 const PreviewNft = () => {
-    const { mintNftData, nftMeta } = useMintNft();
+    const { data } = usePreviewNft();
 
     return (
         <div className="box flex-shrink-0 flex-grow basis-2/12">
@@ -16,7 +16,7 @@ const PreviewNft = () => {
                         <div className="aspect-square">
                             <img
                                 className={`w-full h-full object-cover rounded-md text-center`}
-                                src={nftMeta.image ? displayPinataCID(nftMeta.image) : "/images/nft.jpg"}
+                                src={data.image ? displayPinataCID(data.image) : "/images/nft.jpg"}
                                 alt="New NFT"
                             />
                         </div>
@@ -33,8 +33,8 @@ const PreviewNft = () => {
                                 Creatures NFT
                             </p>
                             <div className="block mt-1">
-                                <p className="text-xl font-semibold text-white">{nftMeta.name || "Siêu cấp NFT"}</p>
-                                <p className="mt-2 mb-3 text-base text-white/80 line-clamp-2">{nftMeta.description || "Đây là một sản phẩm độc đáo của chúng tôi"}</p>
+                                <p className="text-xl font-semibold text-white">{data.name || "Siêu cấp NFT"}</p>
+                                <p className="mt-2 mb-3 text-base text-white/80 line-clamp-2">{data.description || "Đây là một sản phẩm độc đáo của chúng tôi"}</p>
                             </div>
                         </div>
                         <div className="overflow-hidden mb-6">
@@ -43,7 +43,7 @@ const PreviewNft = () => {
                                     <dt className="order-2 text-base text-white/80">Giá</dt>
                                     <dd className="order-1 text-lg font-semibold special-text">
                                         <div className="flex justify-center items-center">
-                                            {mintNftData.price}
+                                            {data.price}
                                             <img className="h-6 ml-1" src="/images/eth.png" alt="ether icon" />
                                         </div>
                                     </dd>

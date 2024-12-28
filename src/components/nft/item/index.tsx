@@ -1,7 +1,9 @@
 import { FormLayout } from "@/components/layouts";
 import { useAccount } from "@/hooks/web3";
 import { Nft } from "@/types/nft";
+import { displayPinataCID } from "@/utils/web3";
 import { signIn, useSession } from "next-auth/react";
+import Image from "next/image";
 
 type NftItemProps = {
     item: Nft;
@@ -15,17 +17,29 @@ const NftItem: React.FC<NftItemProps> = ({ item, buyNft }) => {
     return (
         <>
             <FormLayout>
+                <p className="text-red">{item.owner}</p>
                 <div className="relative">
                     <img
                         className={`h-full w-full object-cover rounded-md`}
-                        src={item.meta.image}
+                        src={displayPinataCID(item.meta.image)}
                         alt="New NFT"
                     />
-                    <div className="avatar absolute -top-1 -left-1">
-                        <div className="ring-white/40 ring-offset-base-100 w-10 rounded-full ring-1 ring-offset-2">
-                            <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
-                        </div>
-                    </div>
+                    {
+                        session?.user.image
+                            ?
+                            <div className="avatar absolute -top-1 -left-1">
+                                <div className="ring-white/40 ring-offset-base-100 w-10 rounded-full ring-1 ring-offset-2">
+                                    <Image src={session?.user.image || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} alt="Avatar" layout="fill" objectFit="contain" />
+                                </div>
+                            </div>
+                            :
+                            <div className="avatar absolute -top-1 -left-1 placeholder">
+                                <div className="ring-white/40 ring-offset-base-100 w-10 rounded-full ring-1 ring-offset-2">
+                                    <span className="bg-neutral text-neutral-content">{session?.user.name}</span>
+                                </div>
+                            </div>
+                    }
+
                 </div>
                 <div className="flex-1 bg-transparent pt-4 flex flex-col justify-between">
                     <div className="flex-1">

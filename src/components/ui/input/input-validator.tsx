@@ -22,6 +22,7 @@ const InputValidator = <FormData extends FieldValues>({
     name,
     errors,
     register,
+    required,
     ...rest
 }: InputValidatorProps<FormData>) => {
     const [fieldName, index, subFieldName] = name.split(".");
@@ -42,6 +43,7 @@ const InputValidator = <FormData extends FieldValues>({
                 htmlFor={rest.id}
             >
                 {label}
+                {required && <span className="text-red-500">*</span>}
             </label>
             <input
                 type="text"

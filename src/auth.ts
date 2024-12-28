@@ -1,4 +1,3 @@
-import { IUser } from "@/types/next-auth";
 import { BACKEND_URL, sendRequest } from "@/utils/api";
 import type { NextAuthOptions } from "next-auth";
 import { getServerSession } from "next-auth";
@@ -28,15 +27,17 @@ const authOptions: NextAuthOptions = {
             throw new Error("Wrong password or email");
           } else if (+res.statusCode === 400) {
             throw new Error("Account not active");
+          } else {
+            throw new Error("Internal server error");
           }
         } catch (error: any) {
-          throw new Error(error.message ?? "Internal server error");
+          throw new Error(error.message);
         }
       },
     }),
   ],
   pages: {
-    signIn: "/auth/login",
+    signIn: "/login",
   },
   callbacks: {
     jwt({ token, user }) {
@@ -57,6 +58,6 @@ const authOptions: NextAuthOptions = {
   },
 };
 
-const getSession = () => getServerSession(authOptions);
+const getAuthSession = () => getServerSession(authOptions);
 
-export { authOptions, getSession };
+export { authOptions, getAuthSession };

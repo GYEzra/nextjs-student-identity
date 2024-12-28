@@ -26,25 +26,14 @@ export const hookFactory: AccountHookFactory =
       async () => {
         const accounts = await provider!.listAccounts();
         const account = accounts[0];
-        const address = account.address;
 
         if (!account) throw new Error("No Ethereum account detected");
 
-        if (provider) await signedContract(address);
-
-        return address;
+        return account.address;
       },
 
       { revalidateOnFocus: false, shouldRetryOnError: false }
     );
-
-    const signedContract = async (address: string) => {
-      const signer = await provider?.getSigner(address);
-
-      if (signer) {
-        contract = contract?.connect(signer);
-      }
-    };
 
     useEffect(() => {
       ethereum?.on("accountsChanged", handleAccountsChanged);
@@ -60,12 +49,9 @@ export const hookFactory: AccountHookFactory =
         await toast.promise(promise!, {
           pending: "Đang kết nối ví",
           success: "Kết nối ví thành công",
-          error: {
-            type: "warning",
-          },
         });
-      } catch (error) {
-        console.error("Error connecting to Ethereum:", error);
+      } catch (error: any) {
+        toast.error(error.message);
       }
     };
 
@@ -75,7 +61,6 @@ export const hookFactory: AccountHookFactory =
         toast.error("Please, connect to Web3 wallet");
       } else if (accounts[0] !== address) {
         mutate(accounts[0]);
-        signedContract(accounts[0]);
       }
     };
 

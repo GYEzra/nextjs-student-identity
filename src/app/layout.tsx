@@ -1,7 +1,7 @@
 import '@/app/styles/globals.css';
 import 'react-toastify/dist/ReactToastify.css';
 import { ToastContainer } from 'react-toastify';
-import { getSession } from "@/auth";
+import { getAuthSession } from "@/auth";
 import NextAuthWrapper from "@/lib/next.auth.wrapper";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
@@ -22,9 +22,9 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  const session = await getSession();
+  const session = await getAuthSession();
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning={true}>
       <head>
         <link rel="icon" href="/public/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />

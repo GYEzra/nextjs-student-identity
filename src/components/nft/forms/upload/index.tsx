@@ -1,42 +1,28 @@
-import { useMintNft } from "@/providers/nft";
+"use client";
 import { useWeb3 } from "@/providers/web3";
 import { getSignedData, uploadNftImage, uploadNftMeta, verifySignature } from "@/lib/nft";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid"
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useSession } from "next-auth/react";
 import { ChangeEvent } from "react";
-import { useFieldArray, useForm } from "react-hook-form";
 import { toast } from "react-toastify";
-import * as z from "zod";
 import { InputValidator, TextAreaValidator } from "@/components/ui";
-import { IMAGE_SCHEMA } from "@/lib/schemas";
+import { nftMetaSchema } from "@/lib/schemas";
+import z from "zod";
+import { usePreviewNft } from "@/providers/preview-nft";
+import { displayPinataCID } from "@/utils/web3";
+import { useFieldArray, useForm } from "react-hook-form";
 
 type UploadNftMetaProps = {
-    setIsTokenURI: React.Dispatch<React.SetStateAction<boolean>>;
+    setTokenURI: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
-const propertiesSchema = z.object({
-    key: z.string({ invalid_type_error: 'Key must be a string' }).min(1, { message: 'Key is required' }),
-    value: z.string({ invalid_type_error: 'Value must be a string' }).min(1, { message: 'Value is required' }),
-})
+type FormValue = z.infer<typeof nftMetaSchema>;
 
-const schema = z.object({
-    name: z.string({ invalid_type_error: 'Name must be a string' }).min(1, { message: 'Name is required' }),
-    description: z.string({ invalid_type_error: 'Description must be a string' }).min(1, { message: 'Description is required' }),
-    image: z.string(),
-    properties: z.array(propertiesSchema)
-});
-
-const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setIsTokenURI }) => {
-    const { data: session } = useSession();
-    const { nftMeta, setNftMeta, mintNftData, setMintNftData } = useMintNft();
+const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
     const { ethereum } = useWeb3();
-
-    const accessToken = session?.access_token!;
-
-    const { register, control, handleSubmit, watch, setValue, formState: { errors } } = useForm({
-        resolver: zodResolver(schema),
-        defaultValues: nftMeta,
+    const { data: previewNftData, update } = usePreviewNft();
+    const { register, control, handleSubmit, trigger, watch, formState: { errors } } = useForm<FormValue>({
+        resolver: zodResolver(nftMetaSchema)
     });
 
     const { fields, append, remove } = useFieldArray({
@@ -44,89 +30,78 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setIsTokenURI }) => {
         name: "properties",
     });
 
-    const onSubmit = (data: any) => {
-        console.log("Check values: ", data);
+    const onSubmit = handleSubmit(async (data) => {
+        try {
+            await handleVerifySignature();
+
+            const uploadMetaPromise = uploadNftMeta({
+                ...data,
+                image: previewNftData.image,
+            });
+
+            const uploadMetaRes = await toast.promise(uploadMetaPromise, {
+                pending: 'Waiting for uploading metadata',
+                success: 'Successfully uploaded metadata',
+            })
+
+            setTokenURI(displayPinataCID(uploadMetaRes.IpfsHash));
+        } catch (error: any) {
+            toast.error(error.message);
+        }
+    })
+
+    const uploadImage = async () => {
+        try {
+            const isValidImage = await trigger('image');
+
+            if (isValidImage) {
+                await handleVerifySignature();
+
+                const files = watch('image');
+                const formData = new FormData();
+
+                formData.append("file", files[0]);
+
+                const uploadImagePromise = uploadNftImage(formData);
+                const uploadImageRes = await toast.promise(uploadImagePromise, {
+                    pending: 'Waiting for uploading image',
+                    success: 'Successfully uploaded image',
+                })
+
+                update({ image: uploadImageRes.IpfsHash });
+            }
+        } catch (error: any) {
+            toast.error(error.message);
+        }
     }
 
-    const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
-        setNftMeta({ ...nftMeta, [name]: value });
+        update({ [name]: value });
     }
 
     const handleVerifySignature = async () => {
-        const signedData = await getSignedData(ethereum!, accessToken);
+        const signedDataRes = await getSignedData(ethereum!);
+        const verifySignaturePromise = verifySignature(signedDataRes!.signedData, signedDataRes.account);
 
-        if (signedData.EC != 0) {
-            toast.error(signedData.error);
-            throw new Error("Failed to signed signature");
-        }
-
-        const verifyData = await verifySignature(signedData.data!.signedData, signedData.data!.account, accessToken);
-
-        if (verifyData.EC != 0) {
-            toast.error(verifyData.error);
-            throw new Error("Failed to verify signature");
-        }
-    }
-
-    const uploadMetadata = async () => {
-        await handleVerifySignature();
-
-        const promise = uploadNftMeta(nftMeta, accessToken);
-
-        const res = await toast.promise(promise, {
-            pending: "Đang tải thông tin NFT",
+        await toast.promise(verifySignaturePromise, {
+            pending: 'Verifying signature',
+            success: 'Signature verified successfully',
+            error: 'Failed to verify signature',
         })
-
-        if (res.EC === 0) {
-            const data = res.data;
-            toast.success("Successfully uploaded metadata");
-            setIsTokenURI(true);
-            setMintNftData({ ...mintNftData, tokenURI: data!.IpfsHash });
-        } else {
-            toast.error(res.error);
-            throw new Error("Failed to upload metadata");
-        }
-    }
-
-    const uploadImage = async (e: ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-
-        if (!file) {
-            toast.warn("Provide a valid image file");
-            return;
-        }
-
-        await handleVerifySignature();
-
-        const formData = new FormData();
-        formData.append("file", file);
-
-        const promise = uploadNftImage(formData, accessToken);
-        const res = await toast.promise(promise, {
-            pending: 'Waiting for uploading image',
-        })
-
-        if (res.EC === 0) {
-            setNftMeta({ ...nftMeta, image: res.data!.IpfsHash });
-            toast.success("Image uploaded successfully");
-        } else {
-            toast.error(res.error);
-            throw new Error("Failed to upload image");
-        }
     }
 
     return (
-        <form className="mx-0 my-auto" onSubmit={handleSubmit(onSubmit)}>
+        <form className="mx-0 my-auto" onSubmit={onSubmit}>
             <div className="p-4">
                 <div>
                     <InputValidator label="Picture" type="file" name="image" register={register} errors={errors} className="file-input file-input-bordered w-full" onChange={uploadImage} />
                 </div>
                 <div className="mt-3">
-                    <InputValidator label="NFT Name" type="text" name="name" placeholder="Please enter the name of the NFT" register={register} errors={errors} onChange={onChange} />
+                    <InputValidator label="NFT Name" type="text" name="name" placeholder="Please enter the name of the NFT" register={register} errors={errors} onChange={handleChange} />
                 </div>
                 <div className="mt-3">
-                    <TextAreaValidator label="NFT Description" name="description" placeholder="Enter a description of the NFT" register={register} errors={errors} onChange={onChange} />
+                    <TextAreaValidator label="NFT Description" name="description" placeholder="Enter a description of the NFT" register={register} errors={errors} onChange={handleChange} />
                 </div>
                 <div className="mt-3">
                     <label htmlFor="external" className="block text-md font-medium leading-6 text-neutral-400">
@@ -135,7 +110,7 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setIsTokenURI }) => {
                     {fields?.map((property, index) => {
                         return (
                             <div key={index} className="mt-2 flex gap-4">
-                                <InputValidator type="text" name={`properties.${index}.key`} placeholder="Key" register={register} errors={errors} onChange={onChange} />
+                                <InputValidator type="text" name={`properties.${index}.key`} placeholder="Key" register={register} errors={errors} />
                                 <InputValidator type="text" name={`properties.${index}.value`} placeholder="Value" register={register} errors={errors} />
                                 <button type="button" onClick={() => remove(index)}>
                                     <XMarkIcon width={20} className="text-red-700" />

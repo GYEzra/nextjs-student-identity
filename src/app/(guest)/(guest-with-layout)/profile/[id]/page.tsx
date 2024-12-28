@@ -1,4 +1,4 @@
-import { Profile } from "@/components/ui";
+import Profile from "@/components/profile";
 
 const ProfilePage = () => {
     return <Profile />

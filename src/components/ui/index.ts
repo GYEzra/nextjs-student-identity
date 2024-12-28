@@ -5,3 +5,4 @@ export { default as ErrorNetwork } from "./error/network";
 export { default as ErrorAccount } from "./error/account";
 export { default as InputValidator } from "./input/input-validator";
 export { default as TextAreaValidator } from "./textarea/textarea-validator";
+export { default as Modal } from "./modal";

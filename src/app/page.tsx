@@ -1,11 +1,9 @@
-"use client";
-import { Carousel, Navbar } from "@/components/ui";
+import { Carousel, Modal, Navbar } from "@/components/ui";
 import { carouselImgSrc, features } from "../../public/meta";
 import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { NftList } from "@/components/nft";
 import { Benefit, Introduce, Partner, Ranking, Subscribe } from "@/components/home";
 import { Footer } from "@/components/layouts";
-
 
 export default function Home() {
   return (

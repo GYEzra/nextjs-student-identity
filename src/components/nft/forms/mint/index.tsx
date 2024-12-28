@@ -1,46 +1,70 @@
-import { displayPinataCID } from "@/utils/web3";
+"use client";
 import Link from "next/link";
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
-import * as z from "zod";
 import { InputValidator } from "@/components/ui";
 import { ChangeEvent } from "react";
-import { useMintNft } from "@/providers/nft";
 import { useAccount } from "@/hooks/web3";
+import { nftSchema } from "@/lib/schemas";
+import { usePreviewNft } from "@/providers/preview-nft";
+import { toast } from "react-toastify";
+import z from "zod";
+import { useWeb3 } from "@/providers/web3";
+import { ethers } from "ethers";
+import { ZERO_ADDRESS } from "@/utils/web3";
+import { useRouter } from "next/navigation";
 
-const MintNftForm = () => {
-    const schema = z.object({
-        tokenURI: z.string({ invalid_type_error: 'Token URI must be a string' }).min(1, { message: 'Token URI is required' }).url({ message: 'Invalid URL' }),
-        addressTo: z.string()
-            .length(42, { message: 'Invalid Ethereum address' }),
-        price: z.string().min(1, { message: 'Price is required' }).pipe(z.number({ coerce: true, invalid_type_error: 'Price is invalid' }).finite().gte(0, { message: 'Price must be a positive number' }),),
-    });
+type MintNftFormProps = {
+    tokenURI?: string;
+}
 
+type FormValue = z.infer<typeof nftSchema>;
+
+const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
+    const router = useRouter();
     const { account } = useAccount();
-    const { mintNftData, setMintNftData } = useMintNft();
-
-    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm({
-        resolver: zodResolver(schema),
+    const { update } = usePreviewNft();
+    const { contract } = useWeb3();
+    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<FormValue>({
+        resolver: zodResolver(nftSchema),
+        defaultValues: {
+            tokenURI: tokenURI
+        }
     });
 
-    const toogleYourAddress = () => {
-        const currentAddress = watch('addressTo');
-        setValue('addressTo', currentAddress === account.data ? "" : account.data);
-    }
+    const onSubmit = handleSubmit(async (data) => {
+        try {
+            const { addressTo, tokenURI, price, isListed } = data;
+            const priceBn = ethers.parseEther(price.toString());
+            const mintNftPromise = contract!.mint(addressTo, tokenURI, priceBn, isListed, { from: account.data! });
+            const mintNftRes = await toast.promise(mintNftPromise, {
+                pending: 'Minting NFT',
+            })
 
-    const onChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+            if (mintNftRes.hash != null) {
+                router.push(`/`);
+                toast.success("NFT minted successfully");
+            }
+        } catch (error: any) {
+            if (error.code != null) {
+                toast.error(error.reason);
+            } else {
+                toast.error(error.message);
+            }
+        }
+    })
+
+    const toogleYourAddress = () => setValue('addressTo', watch('addressTo') === account.data ? ZERO_ADDRESS : account.data!);
+
+    const toogleListed = () => setValue('isListed', !watch('isListed'));
+
+    const onChange = (e: ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
-        setMintNftData({ ...mintNftData, [name]: value });
-    }
-
-    const onSubmit = async () => {
-        const values = watch();
-        console.log("Check values: ", values);
-        console.log("Check Errors: ", errors);
+        update({ [name]: value });
     }
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
+        <form onSubmit={onSubmit}>
             <div className="shadow sm:rounded-md sm:overflow-hidden flex flex-col gap-2 my-4">
                 <div>
                     <label htmlFor="addressTo" className="block text-md font-medium leading-6 text-neutral-400">
@@ -48,9 +72,9 @@ const MintNftForm = () => {
                     </label>
                     <div className="mt-1">
                         {
-                            mintNftData.tokenURI
-                                ? <Link href={displayPinataCID(mintNftData.tokenURI)} className="underline text-indigo-600">
-                                    {displayPinataCID(mintNftData.tokenURI)}
+                            tokenURI
+                                ? <Link href={tokenURI} className="underline text-indigo-600">
+                                    {tokenURI}
                                 </Link>
                                 : <InputValidator type="text" name="tokenURI" placeholder="Please enter the recipient's Ethereum address" register={register} errors={errors} onChange={onChange} />
                         }
@@ -74,7 +98,7 @@ const MintNftForm = () => {
             <div className="form-control">
                 <label className="flex gap-x-2 flex-nowrap cursor-pointer text-md font-medium text-neutral-400">
                     <span>Do you want the product to be listed on the floor?</span>
-                    <input type="checkbox" defaultChecked={mintNftData.isListed} checked className="toggle toggle-primary" onClick={() => mintNftData.isListed = !(mintNftData.isListed)} onChange={e => { }} />
+                    <InputValidator type="checkbox" checked={true} readOnly name="isListed" className="toggle toggle-primary" register={register} errors={errors} onClick={toogleListed} />
                 </label>
             </div>
             <div className="mt-4 px-4 py-3 sm:px-6 text-center">

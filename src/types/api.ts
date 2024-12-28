@@ -1,4 +1,4 @@
-export type EC = 0 | -1 | -2; // 0 for success, -1 for error, -2 for internal error
+export type EC = 0 | -1; // 0 for success, -1 for error
 
 export interface ResponseData<T> {
   EC: EC;

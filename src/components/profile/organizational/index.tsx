@@ -1,5 +1,5 @@
 import { Organizational } from "@/types/user";
-import { formatDate, formatEthAddress } from "@/utils/web3";
+import { formatDate, formatEthAddress } from "@/utils/utils";
 import { BsBookmarkCheckFill } from "react-icons/bs";
 import { FaFacebook, FaMailBulk, FaTelegramPlane, FaUsers } from "react-icons/fa";
 import { FaLocationDot } from "react-icons/fa6";

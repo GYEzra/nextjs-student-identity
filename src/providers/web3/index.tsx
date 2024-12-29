@@ -1,12 +1,12 @@
 "use client";
 import { createContext, FunctionComponent, useContext, useEffect, useState } from "react";
-import { BaseContract, BrowserProvider, Contract } from "ethers";
+import { BrowserProvider, Contract, InfuraProvider } from "ethers";
 import React from "react";
 import { MetaMaskInpageProvider } from "@metamask/providers";
 import { Web3State } from "@/types/web3";
 import { NftMarketplace } from "@/types/contract-type";
 import { createDefaultWeb3State, createWeb3State } from "./utils";
-import { loadContract } from "@/lib/contract";
+import { getProvider, loadContract } from "@/lib/contract";
 
 type Web3ProviderProps = {
   children: React.ReactNode;
@@ -19,9 +19,9 @@ const Web3Context = createContext<Web3State>(createDefaultWeb3State());
 const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
   const [web3, setWeb3] = useState<Web3State>(createDefaultWeb3State());
 
-  const setListeners = (ethereum: MetaMaskInpageProvider, contract: Contract, provider: BrowserProvider) => {
-    ethereum.on("chainChanged", pageReload);
-    ethereum.on("accountsChanged", handleAccountsChanged(ethereum, contract, provider));
+  const setListeners = (ethereum: MetaMaskInpageProvider, contract: Contract, provider: BrowserProvider | InfuraProvider) => {
+    ethereum?.on("chainChanged", pageReload);
+    ethereum?.on("accountsChanged", handleAccountsChanged(ethereum, contract, provider));
   };
 
   const removeListeners = (ethereum: MetaMaskInpageProvider) => {
@@ -29,7 +29,7 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
     ethereum?.removeListener("accountsChanged", handleAccountsChanged);
   };
 
-  const handleAccountsChanged = (ethereum: MetaMaskInpageProvider, contract: Contract, provider: BrowserProvider) => async () => {
+  const handleAccountsChanged = (ethereum: MetaMaskInpageProvider, contract: Contract, provider: BrowserProvider | InfuraProvider) => async () => {
     const isLocked = !(await ethereum._metamask.isUnlocked());
     if (isLocked) {
       pageReload();
@@ -38,7 +38,7 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
     }
   }
 
-  const handleSignedContract = async (contract: Contract, provider: BrowserProvider) => {
+  const handleSignedContract = async (contract: Contract, provider: BrowserProvider | InfuraProvider) => {
     const accounts = await provider?.listAccounts();
 
     if (accounts.length === 0) return;
@@ -52,7 +52,7 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
   const initWeb3 = async () => {
     try {
       const ethereum = window.ethereum;
-      const provider = new BrowserProvider(ethereum);
+      const provider = getProvider(ethereum);
       const contract = await loadContract(provider, 'NftMarketplace');
 
       setTimeout(() => setListeners(ethereum, contract, provider), 500);
@@ -69,6 +69,7 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
       await handleSignedContract(contract, provider);
 
     } catch (error: any) {
+      console.log("Check: ", web3)
       setWeb3((api: any) => createWeb3State({ ...(api as any), isLoading: false, ethereum: window.ethereum || null }));
     }
   }

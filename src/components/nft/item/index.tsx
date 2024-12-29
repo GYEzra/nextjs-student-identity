@@ -1,7 +1,8 @@
 import { FormLayout } from "@/components/layouts";
 import { useAccount } from "@/hooks/web3";
 import { Nft } from "@/types/nft";
-import { displayPinataCID } from "@/utils/web3";
+import { getPinataCid } from "@/utils";
+import { BACKEND_URL } from "@/utils/api";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 
@@ -17,11 +18,10 @@ const NftItem: React.FC<NftItemProps> = ({ item, buyNft }) => {
     return (
         <>
             <FormLayout>
-                <p className="text-red">{item.owner}</p>
                 <div className="relative">
                     <img
                         className={`h-full w-full object-cover rounded-md`}
-                        src={displayPinataCID(item.meta.image)}
+                        src={getPinataCid(item.meta.image)}
                         alt="New NFT"
                     />
                     {
@@ -29,7 +29,7 @@ const NftItem: React.FC<NftItemProps> = ({ item, buyNft }) => {
                             ?
                             <div className="avatar absolute -top-1 -left-1">
                                 <div className="ring-white/40 ring-offset-base-100 w-10 rounded-full ring-1 ring-offset-2">
-                                    <Image src={session?.user.image || "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} alt="Avatar" layout="fill" objectFit="contain" />
+                                    <Image src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Avatar" layout="fill" objectFit="contain" loading="eager" />
                                 </div>
                             </div>
                             :

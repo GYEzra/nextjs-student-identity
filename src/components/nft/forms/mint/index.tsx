@@ -11,8 +11,8 @@ import { toast } from "react-toastify";
 import z from "zod";
 import { useWeb3 } from "@/providers/web3";
 import { ethers } from "ethers";
-import { ZERO_ADDRESS } from "@/utils/web3";
 import { useRouter } from "next/navigation";
+import { ZERO_ADDRESS } from "@/utils";
 
 type MintNftFormProps = {
     tokenURI?: string;

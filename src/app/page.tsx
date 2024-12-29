@@ -4,6 +4,7 @@ import { ArrowRightIcon } from "@heroicons/react/16/solid";
 import { NftList } from "@/components/nft";
 import { Benefit, Introduce, Partner, Ranking, Subscribe } from "@/components/home";
 import { Footer } from "@/components/layouts";
+import { getServerUrl, imageLoader } from "@/utils";
 
 export default function Home() {
   return (

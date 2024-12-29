@@ -26,7 +26,6 @@ export default async function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning={true}>
       <head>
-        <link rel="icon" href="/public/favicon.ico" />
         <link rel="preconnect" href="https://fonts.googleapis.com" />
       </head>
       <body className={inter.className}>

@@ -1,5 +1,7 @@
+"use client"
 import React from "react";
 import Image from "next/image";
+import { imageLoader } from "@/utils";
 
 const Partner = () => {
     return (
@@ -13,11 +15,11 @@ const Partner = () => {
                 </p>
                 <div className="mx-auto mt-12 grid grid-cols-5 justify-center gap-x-8">
                     {[
-                        "/logo-cty/cty1.png",
-                        "/logo-cty/cty2.png",
-                        "/logo-cty/cty3.png",
-                        "/logo-cty/cty4.png",
-                        "/logo-cty/cty5.png",
+                        "/images/logo-cty/cty1.png",
+                        "/images/logo-cty/cty2.png",
+                        "/images/logo-cty/cty3.png",
+                        "/images/logo-cty/cty4.png",
+                        "/images/logo-cty/cty5.png",
                     ].map((src, index) => (
                         <div
                             key={index}

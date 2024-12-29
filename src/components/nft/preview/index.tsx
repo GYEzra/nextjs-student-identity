@@ -1,6 +1,6 @@
 import { FormLayout } from "@/components/layouts";
 import { usePreviewNft } from "@/providers/preview-nft";
-import { displayPinataCID } from "@/utils/web3";
+import { getPinataCid } from "@/utils";
 
 const PreviewNft = () => {
     const { data } = usePreviewNft();
@@ -16,7 +16,7 @@ const PreviewNft = () => {
                         <div className="aspect-square">
                             <img
                                 className={`w-full h-full object-cover rounded-md text-center`}
-                                src={data.image ? displayPinataCID(data.image) : "/images/nft.jpg"}
+                                src={data.image ? getPinataCid(data.image) : "/images/nft.jpg"}
                                 alt="New NFT"
                             />
                         </div>

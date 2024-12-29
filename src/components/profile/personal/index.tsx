@@ -1,5 +1,5 @@
 import { Personal } from "@/types/user";
-import { formatDate, formatEthAddress } from "@/utils/web3";
+import { formatDate, formatEthAddress } from "@/utils/utils";
 import { FaFacebook, FaIdCard, FaMailBulk, FaPhoneAlt, FaTelegramPlane, FaUser } from "react-icons/fa";
 import { SiBiolink } from "react-icons/si";
 

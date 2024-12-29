@@ -9,8 +9,8 @@ import { InputValidator, TextAreaValidator } from "@/components/ui";
 import { nftMetaSchema } from "@/lib/schemas";
 import z from "zod";
 import { usePreviewNft } from "@/providers/preview-nft";
-import { displayPinataCID } from "@/utils/web3";
 import { useFieldArray, useForm } from "react-hook-form";
+import { getPinataCid } from "@/utils";
 
 type UploadNftMetaProps = {
     setTokenURI: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -44,7 +44,7 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
                 success: 'Successfully uploaded metadata',
             })
 
-            setTokenURI(displayPinataCID(uploadMetaRes.IpfsHash));
+            setTokenURI(getPinataCid(uploadMetaRes.IpfsHash));
         } catch (error: any) {
             toast.error(error.message);
         }

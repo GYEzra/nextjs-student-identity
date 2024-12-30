@@ -69,7 +69,6 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
       await handleSignedContract(contract, provider);
 
     } catch (error: any) {
-      console.log("Check: ", web3)
       setWeb3((api: any) => createWeb3State({ ...(api as any), isLoading: false, ethereum: window.ethereum || null }));
     }
   }

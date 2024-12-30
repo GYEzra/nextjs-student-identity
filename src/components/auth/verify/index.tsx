@@ -2,11 +2,12 @@
 import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { InputValidator } from "@/components/ui";
-import { verifyAccountSchema, VerifyAccountFormValue } from "@/lib/schemas";
+import { verifyAccountSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
+import { z } from "zod";
 
 const Verify = ({ id }: { id: string }) => {
-    const { register, handleSubmit, formState: { errors } } = useForm<VerifyAccountFormValue>({
+    const { register, handleSubmit, formState: { errors } } = useForm<z.output<typeof verifyAccountSchema>>({
         resolver: zodResolver(verifyAccountSchema)
     });
 

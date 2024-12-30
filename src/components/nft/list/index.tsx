@@ -6,7 +6,6 @@ import NftItem from "../item";
 
 const NftList = () => {
     const { nfts } = useListedNfts();
-    console.log("Chekc nfts", JSON.stringify(nfts.data, null, 2));
 
     return (
         <div className="mt-12 max-w-lg mx-auto grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:max-w-none">

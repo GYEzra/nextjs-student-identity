@@ -3,18 +3,19 @@ import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { RegisterFormValue, registerSchema } from "@/lib/schemas";
+import { registerSchema } from "@/lib/schemas";
 import { signUp } from "@/lib/auth";
 import { InputValidator } from "@/components/ui";
 import { useHasMounted } from "@/hooks/custom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AccountType } from "@/types/user";
 import Loader from "@/app/loader";
+import { z } from "zod";
 
 const Signup = () => {
     const hasMounted = useHasMounted();
     const router = useRouter();
-    const { register, handleSubmit, watch, formState: { errors } } = useForm<RegisterFormValue>({
+    const { register, handleSubmit, formState: { errors } } = useForm<z.output<typeof registerSchema>>({
         resolver: zodResolver(registerSchema)
     });
 

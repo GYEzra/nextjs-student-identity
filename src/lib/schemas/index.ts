@@ -1,7 +1,6 @@
 import { z } from "zod";
 
 const ACCEPTED_IMAGE_TYPES = ["image/jpeg", "image/png"];
-
 const MAX_FILE_SIZE = 4 * 1024 * 1024; // 4MB in bytes
 
 export const imageSchema =

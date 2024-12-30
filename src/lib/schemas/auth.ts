@@ -25,7 +25,3 @@ export const registerSchema = z
 export const verifyAccountSchema = z.object({
   code: z.string().min(1, { message: "Verification code is required" }),
 });
-
-export type LoginFormValue = z.infer<typeof loginSchema>;
-export type RegisterFormValue = z.infer<typeof registerSchema>;
-export type VerifyAccountFormValue = z.infer<typeof verifyAccountSchema>;

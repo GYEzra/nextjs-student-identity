@@ -18,14 +18,12 @@ type MintNftFormProps = {
     tokenURI?: string;
 }
 
-type FormValue = z.infer<typeof nftSchema>;
-
 const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
     const router = useRouter();
     const { account } = useAccount();
     const { update } = usePreviewNft();
     const { contract } = useWeb3();
-    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<FormValue>({
+    const { register, handleSubmit, watch, setValue, formState: { errors } } = useForm<z.output<typeof nftSchema>>({
         resolver: zodResolver(nftSchema),
         defaultValues: {
             tokenURI: tokenURI

@@ -1,27 +1,27 @@
 "use client";
 import { useWeb3 } from "@/providers/web3";
-import { getSignedData, uploadNftImage, uploadNftMeta, verifySignature } from "@/lib/nft";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid"
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent } from "react";
 import { toast } from "react-toastify";
 import { InputValidator, TextAreaValidator } from "@/components/ui";
 import { nftMetaSchema } from "@/lib/schemas";
-import z from "zod";
 import { usePreviewNft } from "@/providers/preview-nft";
 import { useFieldArray, useForm } from "react-hook-form";
+import { useSession } from "next-auth/react";
+import { getSignature, requestToSignature, uploadNftImage, uploadNftMeta, verifySignature } from "@/lib/nft";
 import { getPinataCid } from "@/utils";
+import z from "zod";
 
 type UploadNftMetaProps = {
     setTokenURI: React.Dispatch<React.SetStateAction<string | undefined>>;
 }
 
-type FormValue = z.infer<typeof nftMetaSchema>;
-
 const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
+    const { data: session } = useSession();
     const { ethereum } = useWeb3();
     const { data: previewNftData, update } = usePreviewNft();
-    const { register, control, handleSubmit, trigger, watch, formState: { errors } } = useForm<FormValue>({
+    const { register, control, handleSubmit, trigger, watch, formState: { errors } } = useForm<z.output<typeof nftMetaSchema>>({
         resolver: zodResolver(nftMetaSchema)
     });
 
@@ -32,12 +32,10 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
 
     const onSubmit = handleSubmit(async (data) => {
         try {
-            await handleVerifySignature();
-
             const uploadMetaPromise = uploadNftMeta({
                 ...data,
                 image: previewNftData.image,
-            });
+            }, session!.access_token);
 
             const uploadMetaRes = await toast.promise(uploadMetaPromise, {
                 pending: 'Waiting for uploading metadata',
@@ -50,7 +48,7 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
         }
     })
 
-    const uploadImage = async () => {
+    const onUploadImage = async () => {
         try {
             const isValidImage = await trigger('image');
 
@@ -62,17 +60,28 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
 
                 formData.append("file", files[0]);
 
-                const uploadImagePromise = uploadNftImage(formData);
-                const uploadImageRes = await toast.promise(uploadImagePromise, {
-                    pending: 'Waiting for uploading image',
-                    success: 'Successfully uploaded image',
+                const uploadImagePromise = uploadNftImage(formData, session!.access_token);
+                const uploadImageResponse = await toast.promise(uploadImagePromise, {
+                    pending: 'Waiting for uploading image...',
                 })
 
-                update({ image: uploadImageRes.IpfsHash });
+                update({ image: uploadImageResponse.IpfsHash });
+                toast.success('Image uploaded successfully');
             }
         } catch (error: any) {
             toast.error(error.message);
         }
+    }
+
+    const handleVerifySignature = async () => {
+        const signature = await getSignature(session!.access_token);
+        const signedData = await requestToSignature(signature, ethereum!);
+        const verifySignaturePromise = verifySignature(signedData, session!.access_token);
+
+        await toast.promise(verifySignaturePromise, {
+            pending: 'Waiting for verifying signature...',
+            success: 'Signature verified successfully',
+        })
     }
 
     const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
@@ -80,22 +89,11 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
         update({ [name]: value });
     }
 
-    const handleVerifySignature = async () => {
-        const signedDataRes = await getSignedData(ethereum!);
-        const verifySignaturePromise = verifySignature(signedDataRes!.signedData, signedDataRes.account);
-
-        await toast.promise(verifySignaturePromise, {
-            pending: 'Verifying signature',
-            success: 'Signature verified successfully',
-            error: 'Failed to verify signature',
-        })
-    }
-
     return (
         <form className="mx-0 my-auto" onSubmit={onSubmit}>
             <div className="p-4">
                 <div>
-                    <InputValidator label="Picture" type="file" name="image" register={register} errors={errors} className="file-input file-input-bordered w-full" onChange={uploadImage} />
+                    <InputValidator label="Picture" type="file" name="image" register={register} errors={errors} className="file-input file-input-bordered w-full" onChange={onUploadImage} />
                 </div>
                 <div className="mt-3">
                     <InputValidator label="NFT Name" type="text" name="name" placeholder="Please enter the name of the NFT" register={register} errors={errors} onChange={handleChange} />

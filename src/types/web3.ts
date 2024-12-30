@@ -24,7 +24,7 @@ export type SignedRes = {
 
 export type SignedData = {
   account: string;
-  signedData: any;
+  signedData: string;
 };
 
 export type VerifyRes = {

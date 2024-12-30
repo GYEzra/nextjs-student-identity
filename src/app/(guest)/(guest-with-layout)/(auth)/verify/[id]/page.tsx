@@ -2,7 +2,6 @@
 import { Verify } from "@/components/auth";
 
 const VerifyPage = ({ params }: { params: { id: string } }) => {
-    console.log("Check id:", params);
     return (
         <div className="flex flex-grow gap-8">
             <div className="flex-1 hidden lg:flex w-full lg:w-1/2 bg-[url('/images/nft.jpg')] bg-cover bg-center items-center justify-center rounded aspect-square">

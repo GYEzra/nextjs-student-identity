@@ -5,16 +5,16 @@ import Link from "next/link";
 import { InputValidator, Modal } from "@/components/ui";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { LoginFormValue, loginSchema } from "@/lib/schemas";
+import { loginSchema } from "@/lib/schemas";
 import { authenticate } from "@/lib/auth";
 import { useHasMounted } from "@/hooks/custom";
-import { useState } from "react";
 import Loader from "@/app/loader";
+import { z } from "zod";
 
 const Login = () => {
     const hasMounted = useHasMounted();
     const router = useRouter();
-    const { register, handleSubmit, formState: { errors } } = useForm<LoginFormValue>({
+    const { register, handleSubmit, formState: { errors } } = useForm<z.output<typeof loginSchema>>({
         resolver: zodResolver(loginSchema)
     });
 

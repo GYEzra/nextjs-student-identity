@@ -19,8 +19,6 @@ export const hookFactory: ListedNftsHookFactory =
       const nftsContract = await contract!.getAllNftsOnSale();
       const nftsContractLength = nftsContract.length;
 
-      console.log("Listed NFTs: ", nftsContract);
-
       for (let i = 0; i < nftsContractLength; i++) {
         const item = nftsContract[i];
         const tokenURI = await contract!.tokenURI(item.tokenId);

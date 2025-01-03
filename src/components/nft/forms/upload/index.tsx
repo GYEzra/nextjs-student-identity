@@ -9,7 +9,7 @@ import { nftMetaSchema } from "@/lib/schemas";
 import { usePreviewNft } from "@/providers/preview-nft";
 import { useFieldArray, useForm } from "react-hook-form";
 import { useSession } from "next-auth/react";
-import { getSignature, requestToSignature, uploadNftImage, uploadNftMeta, verifySignature } from "@/lib/nft";
+import { getSignature, requestToSignature, uploadNftImage, uploadNftMeta, verifySignature } from "@/lib/api/nft";
 import { getPinataCid } from "@/utils";
 import z from "zod";
 
@@ -84,7 +84,7 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
         })
     }
 
-    const handleChange = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
+    const onChangeValue = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
         const { name, value } = e.target;
         update({ [name]: value });
     }
@@ -96,10 +96,10 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
                     <InputValidator label="Picture" type="file" name="image" register={register} errors={errors} className="file-input file-input-bordered w-full" onChange={onUploadImage} />
                 </div>
                 <div className="mt-3">
-                    <InputValidator label="NFT Name" type="text" name="name" placeholder="Please enter the name of the NFT" register={register} errors={errors} onChange={handleChange} />
+                    <InputValidator label="NFT Name" type="text" name="name" placeholder="Please enter the name of the NFT" register={register} errors={errors} onChange={onChangeValue} />
                 </div>
                 <div className="mt-3">
-                    <TextAreaValidator label="NFT Description" name="description" placeholder="Enter a description of the NFT" register={register} errors={errors} onChange={handleChange} />
+                    <TextAreaValidator label="NFT Description" name="description" placeholder="Enter a description of the NFT" register={register} errors={errors} onChange={onChangeValue} />
                 </div>
                 <div className="mt-3">
                     <label htmlFor="external" className="block text-md font-medium leading-6 text-neutral-400">

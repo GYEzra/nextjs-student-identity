@@ -4,7 +4,7 @@ import { AccountType, Organizational, Personal } from "@/types/user";
 import { redirect, useParams } from "next/navigation";
 import PersonalInfo from "./personal";
 import OrganizationalInfo from "./organizational";
-import { findUserById } from "@/lib/user";
+import { findUserById } from "@/lib/api/user";
 import { useHasMounted } from "@/hooks/custom";
 import { Carousel } from "../ui";
 

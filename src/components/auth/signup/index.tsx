@@ -5,7 +5,7 @@ import Link from "next/link";
 import { useForm } from "react-hook-form";
 import { registerSchema } from "@/lib/schemas";
 import { signUp } from "@/lib/auth";
-import { InputValidator } from "@/components/ui";
+import { Button, InputValidator } from "@/components/ui";
 import { useHasMounted } from "@/hooks/custom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AccountType } from "@/types/user";
@@ -13,72 +13,71 @@ import Loader from "@/app/loader";
 import { z } from "zod";
 
 const Signup = () => {
-    const hasMounted = useHasMounted();
-    const router = useRouter();
-    const { register, handleSubmit, formState: { errors } } = useForm<z.output<typeof registerSchema>>({
-        resolver: zodResolver(registerSchema)
-    });
+  const hasMounted = useHasMounted();
+  const router = useRouter();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<z.output<typeof registerSchema>>({
+    resolver: zodResolver(registerSchema),
+  });
 
-    const onSubmit = handleSubmit(async (data) => {
-        try {
-            const signUpPromise = signUp(data);
-            const signUpResponse = await toast.promise(signUpPromise, {
-                pending: "Signing up...",
-            })
+  const onSubmit = handleSubmit(async (data) => {
+    try {
+      const signUpPromise = signUp(data);
+      const signUpResponse = await toast.promise(signUpPromise, {
+        pending: "Signing up...",
+      });
 
-            if (signUpResponse.EC === 0) {
-                toast.success("Signup successfully!");
-                router.push(`/verify/${signUpResponse.data!._id}`);
-            } else {
-                toast.error(signUpResponse.error);
-            }
-        } catch (error) {
-            toast.error("Internal server error")
-        }
-    })
+      if (signUpResponse.EC === 0) {
+        toast.success("Signup successfully!");
+        router.push(`/verify/${signUpResponse.data!._id}`);
+      } else {
+        toast.error(signUpResponse.error);
+      }
+    } catch (error) {
+      toast.error("Internal server error");
+    }
+  });
 
-    if (!hasMounted) return <Loader />;
+  if (!hasMounted) return <Loader />;
 
-    return (
-        <>
-            <form onSubmit={onSubmit}>
-                <fieldset className="flex flex-col gap-y-4">
-                    <legend className="text-2xl md:text-3xl text-center font-bold tracking-wide text-white uppercase py-4">SignUp</legend>
+  return (
+    <>
+      <h1 className="pt-4 pb-6 font-bold dark:text-gray-400 text-5xl text-center cursor-default">SignUp</h1>
+      <form onSubmit={onSubmit}>
+        <fieldset className="flex flex-col gap-y-4">
+          <div className="flex gap-x-4 mt-6">
+            <div className="flex gap-x-2">
+              <InputValidator type="radio" className="radio radio-error checked:bg-red-500" name="accountType" defaultChecked value={AccountType.Personal} register={register} errors={errors} />
+              <span className="text-md font-medium leading-6 text-neutral-400">{AccountType.Personal}</span>
+            </div>
+            <div className="flex gap-x-2">
+              <InputValidator type="radio" className="radio radio-error checked:bg-red-500" name="accountType" defaultChecked value={AccountType.Organizational} register={register} errors={errors} />
+              <span className="text-md font-medium leading-6 text-neutral-400">{AccountType.Organizational}</span>
+            </div>
+          </div>
 
-                    <div className="flex gap-x-4 mt-6">
-                        <div className="flex gap-x-2">
-                            <InputValidator type="radio" className="radio radio-error checked:bg-red-500" name="accountType" defaultChecked value={AccountType.Personal} register={register} errors={errors} />
-                            <span className="text-md font-medium leading-6 text-neutral-400">{AccountType.Personal}</span>
-                        </div>
-                        <div className="flex gap-x-2">
-                            <InputValidator type="radio" className="radio radio-error checked:bg-red-500" name="accountType" defaultChecked value={AccountType.Organizational} register={register} errors={errors} />
-                            <span className="text-md font-medium leading-6 text-neutral-400">{AccountType.Organizational}</span>
-                        </div>
-                    </div>
+          <InputValidator required type="text" label="Fullname" name="name" placeholder="Please enter your name" register={register} errors={errors} />
+          <InputValidator required type="text" label="Email" name="email" placeholder="Please enter your email" register={register} errors={errors} />
+          <InputValidator required type="password" label="Password" name="password" placeholder="Please enter your password" register={register} errors={errors} />
+          <InputValidator required type="password" label="Confirm Password" name="confirmPassword" placeholder="Please enter your confirm password" register={register} errors={errors} />
+        </fieldset>
 
-                    <InputValidator required type="text" label="Fullname" name="name" placeholder="Please enter your name" register={register} errors={errors} />
-                    <InputValidator required type="text" label="Email" name="email" placeholder="Please enter your email" register={register} errors={errors} />
-                    <InputValidator required type="password" label="Password" name="password" placeholder="Please enter your password" register={register} errors={errors} />
-                    <InputValidator required type="password" label="Confirm Password" name="confirmPassword" placeholder="Please enter your confirm password" register={register} errors={errors} />
+        <Button type="submit" value="Sign Up"></Button>
 
-
-                </fieldset>
-
-                <button type="submit" className="special-button w-full mt-8 py-2">
-                    Sign Up
-                </button>
-
-                <p className="mt-6 text-center text-white">
-                    Already have an account?{" "}
-                    <Link href="/login">
-                        <span className="font-medium link text-white no-underline hover:text-gray-300 hover:underline">
-                            Login
-                        </span>
-                    </Link>
-                </p>
-            </form>
-        </>
-    );
+        <div className="flex flex-col mt-4 items-center justify-center text-sm">
+          <h3 className="dark:text-gray-300">
+            Already have an account?
+            <Link href="/login" className="group text-blue-400 transition-all duration-100 ease-in-out">
+              <span className="bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">Login</span>
+            </Link>
+          </h3>
+        </div>
+      </form>
+    </>
+  );
 };
 
 export default Signup;

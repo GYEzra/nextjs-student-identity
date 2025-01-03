@@ -2,7 +2,6 @@ import { FormLayout } from "@/components/layouts";
 import { useAccount } from "@/hooks/web3";
 import { Nft } from "@/types/nft";
 import { getPinataCid } from "@/utils";
-import { BACKEND_URL } from "@/utils/api";
 import { signIn, useSession } from "next-auth/react";
 import Image from "next/image";
 
@@ -18,7 +17,7 @@ const NftItem: React.FC<NftItemProps> = ({ item, buyNft }) => {
     return (
         <>
             <FormLayout>
-                <div className="relative">
+                <div className="relative h-[200px]">
                     <img
                         className={`h-full w-full object-cover rounded-md`}
                         src={getPinataCid(item.meta.image)}
@@ -39,7 +38,6 @@ const NftItem: React.FC<NftItemProps> = ({ item, buyNft }) => {
                                 </div>
                             </div>
                     }
-
                 </div>
                 <div className="flex-1 bg-transparent pt-4 flex flex-col justify-between">
                     <div className="flex-1">

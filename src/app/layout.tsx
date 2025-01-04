@@ -1,14 +1,14 @@
-import '@/app/styles/globals.css';
-import 'react-toastify/dist/ReactToastify.css';
-import { ToastContainer } from 'react-toastify';
+import "@/app/styles/globals.css";
+import "react-toastify/dist/ReactToastify.css";
+import { ToastContainer } from "react-toastify";
 import { getAuthSession } from "@/auth";
 import NextAuthWrapper from "@/lib/next.auth.wrapper";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import { Suspense } from 'react';
-import React from 'react';
-import Loader from './loader';
-import { Web3Provider } from '@/providers';
+import { Suspense } from "react";
+import React from "react";
+import Loader from "./loader";
+import { Web3Provider } from "@/providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -28,14 +28,12 @@ export default async function RootLayout({
       <head>
         <link rel="preconnect" href="https://fonts.googleapis.com" />
       </head>
-      <body className={inter.className}>
+      <body className={`${inter.className} bg-black`}>
         <React.StrictMode>
           <ToastContainer />
           <NextAuthWrapper session={session}>
             <Web3Provider>
-              <Suspense fallback={<Loader />}>
-                {children}
-              </Suspense>
+              <Suspense fallback={<Loader />}>{children}</Suspense>
             </Web3Provider>
           </NextAuthWrapper>
         </React.StrictMode>

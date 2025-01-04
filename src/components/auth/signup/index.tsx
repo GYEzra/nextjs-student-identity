@@ -45,7 +45,7 @@ const Signup = () => {
 
   return (
     <>
-      <h1 className="pt-4 pb-6 font-bold dark:text-gray-400 text-5xl text-center cursor-default">SignUp</h1>
+      <h1 className="pt-2 pb-6 font-bold text-white text-5xl text-center cursor-default">Sign Up</h1>
       <form onSubmit={onSubmit}>
         <fieldset className="flex flex-col gap-y-4">
           <div className="flex gap-x-4 mt-6">
@@ -68,7 +68,7 @@ const Signup = () => {
         <Button type="submit" value="Sign Up"></Button>
 
         <div className="flex flex-col mt-4 items-center justify-center text-sm">
-          <h3 className="dark:text-gray-300">
+          <h3 className="text-primary-label">
             Already have an account?
             <Link href="/login" className="group text-blue-400 transition-all duration-100 ease-in-out">
               <span className="bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">Login</span>

@@ -1,17 +1,11 @@
 import React from "react";
 
 type FormLayoutProps = {
-    children: React.ReactNode,
-}
+  children: React.ReactNode;
+};
 
 const FormLayout: React.FC<FormLayoutProps> = ({ children }) => {
-    return (
-        <div className="rounded-lg p-[2px] bg-gradient-to-b from-blue-300 to-pink-300 dark:from-blue-800 dark:to-purple-800 drop-shadow-md shadow-white/60 overflow-hidden">
-            <div className="rounded-[calc(0.5rem-1px)] bg-black/90 dark:bg-gray-900 p-4">
-                {children}
-            </div>
-        </div>
-    );
+  return <div className="min-w-80 max-w-max border border-[#272b30] bg-[#111315] px-4 py-3 shadow-[0_0_30px_#7866cc1f] rounded-md">{children}</div>;
 };
 
 export default FormLayout;

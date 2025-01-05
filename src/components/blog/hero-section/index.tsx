@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroSection = () => {
   return (
-    <section className="text-gray-600 body-font bg-gradient-to-r from-violet-600 via-purple-500 to-black">
+    <section className="text-gray-600 body-font bg-gradient-to-r from-blue-900 via-indigo-800 to-black">
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center gap-10">
         {/* Left Video with Overlay */}
         <div className="relative lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">

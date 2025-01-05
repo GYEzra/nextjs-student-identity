@@ -20,7 +20,7 @@ const NFTs = [
 ];
 
 const NFTGallery = () => (
-  <section className="text-gray-600 bg-gradient-to-r from-violet-600 via-purple-500 to-black  body-font">
+  <section className="text-gray-600 bg-gradient-to-r from-blue-900 via-indigo-800 to-black  body-font">
     <div className="container px-5 py-24 mx-auto">
       <div className="flex flex-col">
         <div className="h-1 bg-gray-800 rounded overflow-hidden">

@@ -1,8 +1,8 @@
 import React from 'react'
 import { CalendarDaysIcon, HandRaisedIcon } from '@heroicons/react/24/outline'
 const Subscribe = () => {
-    return (
-        <div className="relative isolate text-gray-600 body-font bg-gradient-to-r from-purple-800 via-indigo-700 to-black py-16 ">
+    return (// <div className="relative isolate text-gray-600 body-font bg-gradient-to-r from-purple-800 via-indigo-700 to-black py-16 ">
+        <div className="relative isolate text-gray-600 body-font py-10 ">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:max-w-none lg:grid-cols-2">
                     <div className="max-w-xl lg:max-w-lg">

@@ -52,8 +52,8 @@ const Ranking = () => {
     const [activeTab, setActiveTab] = useState(1);
 
     return (
-        <div className="bg-gradient-to-r from-purple-800 via-indigo-700 to-black text-white p-8">
-            <br/><br/><br/>
+        <div className=" text-white px-8 py-10">
+         
             <h1 className="text-3xl font-semibold mb-6 text-center">Trending NFT Collections</h1>
             <div className="flex justify-center mb-8">
                 <button

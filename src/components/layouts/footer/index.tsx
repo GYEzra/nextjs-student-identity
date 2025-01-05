@@ -2,7 +2,7 @@ import React from "react";
 
 const Footer = () => {
     return (
-        <footer className="text-gray-600 body-font bg-gradient-to-r from-violet-600 via-purple-500 to-black">
+        <footer className="text-gray-600 body-font bg-gradient-to-r from-purple-800 via-indigo-700 to-black ">
             <div className="container px-5 py-24 mx-auto">
                 <div className="flex flex-wrap md:text-left text-center order-first">
                     <div className="lg:w-1/4 md:w-1/2 w-full px-4">
@@ -57,7 +57,7 @@ const Footer = () => {
                     </div>
                 </div>
             </div>
-            <div className="text-gray-600 body-font bg-gradient-to-r from-violet-600 via-purple-500 to-black">
+            <div className="text-gray-600 body-font bg-gradient-to-r from-purple-800 via-indigo-700 to-black ">
                 <div className="container px-5 py-6 mx-auto flex items-center sm:flex-row flex-col">
                     <a className="flex title-font font-medium items-center md:justify-start justify-center text-white">
                         <svg

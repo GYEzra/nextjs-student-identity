@@ -1,11 +1,10 @@
 "use client"
 import React from "react";
 import Image from "next/image";
-import { imageLoader } from "@/utils";
 
 const Partner = () => {
     return (
-        <div className="text-gray-600 body-font bg-gradient-to-r from-violet-600 via-purple-500 to-black py-32 ">
+        <div className="text-gray-600 body-font bg-gradient-to-r from-purple-800 via-indigo-700 to-black py-32 ">
             <div className="mx-auto max-w-7xl px-6 lg:px-8">
                 <h2 className="text-center text-4xl font-bold special-text">
                     Our Partners and Collaborators

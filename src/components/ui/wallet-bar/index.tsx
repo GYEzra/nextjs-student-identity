@@ -12,12 +12,14 @@ const Walletbar = () => {
       <button onClick={() => signIn()} className="btn border-0 special-button">
         Login
       </button>
-    )
+    );
   }
+
+  const accountType = "Personal";
 
   return (
     <>
-      <div className="text-gray-300 self-center mr-2 hidde">
+      <div className="text-gray-300 self-center mr-2">
         <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-purple-100 text-purple-800">
           <svg
             className="-ml-0.5 mr-1.5 h-2 w-2 text-indigo-400"
@@ -29,8 +31,8 @@ const Walletbar = () => {
           {network.isLoading
             ? "Loading..."
             : account.isInstalled
-              ? network.data
-              : "Not connected"}
+            ? network.data
+            : "Not connected"}
         </span>
       </div>
       <div className="dropdown dropdown-end">
@@ -51,7 +53,7 @@ const Walletbar = () => {
           className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-120 p-2 shadow"
         >
           <li>
-            <div className="flex">
+            <div className="flex items-center">
               <div className="avatar relative">
                 <div className="w-12 rounded-full">
                   <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
@@ -65,11 +67,12 @@ const Walletbar = () => {
                   <span className="absolute inline-flex rounded-full h-3 w-3 bg-red-500"></span>
                 )}
               </div>
-              <div className="ml-1">
+              <div className="ml-2">
                 <p className="text-sm font-medium text-neutral-800">
                   {session.user.name}
                 </p>
                 <p className="text-sm text-neutral-600">{session.user.email}</p>
+                <p className="text-sm italic text-neutral-500">{accountType}</p>
               </div>
             </div>
 
@@ -101,7 +104,7 @@ const Walletbar = () => {
           ) : (
             <li className="mt-2">
               <button
-                onClick={() => window.open("https://metamask.io", "_ blank")}
+                onClick={() => window.open("https://metamask.io", "_blank")}
                 className="btn border-0 special-button"
               >
                 Install wallet
@@ -111,7 +114,7 @@ const Walletbar = () => {
         </ul>
       </div>
     </>
-  )
+  );
 };
 
 export default Walletbar;

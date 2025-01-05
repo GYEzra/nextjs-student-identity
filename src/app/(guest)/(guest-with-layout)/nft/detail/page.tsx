@@ -2,6 +2,8 @@
 import React from "react";
 import { FaFacebook, FaTelegram } from "react-icons/fa6";
 import { useState } from "react";
+import { HiBadgeCheck } from "react-icons/hi";
+import { GrFormPrevious, GrFormNext } from "react-icons/gr";
 
 const DetailNftPage = () => {
   const relatedItems = [
@@ -79,18 +81,6 @@ const DetailNftPage = () => {
     },
   ];
 
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [selectedItem, setSelectedItem] = useState<any>(null);
-
-  const openModal = (item: any) => {
-    setSelectedItem(item);
-    setIsModalOpen(true);
-  };
-
-  const closeModal = () => {
-    setIsModalOpen(false);
-  };
-
   const [isExpanded, setIsExpanded] = useState(false);
   const maxLength = 200;
   const text = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
@@ -99,29 +89,40 @@ const DetailNftPage = () => {
     fugit excepturi, temporibus officia quam voluptates aliquam omnis
     atque provident, animi modi dolores iusto.`;
 
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  const handlePrev = () => {
+    if (currentIndex > 0) {
+      setCurrentIndex(currentIndex - 1);
+    }
+  };
+
+  const handleNext = () => {
+    if (currentIndex < relatedItems.length - 1) {
+      setCurrentIndex(currentIndex + 1);
+    }
+  };
+
   return (
-    <div className="flex flex-col gap-10 p-4 text-white">
+    <div className="flex flex-col gap-10 p-0 lg:p-4 text-white">
       {/* Chi tiết NFT */}
       <div className="flex flex-col lg:flex-row gap-6">
-        <div className="lg:w-1/2 w-full">
-          <img
-            className="w-full rounded-xl"
-            src="/images/nft.jpg"
-            alt="NFT Image"
-          />
-        </div>
+        <img
+          className="w-full lg:w-2/5  rounded-xl"
+          src="/images/nft.jpg"
+          alt="NFT Image"
+        />
+
         <div className="lg:w-1/2 w-full flex flex-col gap-4 ">
           {/* Nội dung thông tin */}
           <div className="flex justify-between items-center">
-            <p className="text-2xl lg:text-4xl font-medium">
-              Philipp Potocnik
-            </p>
-            <div className="flex gap-4">
+            <p className="text-2xl lg:text-4xl font-medium">Philipp Potocnik</p>
+            <div className="flex items-center gap-4">
               <div className="tooltip" data-tip="Facebook">
-                <FaFacebook className="size-6" />
+                <FaFacebook className="size-4 lg:size-6" />
               </div>
               <div className="tooltip" data-tip="Telegram">
-                <FaTelegram className="size-6" />
+                <FaTelegram className="size-4 lg:size-6" />
               </div>
               <div className="tooltip" data-tip="E-mail">
                 {" "}
@@ -129,7 +130,7 @@ const DetailNftPage = () => {
                   xmlns="http://www.w3.org/2000/svg"
                   viewBox="0 0 24 24"
                   fill="currentColor"
-                  className="w-6 h-6 cursor-pointer"
+                  className="w-4 h-4 lg:w-6 lg:h-6 cursor-pointer"
                 >
                   <path d="M1.5 8.67v8.58a3 3 0 0 0 3 3h15a3 3 0 0 0 3-3V8.67l-8.928 5.493a3 3 0 0 1-3.144 0L1.5 8.67Z" />
                   <path d="M22.5 6.908V6.75a3 3 0 0 0-3-3h-15a3 3 0 0 0-3 3v.158l9.714 5.978a1.5 1.5 0 0 0 1.572 0L22.5 6.908Z" />
@@ -153,52 +154,31 @@ const DetailNftPage = () => {
             </button>
           )}
           {/* Hai cột */}
-          <div className="flex flex-wrap lg:flex-nowrap gap-4">
+          <div className="flex gap-4">
             <div className="w-full lg:w-1/2 flex flex-col gap-3">
-              <p className="font-semibold">Created by</p>
+              <p className="text-xs lg:text-base font-semibold">Created by</p>
               <div className="flex gap-2 items-center">
                 <img
-                  className="w-10 h-10 rounded-full"
+                  className="w-6 h-6 lg:w-10 lg:h-10 rounded-full"
                   src="/images/nft.jpg"
                   alt="Created by"
                 />
-                <p className="font-semibold">Olivia Samantha</p>
+                <p className="text-sm lg:text-base font-semibold">
+                  Olivia Samantha
+                </p>
               </div>
             </div>
             <div className="w-full lg:w-1/2 flex flex-col gap-3">
-              <p className="font-semibold">Collection</p>
+              <p className="text-xs lg:text-base font-semibold">Collection</p>
               <div className="flex gap-2 items-center">
                 <img
-                  className="w-10 h-10 rounded-full"
+                  className="w-6 h-6 lg:w-10 lg:h-10 rounded-full"
                   src="/images/nft.jpg"
                   alt="Collection"
                 />
-                <p className="font-semibold">Patterfly Studio</p>
-              </div>
-            </div>
-          </div>
-          <div className="flex flex-col gap-3">
-            <p className="font-semibold">Properties</p>
-            <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-              <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
-                <p className="text-sm text-green-400">Type</p>
-                <p className="text-base font-medium">Legendary</p>
-                <p className="text-xs text-gray-400">12.6% rarity</p>
-              </div>
-              <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
-                <p className="text-sm text-green-400">Body</p>
-                <p className="text-base font-medium">Legendary</p>
-                <p className="text-xs text-gray-400">12.6% rarity</p>
-              </div>
-              <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
-                <p className="text-sm text-green-400">Hair</p>
-                <p className="text-base font-medium">Legendary</p>
-                <p className="text-xs text-gray-400">12.6% rarity</p>
-              </div>
-              <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
-                <p className="text-sm text-green-400">Eyes</p>
-                <p className="text-base font-medium">Legendary</p>
-                <p className="text-xs text-gray-400">12.6% rarity</p>
+                <p className="text-sm lg:text-base font-semibold">
+                  Patterfly Studio
+                </p>
               </div>
             </div>
           </div>
@@ -227,93 +207,125 @@ const DetailNftPage = () => {
           </div>
         </div>
       </div>
-      <div className="flex flex-col gap-6">
-        <p className="text-lg lg:text-xl font-semibold">Related Items</p>
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
-          {relatedItems.slice(0, 4).map((item) => (
-            <div
-              key={item.id}
-              className="flex flex-col gap-2 border border-zinc-800 rounded-lg p-2 cursor-pointer"
-              onClick={() => openModal(item)}
-            >
-              <img
-                src={item.image}
-                alt={item.name}
-                className="w-full rounded-lg h-72 object-cover"
-              />
-              <div className="p-3 flex flex-col gap-2">
-                <p className="text-sm uppercase font-normal text-gray-400">
-                  {item.owner}
-                </p>
-                <p className="text-sm uppercase font-bold">{item.name}</p>
-                <p className="text-sm font-semibold">
-                  Price: <span className="font-bold">{item.price}</span>
-                </p>
-              </div>
-            </div>
-          ))}
+      <div className="flex flex-col gap-3">
+        <p className="font-semibold">Properties</p>
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+          <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
+            <p className="text-sm text-green-400">Type</p>
+            <p className="text-base font-medium">Legendary</p>
+            <p className="text-xs text-gray-400">12.6% rarity</p>
+          </div>
+
+          <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
+            <p className="text-sm text-green-400">Body</p>
+            <p className="text-base font-medium">Legendary</p>
+            <p className="text-xs text-gray-400">12.6% rarity</p>
+          </div>
+          <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
+            <p className="text-sm text-green-400">Hair</p>
+            <p className="text-base font-medium">Legendary</p>
+            <p className="text-xs text-gray-400">12.6% rarity</p>
+          </div>
+          <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
+            <p className="text-sm text-green-400">Eyes</p>
+            <p className="text-base font-medium">Legendary</p>
+            <p className="text-xs text-gray-400">12.6% rarity</p>
+          </div>
         </div>
       </div>
-      {/* Modal for NFT Details */}
-      {isModalOpen && selectedItem && (
-        <div className=" h-auto fixed inset-0 bg-black bg-opacity-50 flex mt-4 sm:items-center justify-center z-50">
-          <div className="bg-white p-6 rounded-lg w-11/12 sm:w-3/5">
-            <div className="flex sm:flex-row gap-4">
-              <img
-                src={selectedItem.image}
-                alt={selectedItem.name}
-                className="w-2/5 h-2/5 sm:w-2/5 object-cover  rounded-md"
-              />
-              <div className="w-3/5 sm:w-3/5 flex flex-col gap-1 sm:gap-2">
-                <h2 className="text-base font-bold text-gray-900 sm:text-2xl">
-                  {selectedItem.name}
-                </h2>
-                <p className=" text-base sm:text-2xl font-bold text-gray-800">
-                  Price:{" "}
-                  <span className="text-red-500">{selectedItem.price}</span>
-                </p>
-                <p className="text-gray-800 font-bold text-base sm:text-xl">
-                  Attributes:
-                </p>
-                <ul className="list-disc pl-5 text-gray-700">
-                  {selectedItem?.meta?.properties?.map((property: any) => (
-                    <li
-                      key={property.key}
-                      className="text-gray-600 text-sm sm:text-base"
-                    >
-                      {property.key}: {property.value}
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div>
-            <p className="text-gray-800 font-bold text-base sm:text-xl mt-2">
-              Discription
-            </p>
-            <p className="text-gray-700 text-sm sm:text-base">
-              {" "}
-              {selectedItem.description.length > 100
-                ? `${selectedItem.description.slice(0, 100)}...`
-                : selectedItem.description}
-            </p>
+      <div className="flex flex-col gap-6">
+        <p className="text-lg lg:text-xl font-semibold">Related Items</p>
 
-            <div className="mt-4 flex flex-row gap-2 sm:gap-4">
+        <div className="flex justify-center">
+          <div className="w-full lg:w-11/12">
+            {/* Carousel for tablet and mobile */}
+            <div className="lg:hidden relative">
+              <div className="overflow-hidden">
+                <div
+                  className="flex transition-transform "
+                  style={{ transform: `translateX(-${currentIndex * 100}%)` }}
+                >
+                  {relatedItems.map((item) => (
+                    <div key={item.id} className="w-full px-10 flex-shrink-0">
+                      <div className="p-2 border  border-zinc-800 rounded-lg">
+                        <img
+                          src={item.image}
+                          alt={item.name}
+                          className="w-full rounded-lg object-cover"
+                        />
+                        <div className="p-3 flex flex-col gap-2">
+                          <div className="flex gap-1 items-center">
+                            <p className="text-xs font-medium text-gray-50">
+                              {item.owner}
+                            </p>
+                            <HiBadgeCheck className="bg-blue-600 rounded-full size-3" />
+                          </div>
+
+                          <p className="text-sm uppercase font-bold">
+                            {item.name}
+                          </p>
+                          <p className="text-sm font-normal text-gray-400">
+                            Price:{" "}
+                            <span className="font-bold text-green-400">
+                              {item.price}
+                            </span>
+                          </p>
+                        </div>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+              </div>
               <button
-                onClick={() => console.log("Detail button clicked")}
-                className="w-full sm:w-1/2 bg-green-600 text-white py-2 text-sm sm:text-base rounded-md"
+                onClick={handlePrev}
+                className="absolute left-0 top-1/2 transform -translate-y-1/2 p-1 border  border-zinc-700 text-white rounded-full"
+                disabled={currentIndex === 0}
               >
-                Detail
+                <GrFormPrevious className="size-5 text-zinc-500" />
               </button>
               <button
-                onClick={closeModal}
-                className="w-full sm:w-1/2 bg-red-600 text-white py-2 text-sm sm:text-base rounded-md"
+                onClick={handleNext}
+                className="absolute right-0 top-1/2 transform -translate-y-1/2 p-1 border border-zinc-700 text-white rounded-full"
+                disabled={currentIndex === relatedItems.length - 1}
               >
-                Close
+                <GrFormNext className="size-5 text-zinc-500" />
               </button>
+            </div>
+
+            {/* Grid for larger screens */}
+            <div className="hidden lg:flex gap-4">
+              {relatedItems.map((item) => (
+                <div
+                  key={item.id}
+                  className="w-1/5 p-2 rounded-lg border border-zinc-800 transition-transform transform hover:scale-105 hover:shadow-lg"
+                >
+                  <img
+                    src={item.image}
+                    alt={item.name}
+                    className="w-full rounded-lg object-cover"
+                  />
+                  <div className="p-3 flex flex-col gap-2">
+                    <div className="flex gap-1 items-center">
+                      <p className="text-xs font-medium text-gray-50">
+                        {item.owner}
+                      </p>
+                      <HiBadgeCheck className="bg-blue-600 rounded-full size-3" />
+                    </div>
+
+                    <p className="text-sm uppercase font-bold">{item.name}</p>
+                    <p className="text-sm font-normal text-gray-400">
+                      Price:{" "}
+                      <span className="font-bold text-green-400">
+                        {item.price}
+                      </span>
+                    </p>
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
-      )}
+      </div>
     </div>
   );
 };

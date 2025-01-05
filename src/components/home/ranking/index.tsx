@@ -1,6 +1,6 @@
 "use client";
-
 import { useState } from "react";
+import React from "react";
 
 const trendingCollections1 = [
     { rank: 1, name: "Courtyard.io", price: "5.98 USDC.e", volume: "33 ETH", image: "https://i.seadn.io/gcs/files/3ea70379eaf770c85beae83b89c7a632.png?auto=format&dpr=1&w=136&h=136&fr=1" },
@@ -29,56 +29,51 @@ interface NFTCollection {
 }
 
 const NFTTable: React.FC<{ data: NFTCollection[] }> = ({ data }) => (
-    <table className="table-auto w-full text-sm text-white bg-gray-900 rounded-lg shadow-lg mb-6">
-        <thead>
-            <tr className="border-b border-gray-700 text-left">
-                <th className="p-4 text-lg">Rank</th>
-                <th className="p-4 text-lg">Collection</th>
-                <th className="p-4 text-lg">Floor Price</th>
-                <th className="p-4 text-lg">Volume</th>
-            </tr>
-        </thead>
-        <tbody>
-            {data.map((item) => (
-                <tr key={item.rank} className="border-b border-gray-700 hover:bg-purple-800 transition-all duration-300">
-                    <td className="p-4">{item.rank}</td>
-                    <td className="p-4">
-                        <div className="flex items-center">
-                            <img src={item.image} alt={item.name} className="w-12 h-12 rounded-full mr-3" />
-                            <span>{item.name}</span>
-                        </div>
-                    </td>
-                    <td className="p-4">{item.price}</td>
-                    <td className="p-4">{item.volume}</td>
-                </tr>
-            ))}
-        </tbody>
-    </table>
+    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+        {data.map((item) => (
+            <div key={item.rank} className="bg-gray-800 rounded-lg shadow-lg p-4 hover:scale-105 transition-all duration-300">
+                <div className="flex items-center mb-4">
+                    <img src={item.image} alt={item.name} className="w-16 h-16 rounded-full mr-4" />
+                    <div>
+                        <h3 className="text-lg font-semibold">{item.name}</h3>
+                        <p className="text-sm text-gray-400">Rank #{item.rank}</p>
+                    </div>
+                </div>
+                <div className="flex justify-between items-center text-sm text-gray-300">
+                    <p>{item.price}</p>
+                    <p>{item.volume}</p>
+                </div>
+            </div>
+        ))}
+    </div>
 );
 
 const Ranking = () => {
     const [activeTab, setActiveTab] = useState(1);
 
     return (
-        <div className="bg-gradient-to-r from-violet-600 via-purple-500 to-black min-h-screen text-white p-8">
+        <div className="bg-gradient-to-r from-purple-800 via-indigo-700 to-black text-white p-8">
+            <br/><br/><br/>
             <h1 className="text-3xl font-semibold mb-6 text-center">Trending NFT Collections</h1>
             <div className="flex justify-center mb-8">
                 <button
                     onClick={() => setActiveTab(1)}
-                    className={`py-2 px-6 rounded-tl-lg rounded-tr-lg ${activeTab === 1 ? 'bg-purple-700' : 'bg-purple-500'} hover:bg-purple-600 mr-2`}>
+                    className={`py-3 px-8 rounded-lg transition-all duration-300 text-lg font-medium ${activeTab === 1 ? 'bg-indigo-700 text-white shadow-lg' : 'bg-transparent text-gray-400 hover:text-white hover:bg-indigo-600'}`}>
                     Top
                 </button>
                 <button
                     onClick={() => setActiveTab(2)}
-                    className={`py-2 px-6 rounded-tl-lg rounded-tr-lg ${activeTab === 2 ? 'bg-purple-700' : 'bg-purple-500'} hover:bg-purple-600`}>
+                    className={`py-3 px-8 rounded-lg transition-all duration-300 text-lg font-medium ${activeTab === 2 ? 'bg-indigo-700 text-white shadow-lg' : 'bg-transparent text-gray-400 hover:text-white hover:bg-indigo-600'}`}>
                     Trending
                 </button>
             </div>
-            {activeTab === 1 ? (
-                <NFTTable data={trendingCollections1} />
-            ) : (
-                <NFTTable data={trendingCollections2} />
-            )}
+            <div>
+                {activeTab === 1 ? (
+                    <NFTTable data={trendingCollections1} />
+                ) : (
+                    <NFTTable data={trendingCollections2} />
+                )}
+            </div>
         </div>
     );
 };

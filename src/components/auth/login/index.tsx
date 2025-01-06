@@ -5,12 +5,11 @@ import Link from "next/link";
 import { Button, InputValidator, Modal } from "@/components/ui";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { loginSchema } from "@/lib/schemas";
 import { authenticate } from "@/lib/auth";
 import { useHasMounted } from "@/hooks/custom";
 import Loader from "@/app/loader";
-import { z } from "zod";
-import { FormLayout } from "@/components/layouts";
+import { LoginData } from "@/types/auth";
+import { loginSchema } from "@/lib/schemas";
 
 const Login = () => {
   const hasMounted = useHasMounted();
@@ -19,12 +18,12 @@ const Login = () => {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.output<typeof loginSchema>>({
+  } = useForm<LoginData>({
     resolver: zodResolver(loginSchema),
   });
 
-  const onSubmit = handleSubmit(async (data) => {
-    const promise = authenticate(data.email, data.password);
+  const onSubmit = handleSubmit(async (data: LoginData) => {
+    const promise = authenticate(data);
 
     const response = await toast.promise(promise, {
       pending: "Logging in...",

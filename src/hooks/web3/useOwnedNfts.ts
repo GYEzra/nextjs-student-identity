@@ -1,12 +1,12 @@
 import { EthereumHookFactory } from "@/types/hooks";
-import { Nft } from "@/types/nft";
+import { INft } from "@/types/nft";
 import { useCallback } from "react";
 import useSWR from "swr";
 
 type UseOwnedNftsResponse = {
   listNft: (tokenId: number, price: number) => Promise<void>;
 };
-type OwnedNftsHookFactory = EthereumHookFactory<Nft[], UseOwnedNftsResponse>;
+type OwnedNftsHookFactory = EthereumHookFactory<INft[], UseOwnedNftsResponse>;
 
 export type UseOwnedNftsHook = ReturnType<OwnedNftsHookFactory>;
 
@@ -14,7 +14,7 @@ export const hookFactory: OwnedNftsHookFactory =
   ({ contract }) =>
   () => {
     const { data, ...swr } = useSWR(contract ? "web3/useOwnedNfts" : null, async () => {
-      const nfts: Nft[] = [];
+      const nfts: INft[] = [];
       //   const nftsContract = await contract!.getOwnedNfts();
       //   const nftsContractLength = nftsContract.length;
 

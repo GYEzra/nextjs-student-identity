@@ -1,6 +1,6 @@
 export enum AccountType {
-  Personal = "Personal",
-  Organizational = "Organizational",
+  Personal = "PERSONAL",
+  Organizational = "ORGANIZATIONAL",
 }
 export type RoleType = "ADMIN" | "USER";
 

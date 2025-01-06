@@ -1,5 +1,5 @@
 import { EthereumHookFactory } from "@/types/hooks";
-import { Nft, NftMeta } from "@/types/nft";
+import { INft, INftMeta } from "@/types/nft";
 import { ethers } from "ethers";
 import { useCallback } from "react";
 import useSWR from "swr";
@@ -7,7 +7,7 @@ import useSWR from "swr";
 type UseListedNftsResponse = {
   buyNft: (tokenId: number, value: number) => Promise<void>;
 };
-type ListedNftsHookFactory = EthereumHookFactory<Nft[], UseListedNftsResponse>;
+type ListedNftsHookFactory = EthereumHookFactory<INft[], UseListedNftsResponse>;
 
 export type UseListedNftsHook = ReturnType<ListedNftsHookFactory>;
 
@@ -15,7 +15,7 @@ export const hookFactory: ListedNftsHookFactory =
   ({ contract }) =>
   () => {
     const { data, ...swr } = useSWR(contract ? "web3/useListedNfts" : null, async () => {
-      const nfts: Nft[] = [];
+      const nfts: INft[] = [];
       const nftsContract = await contract!.getAllNftsOnSale();
       const nftsContractLength = nftsContract.length;
 
@@ -23,7 +23,7 @@ export const hookFactory: ListedNftsHookFactory =
         const item = nftsContract[i];
         const tokenURI = await contract!.tokenURI(item.tokenId);
         const metaResponse = await fetch(tokenURI);
-        const meta: NftMeta = await metaResponse.json();
+        const meta: INftMeta = await metaResponse.json();
 
         nfts.push({
           tokenId: Number(item.tokenId),

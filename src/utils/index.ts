@@ -21,3 +21,11 @@ export const formatDate = (date: Date): string => {
   const formattedDate = moment(date).utc().format("DD/MM/YYYY");
   return formattedDate;
 };
+
+export const createFormData = <T extends Record<string, any>>(data: T): FormData => {
+  const formData = new FormData();
+  for (const key in data) {
+    formData.append(key, data[key]);
+  }
+  return formData;
+};

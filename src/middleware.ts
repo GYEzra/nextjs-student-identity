@@ -4,6 +4,6 @@ export const config = {
   matcher: [
     // "/((?!api|_next/static|_next/image|favicon.ico|sitemap.xml|robots.txt|videos|images).*)",
     // "/((?!api|_next/static|_next/image|manifest.webmanifest|favicon.ico|sitemap.xml|robots.txt|/|auth|verify|.*\\.png|.*\\.jpg|.*\\.jpeg$).*)",
-    "/((?!api|_next/static|_next/image|images|videos|contracts|login|signup|verify|favicon.ico|manifest.webmanifest|sitemap.xml|robots.txt|$).*)",
+    "/((?!api|_next/static|_next/image|images|videos|contracts|login|signup|verify|forget|favicon.ico|manifest.webmanifest|sitemap.xml|robots.txt|$).*)",
   ],
 };

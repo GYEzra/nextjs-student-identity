@@ -3,7 +3,6 @@
 import { useListedNfts } from "@/hooks/web3";
 import NftItem from "../item";
 
-
 const NftList = () => {
     const { nfts } = useListedNfts();
     console.log("Chekc nfts", JSON.stringify(nfts.data, null, 2));

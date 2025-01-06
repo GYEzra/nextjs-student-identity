@@ -116,3 +116,5 @@ const NftItem: React.FC<NftItemProps> = ({ item, buyNft }) => {
 };
 
 export default NftItem;
+
+

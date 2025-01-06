@@ -1,6 +1,8 @@
 import React from "react";
 
 const Advs = () => {
+ 
+
   const imageData = [
     {
       src: "https://wpsmartnft.com/wp-content/uploads/2024/10/Meta-Legend-8452-1024x1024.avif",
@@ -127,6 +129,7 @@ const Advs = () => {
           </div>
         </div>
       </div>
+ 
     </div>
   );
 };

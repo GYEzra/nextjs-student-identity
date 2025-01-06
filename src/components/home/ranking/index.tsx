@@ -316,7 +316,7 @@ interface NFTCollection {
 }
 
 const NFTTable: React.FC<{ data: NFTCollection[] }> = ({ data }) => (
-  <div className="grid grid-cols-3 gap-x-6">
+  <div className="grid gird-cols-1 lg:grid-cols-3 gap-x-6">
     {data.map((item) => (
       <div
         key={item.rank}

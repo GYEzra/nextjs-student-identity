@@ -68,9 +68,6 @@ const Benefits = () => {
           </div>
         </div>
       </div>
-      <div className="bg-orange-400 h-80">
-        <p>thêm cái gì đó ở đây thêm chưa suy nghĩ ra</p>
-      </div>
     </div>
   );
 };

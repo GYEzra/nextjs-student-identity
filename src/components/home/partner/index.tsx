@@ -4,10 +4,10 @@ import Image from "next/image";
 
 const Partner = () => {
   return (
-    <div className="p-10 mt-10 border-b border-zinc-900 flex flex-col gap-10">
-      <h1 className="text-white text-4xl text-center font-bold animate-pulse">
+    <div className="p-10 mt-5 border-b border-zinc-900 flex flex-col gap-10">
+      {/* <h1 className="text-white text-4xl text-center font-bold animate-pulse">
         Our parner and Collaborators
-      </h1>
+      </h1> */}
       <div className="flex gap-12 animate-marquee">
         {[
           "/images/logo-cty/cty1.png",

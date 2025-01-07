@@ -316,7 +316,7 @@ interface NFTCollection {
 }
 
 const NFTTable: React.FC<{ data: NFTCollection[] }> = ({ data }) => (
-  <div className="grid grid-cols-3 gap-x-6">
+  <div className="grid gird-cols-1 lg:grid-cols-3 gap-x-6">
     {data.map((item) => (
       <div
         key={item.rank}
@@ -355,13 +355,13 @@ const Ranking = () => {
 
   return (
     <div className=" text-white px-8 py-10">
-      <h1 className="text-4xl font-bold mb-6 text-center">
+      <h1 className="text-2xl lg:text-4xl font-bold mb-4 lg:mb-6 text-center">
         Trending NFT Collections
       </h1>
-      <div className="flex gap-4 justify-center mb-8">
+      <div className="flex gap-4 justify-center mb-4 lg:mb-8">
         <button
           onClick={() => setActiveTab(1)}
-          className={`py-3 px-8 rounded-lg transition-all duration-300 text-base font-bold ${
+          className={`py-2 lg:py-3 px-4 lg:px-8 rounded-lg transition-all duration-300 text-xs lg:text-base font-bold ${
             activeTab === 1
               ? "bg-green-600 text-white shadow-lg"
               : "bg-transparent text-white hover:bg-green-600 border border-zinc-600"
@@ -371,7 +371,7 @@ const Ranking = () => {
         </button>
         <button
           onClick={() => setActiveTab(2)}
-          className={`py-3 px-8 rounded-lg transition-all duration-300 text-lg font-medium ${
+          className={`py-2 lg:py-3 px-4 lg:px-8 rounded-lg transition-all duration-300 text-xs lg:text-base font-medium ${
             activeTab === 2
               ? "bg-red-600 text-white shadow-lg"
               : "bg-transparent text-white hover:bg-red-600 border border-zinc-600"

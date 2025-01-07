@@ -1,43 +1,42 @@
 "use client";
 import { toast } from "react-toastify";
-import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { registerSchema } from "@/lib/schemas";
 import { signUp } from "@/lib/auth";
-import { Button, InputValidator } from "@/components/ui";
+import { Button, InputValidator, Modal } from "@/components/ui";
 import { useHasMounted } from "@/hooks/custom";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { AccountType } from "@/types/user";
 import Loader from "@/app/loader";
-import { z } from "zod";
+import { useState } from "react";
+import Verify from "../verify";
+import { RegisterData } from "@/types/auth";
+import { registerSchema } from "@/lib/schemas";
 
 const Signup = () => {
   const hasMounted = useHasMounted();
-  const router = useRouter();
+  const [id, setId] = useState<string | null>(null);
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm<z.output<typeof registerSchema>>({
+  } = useForm<RegisterData>({
     resolver: zodResolver(registerSchema),
   });
 
-  const onSubmit = handleSubmit(async (data) => {
+  const onSubmit = handleSubmit(async (data: RegisterData) => {
     try {
       const signUpPromise = signUp(data);
-      const signUpResponse = await toast.promise(signUpPromise, {
+      const { _id } = await toast.promise(signUpPromise, {
         pending: "Signing up...",
       });
 
-      if (signUpResponse.EC === 0) {
+      if (_id) {
         toast.success("Signup successfully!");
-        router.push(`/verify/${signUpResponse.data!._id}`);
-      } else {
-        toast.error(signUpResponse.error);
+        setId(_id);
       }
-    } catch (error) {
-      toast.error("Internal server error");
+    } catch (error: any) {
+      toast.error(error.message);
     }
   });
 
@@ -76,6 +75,11 @@ const Signup = () => {
           </h3>
         </div>
       </form>
+      {id && (
+        <Modal isOpen>
+          <Verify id={id} />
+        </Modal>
+      )}
     </>
   );
 };

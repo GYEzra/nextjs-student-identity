@@ -73,7 +73,7 @@ const Benefits = () => {
       <div className="flex flex-col lg:flex-row p-10">
         <div className="w-full lg:w-2/5">
           <div className="w-full h-64 lg:h-96 pt-20 px-10 border-b border-zinc-300 rounded-b-[2000px] flex flex-col gap-2 ">
-            <p className="uppercase text-xl lg:text-4xl special-text leading-tight font-extrabold text-center">
+            <p className="uppercase text-xl lg:text-4xl text-white leading-tight font-extrabold text-center">
               The benefits of using our products
             </p>
             <p className="text-gray-300 text-center text-xs lg:text-sm font-normal">

@@ -46,7 +46,7 @@ const Advs = () => {
     <div className="flex flex-col gap-10 my-10">
       <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-2 lg:gap-2">
-          <h1 className="uppercase text-white font-extrabold text-4xl lg:text-8xl text-center">
+          <h1 className="uppercase text-white font-extrabold text-4xl lg:text-6xl text-center">
             Buy & Sell
           </h1>
           <h1 className="text-white font-normal lg:font-bold text-base lg:text-3xl text-center ">

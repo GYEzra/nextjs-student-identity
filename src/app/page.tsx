@@ -97,7 +97,7 @@ export default function Home() {
           }}
         >
           <div className="w-full lg:w-1/2 flex flex-col gap-2 p-2 ">
-            <p className="w-full text-xl lg:text-6xl font-extrabold text-white">
+            <p className="w-full text-2xl lg:text-6xl font-extrabold text-white">
               <span className="special-text">Fintech</span> is The best Web For
               Your <span className="special-text"> NFTS</span>
             </p>
@@ -135,7 +135,7 @@ export default function Home() {
           </div>
           <div className="w-full lg:w-1/2">
             <div className="hidden lg:flex justify-center">
-              <div className=" p-4 lg:p-10 border-none lg:border-8 rounded-xl animate-float">
+              <div className=" p-4 lg:p-10 lg:border-8 rounded-xl animate-float">
                 <div className="w-[300px] h-[300px] border-spacing-2 border-2 rounded-md overflow-hidden  ">
                   <Carousel images={carouselImgSrc} width={300} height={300} />
                 </div>

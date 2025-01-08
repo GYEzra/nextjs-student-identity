@@ -4,10 +4,10 @@ import Walletbar from "../wallet-bar";
 
 const navigation = [
   { label: "Create NFT", href: "/nft/create", activeClass: "" },
+  { label: "List", href: "/list", activeClass: "" },
   { label: "Edit Profile", href: "/profile/edit", activeClass: "" },
   { label: "Detail NFT", href: "/nft/detail", activeClass: "" },
   { label: "Blog", href: "/blog", activeClass: "" },
-  { label: "About", href: "/about", activeClass: "" },
   { label: "About", href: "/about", activeClass: "" },
 ];
 

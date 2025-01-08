@@ -1,14 +1,12 @@
 import React from 'react'
-import { Navbar,HeroSection, Footer,Gallery,NFTGallery } from "@/components/ui";
+import {HeroSection,Gallery,NFTGallery } from "@/components/blog";
 import { NextPage } from 'next';
 const Blog:NextPage = () => {
   return (
     <div>
-        <Navbar/>
         <NFTGallery/>
         <Gallery/>
         <HeroSection/>
-        <Footer/>
     </div>
   )
 }

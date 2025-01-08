@@ -8,6 +8,7 @@ const navigation = [
   { label: "Detail NFT", href: "/nft/detail", activeClass: "" },
   { label: "Blog", href: "/blog", activeClass: "" },
   { label: "About", href: "/about", activeClass: "" },
+  { label: "About", href: "/about", activeClass: "" },
 ];
 
 const Navbar = () => {

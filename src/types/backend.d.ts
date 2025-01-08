@@ -34,8 +34,9 @@ declare global {
       _id: string;
       name: string;
       email: string;
-      image: string;
       accountType: string;
+      image?: string;
+      walletAddress?: string;
     };
     access_token: string;
     expiresIn: Date;

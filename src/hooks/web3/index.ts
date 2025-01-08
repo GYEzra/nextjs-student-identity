@@ -1,5 +1,4 @@
 "use client";
-
 import { useHooks } from "@/providers/web3";
 
 export const useAccount = () => {

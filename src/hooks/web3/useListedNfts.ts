@@ -1,7 +1,9 @@
+import { getNfts } from "@/lib/api/nft";
 import { EthereumHookFactory } from "@/types/hooks";
 import { INft, INftMeta } from "@/types/nft";
 import { ethers } from "ethers";
 import { useCallback } from "react";
+import { toast } from "react-toastify";
 import useSWR from "swr";
 
 type UseListedNftsResponse = {
@@ -14,44 +16,28 @@ export type UseListedNftsHook = ReturnType<ListedNftsHookFactory>;
 export const hookFactory: ListedNftsHookFactory =
   ({ contract }) =>
   () => {
-    const { data, ...swr } = useSWR(contract ? "web3/useListedNfts" : null, async () => {
-      const nfts: INft[] = [];
-      const nftsContract = await contract!.getAllNftsOnSale();
-      const nftsContractLength = nftsContract.length;
-
-      for (let i = 0; i < nftsContractLength; i++) {
-        const item = nftsContract[i];
-        const tokenURI = await contract!.tokenURI(item.tokenId);
-        const metaResponse = await fetch(tokenURI);
-        const meta: INftMeta = await metaResponse.json();
-
-        nfts.push({
-          tokenId: Number(item.tokenId),
-          price: parseFloat(ethers.formatEther(item.price)),
-          owner: item.owner,
-          isListed: item.isListed,
-          meta,
-        });
-      }
-
-      return nfts;
+    const { data, ...swr } = useSWR("web3/useListedNfts", async () => {
+      const { data } = await getNfts();
+      return data;
     });
 
-    const buyNft = useCallback(async (tokenId: number, price: number) => {
-      try {
-        // const convertValue = ethers.parseEther(price.toString());
-        // console.log("Check buy: ", convertValue);
-        // const promise = contract!.buy(tokenId, { value: BigInt(convertValue) });
-        // const res = await toast.promise(promise, {
-        //   pending: "Đang mua NFT",
-        //   success: "Mua thành công",
-        //   error: "Đã xảy ra lỗi khi mua",
-        // });
-        // await res.wait();
-      } catch (error: any) {
-        throw new Error("Error buying NFT:", error.message);
-      }
-    }, []);
+    const buyNft = useCallback(
+      async (tokenId: number, price: number) => {
+        try {
+          const convertValue = ethers.parseEther(price.toString());
+          const tx = await contract!.buy(tokenId, { value: BigInt(convertValue) });
+
+          await toast.promise(tx.wait(), {
+            pending: "Đang mua NFT",
+            success: "Mua thành công",
+            error: "Đã xảy ra lỗi khi mua",
+          });
+        } catch (error: any) {
+          toast.error(error.shortMessage || error.message);
+        }
+      },
+      [contract]
+    );
 
     return {
       ...swr,

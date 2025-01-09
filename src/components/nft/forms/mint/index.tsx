@@ -40,17 +40,22 @@ const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
     try {
       const { addressTo, tokenURI, price, isListed } = data;
       const priceBn = ethers.parseEther(price.toString());
-      const mintNftPromise = contract!.mint(addressTo, tokenURI, priceBn, isListed, { from: account.data! });
-      const mintNftRes = await toast.promise(mintNftPromise, {
-        pending: "Minting NFT",
-      });
+      // const mintNftPromise = contract!.mint(addressTo, tokenURI, priceBn, isListed, { from: account.data! });
+      // const mintNftRes = await toast.promise(mintNftPromise, {
+      //   pending: "Minting NFT",
+      // });
 
-      console.log("Minted NFT hash: ", JSON.stringify(mintNftRes, null, 2));
+      const tx = await contract!.mint(addressTo, tokenURI, priceBn, isListed, { from: account.data! });
+      const receipt = await tx.wait();
 
-      if (mintNftRes.hash != null) {
-        router.push(`/`);
-        toast.success("NFT minted successfully");
-      }
+      const parsedLogs = receipt!.logs.map((log) => contract!.interface.parseLog(log));
+
+      // console.log("Minted NFT hash: ", JSON.stringify(result, null, 2));
+
+      // if (mintNftRes.hash != null) {
+      //   router.push(`/`);
+      //   toast.success("NFT minted successfully");
+      // }
     } catch (error: any) {
       if (error.code != null) {
         toast.error(error.reason);

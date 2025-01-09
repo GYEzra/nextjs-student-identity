@@ -1,12 +1,22 @@
 "use client";
-import { PinataRes } from "@/types/api";
-import { NftMeta } from "@/types/nft";
-import { SignedData, SignedRes, VerifyRes } from "@/types/web3";
+import { INft, INftMeta } from "@/types/nft";
+import { IPaginate, IPinata, ISigned, IVerifyRes, IVerifySignature } from "@/types/response";
+import { ISignedData } from "@/types/web3";
 import { BACKEND_URL, sendRequest, sendRequestFile } from "@/utils/api";
 import { MetaMaskInpageProvider } from "@metamask/providers";
 
-export const getSignature = async (token: string): Promise<SignedRes> => {
-  const signatureResponse = await sendRequest<IBackendRes<SignedRes>>({
+export const getNfts = async (qs?: string): Promise<IPaginate<INft[]>> => {
+  const response = await sendRequest<IBackendRes<IPaginate<INft[]>>>({
+    method: "GET",
+    url: `${BACKEND_URL}/api/v1/nfts${qs ? `?${qs}` : ""}`,
+  });
+
+  if (response.statusCode === 200) return response.data!;
+  throw new Error(response.message);
+};
+
+export const getSignature = async (token: string): Promise<ISigned> => {
+  const signatureResponse = await sendRequest<IBackendRes<ISigned>>({
     method: "GET",
     url: `${BACKEND_URL}/api/v1/nfts/message-signature`,
     headers: {
@@ -19,8 +29,8 @@ export const getSignature = async (token: string): Promise<SignedRes> => {
   throw new Error(signatureResponse.message);
 };
 
-export const verifySignature = async (signedData: SignedData, token: string): Promise<VerifyRes> => {
-  const signatureResponse = await sendRequest<IBackendRes<VerifyRes>>({
+export const verifySignature = async (signedData: ISignedData, token: string): Promise<IVerifySignature> => {
+  const signatureResponse = await sendRequest<IBackendRes<IVerifySignature>>({
     method: "POST",
     url: `${BACKEND_URL}/api/v1/nfts/verify-signature`,
     body: {
@@ -37,7 +47,7 @@ export const verifySignature = async (signedData: SignedData, token: string): Pr
   throw new Error(signatureResponse.message);
 };
 
-export const requestToSignature = async (signature: SignedRes, ethereum: MetaMaskInpageProvider): Promise<SignedData> => {
+export const requestToSignature = async (signature: ISigned, ethereum: MetaMaskInpageProvider): Promise<ISignedData> => {
   try {
     const accounts = (await ethereum.request({ method: "eth_requestAccounts" })) as string[];
     const account = accounts[0];
@@ -51,8 +61,8 @@ export const requestToSignature = async (signature: SignedRes, ethereum: MetaMas
   }
 };
 
-export const uploadNftImage = async (formData: FormData, token: string): Promise<PinataRes> => {
-  const response = await sendRequestFile<IBackendRes<PinataRes>>({
+export const uploadNftImage = async (formData: FormData, token: string): Promise<IPinata> => {
+  const response = await sendRequestFile<IBackendRes<IPinata>>({
     method: "POST",
     url: `${BACKEND_URL}/api/v1/nfts/upload-image`,
     body: formData,
@@ -66,8 +76,8 @@ export const uploadNftImage = async (formData: FormData, token: string): Promise
   throw new Error(response.message);
 };
 
-export const uploadNftMeta = async (nftMeta: NftMeta, token: string): Promise<PinataRes> => {
-  const uploadResponse = await sendRequest<IBackendRes<PinataRes>>({
+export const uploadNftMeta = async (nftMeta: INftMeta, token: string): Promise<IPinata> => {
+  const uploadResponse = await sendRequest<IBackendRes<IPinata>>({
     method: "POST",
     url: `${BACKEND_URL}/api/v1/nfts/upload-metadata`,
     body: nftMeta,

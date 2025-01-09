@@ -46,10 +46,12 @@ export const hookFactory: AccountHookFactory =
       try {
         const promise = ethereum?.request({ method: "eth_requestAccounts" });
 
-        await toast.promise(promise!, {
+        const result = await toast.promise(promise!, {
           pending: "Đang kết nối ví",
           success: "Kết nối ví thành công",
         });
+
+        console.log("Check result: ", result);
       } catch (error: any) {
         toast.error(error.message);
       }

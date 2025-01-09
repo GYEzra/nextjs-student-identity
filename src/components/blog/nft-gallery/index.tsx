@@ -5,22 +5,22 @@ const NFTs = [
   {
     title: "The Galactic Dream",
     description: "A surreal journey through the cosmos. Own this one-of-a-kind NFT and make a statement in the digital art world.",
-    imageUrl: "/images/image1.png"
+    imageUrl: "https://wpsmartnft.com/wp-content/uploads/2024/10/664c5f93aea1b8bb8740e2edb6a2b006_profile.png"
   },
   {
     title: "Abstract Revolution",
     description: "Dive into the realm of abstract digital art with this exclusive NFT piece. A true representation of modern creativity.",
-    imageUrl: "/images/image2.jpg"
+    imageUrl: "https://wpsmartnft.com/wp-content/uploads/2024/10/4af04c687e6e644dae01116a02957fce_profile.jpeg"
   },
   {
     title: "The Digital Odyssey",
     description: "This NFT embodies the spirit of exploration in the digital age. A must-have for NFT collectors and art enthusiasts.",
-    imageUrl: "/images/image3.jpg"
+    imageUrl: "https://i.seadn.io/gcs/files/3ea70379eaf770c85beae83b89c7a632.png?auto=format&dpr=1&w=136&h=136&fr=1"
   }
 ];
 
 const NFTGallery = () => (
-  <section className="text-gray-600 bg-gradient-to-r from-violet-600 via-purple-500 to-black  body-font">
+  <section className="text-gray-600 bg-black  body-font">
     <div className="container px-5 py-24 mx-auto">
       <div className="flex flex-col">
         <div className="h-1 bg-gray-800 rounded overflow-hidden">

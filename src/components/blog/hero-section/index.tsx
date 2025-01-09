@@ -2,7 +2,7 @@ import React from 'react';
 
 const HeroSection = () => {
   return (
-    <section className="text-gray-600 body-font bg-gradient-to-r from-violet-600 via-purple-500 to-black">
+    <section className="text-gray-600 body-font bg-black">
       <div className="container mx-auto flex px-5 py-24 md:flex-row flex-col items-center gap-10">
         {/* Left Video with Overlay */}
         <div className="relative lg:max-w-lg lg:w-full md:w-1/2 w-5/6 mb-10 md:mb-0">
@@ -10,7 +10,7 @@ const HeroSection = () => {
           <img
             className="object-cover object-center rounded shadow-lg"
             alt="hero"
-            src="/images/nft.jpg"
+            src="https://wpsmartnft.com/wp-content/uploads/2024/10/786f3017eeb7a6988bbd0567dece1078_profile.png"
             width={720}
             height={600}
           />

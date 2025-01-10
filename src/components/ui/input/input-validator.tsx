@@ -28,12 +28,12 @@ const InputValidator = <FormData extends FieldValues>({ label, name, errors, reg
       </label>
       <input
         type="text"
-        className={`border p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full text-md
+        className={`h-12 border p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full text-md
         ${error ? "border-red-500" : "border-zinc-300"}`}
         {...rest}
         {...register(name, { onChange: rest.onChange })}
       />
-      <span className={`mt-1 text-sm select-none text-red-500`}>{error}</span>
+      <span className="mt-1 h-4 text-sm select-none text-red-500">{error ?? null}</span>
     </div>
   );
 };

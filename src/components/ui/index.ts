@@ -6,4 +6,4 @@ export { default as ErrorAccount } from "./error/account";
 export { default as InputValidator } from "./input/input-validator";
 export { default as TextAreaValidator } from "./textarea/textarea-validator";
 export { default as Modal } from "./modal";
-export { default as Button } from "./button";
+export { Button, CountdownButton } from "./button";

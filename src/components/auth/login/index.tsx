@@ -5,11 +5,13 @@ import Link from "next/link";
 import { Button, InputValidator, Modal } from "@/components/ui";
 import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { authenticate } from "@/lib/auth";
 import { useHasMounted } from "@/hooks/custom";
 import Loader from "@/app/loader";
 import { LoginData } from "@/types/auth";
 import { loginSchema } from "@/lib/schemas";
+import { useState } from "react";
+import ForgetPassword from "../forget";
+import { authenticate } from "@/lib/api/auth";
 
 const Login = () => {
   const hasMounted = useHasMounted();
@@ -49,7 +51,7 @@ const Login = () => {
         </fieldset>
 
         <div className="text-end">
-          <Link className="group text-blue-400 transition-all duration-100 ease-in-out" href="/auth/forget">
+          <Link className="group text-blue-400 transition-all duration-100 ease-in-out" href="/forget">
             <span className="bg-left-bottom bg-gradient-to-r text-sm from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">Forget your password?</span>
           </Link>
         </div>

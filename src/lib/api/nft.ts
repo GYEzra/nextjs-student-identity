@@ -1,12 +1,12 @@
 "use client";
 import { INft, INftMeta } from "@/types/nft";
-import { IPaginate, IPinata, ISigned, IVerifyRes, IVerifySignature } from "@/types/response";
+import { IMessageResponse, IPinata, ISigned } from "@/types/response";
 import { ISignedData } from "@/types/web3";
 import { BACKEND_URL, sendRequest, sendRequestFile } from "@/utils/api";
 import { MetaMaskInpageProvider } from "@metamask/providers";
 
-export const getNfts = async (qs?: string): Promise<IPaginate<INft[]>> => {
-  const response = await sendRequest<IBackendRes<IPaginate<INft[]>>>({
+export const getNfts = async (qs?: string): Promise<IModelPaginate<INft[]>> => {
+  const response = await sendRequest<IBackendRes<IModelPaginate<INft[]>>>({
     method: "GET",
     url: `${BACKEND_URL}/api/v1/nfts${qs ? `?${qs}` : ""}`,
   });
@@ -29,8 +29,8 @@ export const getSignature = async (token: string): Promise<ISigned> => {
   throw new Error(signatureResponse.message);
 };
 
-export const verifySignature = async (signedData: ISignedData, token: string): Promise<IVerifySignature> => {
-  const signatureResponse = await sendRequest<IBackendRes<IVerifySignature>>({
+export const verifySignature = async (signedData: ISignedData, token: string): Promise<IMessageResponse> => {
+  const signatureResponse = await sendRequest<IBackendRes<IMessageResponse>>({
     method: "POST",
     url: `${BACKEND_URL}/api/v1/nfts/verify-signature`,
     body: {

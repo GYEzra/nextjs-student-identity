@@ -29,11 +29,7 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
       const { address, abi } = await getArtifact();
       const contract = new ethers.Contract(address, abi, provider);
 
-      // const signer = await provider.getSigner(session?.user.walletAddress);
-      // const signedContract = contract.connect(signer);
-
       setTimeout(() => setListeners(ethereum, contract, provider), 500);
-
       setWeb3(
         createWeb3State({
           ethereum: ethereum,
@@ -52,7 +48,7 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
     return () => removeListeners(window.ethereum);
   }, []);
 
-  const handleSignedContract = async (contract: Contract, provider: BrowserProvider | InfuraProvider) => {
+  const handleSignedContract = async (contract: Contract, provider: BrowserProvider) => {
     const accounts = await provider?.listAccounts();
 
     if (accounts.length === 0) return;
@@ -63,7 +59,7 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
     setWeb3((api: any) => createWeb3State({ ...(api as any), contract: signedContract as unknown as NftMarketplace }));
   };
 
-  const setListeners = (ethereum: MetaMaskInpageProvider, contract: Contract, provider: BrowserProvider | InfuraProvider) => {
+  const setListeners = (ethereum: MetaMaskInpageProvider, contract: Contract, provider: BrowserProvider) => {
     ethereum?.on("chainChanged", pageReload);
     ethereum?.on("accountsChanged", handleAccountsChanged(ethereum, contract, provider));
   };
@@ -73,7 +69,7 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
     ethereum?.removeListener("accountsChanged", handleAccountsChanged);
   };
 
-  const handleAccountsChanged = (ethereum: MetaMaskInpageProvider, contract: Contract, provider: BrowserProvider | InfuraProvider) => async () => {
+  const handleAccountsChanged = (ethereum: MetaMaskInpageProvider, contract: Contract, provider: BrowserProvider) => async () => {
     const isLocked = !(await ethereum._metamask.isUnlocked());
     if (isLocked) {
       pageReload();

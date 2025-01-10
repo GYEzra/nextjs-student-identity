@@ -7,3 +7,4 @@ export * from "./nft-schema";
 export * from "./password-schema";
 export * from "./register-schema";
 export * from "./verify-schema";
+export * from "./forget-password-schema";

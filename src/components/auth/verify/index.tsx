@@ -2,11 +2,11 @@
 import { useForm } from "react-hook-form";
 import { Button, InputValidator } from "@/components/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { checkCode } from "@/lib/auth";
 import { toast } from "react-toastify";
-import { redirect, useRouter } from "next/navigation";
+import { useRouter } from "next/navigation";
 import { VerifyAccountData } from "@/types/auth";
 import { verifyAccountSchema } from "@/lib/schemas";
+import { checkCode } from "@/lib/api/auth";
 
 const Verify = ({ id }: { id: string }) => {
   const router = useRouter();
@@ -40,7 +40,7 @@ const Verify = ({ id }: { id: string }) => {
       <form onSubmit={onSubmit}>
         <fieldset>
           <InputValidator type="text" name="_id" register={register} errors={errors} hidden readOnly value={id} />
-          <InputValidator required type="text" label="Code" name="code" placeholder="Please enter your verification code" register={register} errors={errors} />
+          <InputValidator required type="text" label="Code" name="codeId" placeholder="Please enter your verification code" register={register} errors={errors} />
         </fieldset>
 
         <Button type="submit" value="Submit"></Button>

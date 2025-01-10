@@ -1,19 +1,9 @@
-export interface IPaginate<T> {
-  meta: {
-    page: number;
-    limit: number;
-    totalItems: number;
-    totalPages: number;
-  };
-  data: T;
-}
-
 export interface ISigned {
   id: string;
   timestamp: Date;
 }
 
-export interface IVerifySignature {
+export interface IMessageResponse {
   message: string;
 }
 

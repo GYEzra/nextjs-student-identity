@@ -1,134 +1,97 @@
 "use client";
-
 import { toast } from "react-toastify";
+import { useState } from "react";
+import { Button, CountdownButton, InputValidator } from "@/components/ui";
+import { useForm } from "react-hook-form";
+import { ForgetPasswordData } from "@/types/auth";
+import { forgetPasswordSchema } from "@/lib/schemas";
+import { zodResolver } from "@hookform/resolvers/zod";
+import Link from "next/link";
+import { changePassword, sendRetryPassword } from "@/lib/api/auth";
+import { useHasMounted } from "@/hooks/custom";
+import Loader from "@/app/loader";
 import { useRouter } from "next/navigation";
-import { ChangeEvent, useState } from "react";
-import { sendRequest } from "@/utils/api";
 
 const ForgetPassword = () => {
-  // const onSendMail = async () => {
-  //     if (!form.email) {
-  //         setErrors({ ...errors, email: "Please enter your email." });
-  //         return;
-  //     }
-  //     if (!validateEmail(form.email)) {
-  //         setErrors({ ...errors, email: "Invalid email format." });
-  //         return;
-  //     }
-  //     const promise = sendRequest<IBackendRes<{ _id: string; email: string }>>({
-  //         method: "POST",
-  //         url: `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/v1/auth/retry-password`,
-  //         body: { email: form.email },
-  //     });
-  //     const response = await toast.promise(promise, {
-  //         pending: "Sending email...",
-  //     });
-  //     if (response.statusCode === 201) {
-  //         setIsDisabled(true);
-  //         toast.success("Please check your email to get the verification code.");
-  //     } else if (response.statusCode === 400) {
-  //         setErrors({ ...errors, email: "Email does not exist." });
-  //     } else {
-  //         toast.error("An error occurred.");
-  //     }
-  // };
-  // return (
-  //     <>
-  //         <h2 className="text-2xl md:text-3xl text-center font-bold tracking-wide text-white uppercase">
-  //             Forget Password
-  //         </h2>
-  //         <div className="mt-4">
-  //             <label htmlFor="email" className="block text-md font-medium text-white">
-  //                 Email <span className="text-red-600">*</span>
-  //             </label>
-  //             <label className="input input-bordered w-full mt-2 pl-3 pr-0 py-2 rounded-md text-gray-800 flex items-center gap-2">
-  //                 <input
-  //                     type="email"
-  //                     id="email"
-  //                     name="email"
-  //                     value={form.email}
-  //                     className="grow input focus:border-0 p-0"
-  //                     placeholder="Please enter your email"
-  //                     onChange={handleChange}
-  //                 />
-  //                 <button
-  //                     className="btn rounded-tl-none rounded-bl-none rounded-tr-md rounded-br-md"
-  //                     disabled={isDisabled}
-  //                     onClick={onSendMail}
-  //                 >
-  //                     {isDisabled ? "Waiting" : "Send"}
-  //                 </button>
-  //             </label>
-  //             {errors.email && (
-  //                 <p className="text-red-500 text-sm mt-1">{errors.email}</p>
-  //             )}
-  //         </div>
-  //         <div className="mt-4">
-  //             <label
-  //                 htmlFor="password"
-  //                 className="block text-md font-medium text-white"
-  //             >
-  //                 Password <span className="text-red-600">*</span>
-  //             </label>
-  //             <input
-  //                 id="password"
-  //                 name="password"
-  //                 type="password"
-  //                 placeholder="Please enter your password"
-  //                 maxLength={255}
-  //                 className="input input-bordered w-full mt-2 px-3 py-2 rounded-md text-gray-800"
-  //                 onChange={handleChange}
-  //             />
-  //             {errors.password && (
-  //                 <p className="text-red-500 text-sm mt-1">{errors.password}</p>
-  //             )}
-  //         </div>
-  //         <div className="mt-4">
-  //             <label
-  //                 htmlFor="repassword"
-  //                 className="block text-md font-medium text-white"
-  //             >
-  //                 Re-password <span className="text-red-600">*</span>
-  //             </label>
-  //             <input
-  //                 id="repassword"
-  //                 name="repassword"
-  //                 type="password"
-  //                 placeholder="Please re-enter your password"
-  //                 maxLength={255}
-  //                 className="input input-bordered w-full mt-2 px-3 py-2 rounded-md text-gray-800"
-  //                 onChange={handleChange}
-  //             />
-  //             {errors.repassword && (
-  //                 <p className="text-red-500 text-sm mt-1">{errors.repassword}</p>
-  //             )}
-  //         </div>
-  //         <div className="mt-4">
-  //             <label htmlFor="code" className="block text-md font-medium text-white">
-  //                 Code <span className="text-red-600">*</span>
-  //             </label>
-  //             <input
-  //                 id="code"
-  //                 name="code"
-  //                 type="code"
-  //                 placeholder="Please enter the code sent to your email"
-  //                 maxLength={255}
-  //                 className="input input-bordered w-full mt-2 px-3 py-2 rounded-md text-gray-800"
-  //                 onChange={handleChange}
-  //             />
-  //             {errors.code && (
-  //                 <p className="text-red-500 text-sm mt-1">{errors.code}</p>
-  //             )}
-  //         </div>
-  //         <button
-  //             type="button"
-  //             className="special-button w-full mt-8 py-2"
-  //             onClick={onFinish}
-  //         >
-  //             Reset Password
-  //         </button>
-  //     </>
-  // );
+  const hasMounted = useHasMounted();
+  const router = useRouter();
+  const [seconds, setSeconds] = useState<number>(0);
+  const {
+    register,
+    handleSubmit,
+    trigger,
+    watch,
+    formState: { errors },
+  } = useForm<ForgetPasswordData>({
+    resolver: zodResolver(forgetPasswordSchema),
+  });
+
+  const onSubmit = handleSubmit(async (data: ForgetPasswordData) => {
+    try {
+      const promise = changePassword(data);
+      const reponse = await toast.promise(promise, {
+        pending: "Waiting for processing change password",
+      });
+
+      router.push("/login");
+
+      toast.success(reponse.message);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  });
+
+  const onSendRetryPassword = async () => {
+    try {
+      const isEmailValid = await trigger("email");
+
+      if (!isEmailValid) return;
+
+      const email = watch("email");
+      const promise = sendRetryPassword(email);
+
+      const response = await toast.promise(promise, {
+        pending: "Waiting for send mail..",
+      });
+
+      setSeconds(30);
+      toast.success(response.message);
+    } catch (error: any) {
+      toast.error(error.message);
+    }
+  };
+
+  if (!hasMounted) return <Loader />;
+
+  return (
+    <>
+      <h1 className="pt-2 pb-6 font-bold text-white text-5xl text-center cursor-default">Forget Password</h1>
+      <form onSubmit={onSubmit}>
+        <fieldset className="mb-8 flex flex-col gap-y-2">
+          <div className="relative flex flex-wrap md:flex-nowrap gap-y-2 md:gap-x-4">
+            <div className="basis-full md:basis-3/4">
+              <InputValidator required type="text" label="Email" name="email" placeholder="Please enter your email" register={register} errors={errors} />
+            </div>
+            <div className="basis-full md:basis-1/4 md:relative md:-bottom-8">
+              <CountdownButton className="h-12 w-full bg-green-500 text-white text-xs lg:text-md font-medium p-2 rounded-lg" type="button" value="Send" seconds={seconds} setSeconds={setSeconds} onClick={onSendRetryPassword}></CountdownButton>
+            </div>
+          </div>
+          <InputValidator required type="text" label="Code" name="codeId" placeholder="Please enter your activation code" register={register} errors={errors} />
+          <InputValidator required type="password" label="New Password" name="password" placeholder="Please enter your new password" register={register} errors={errors} />
+        </fieldset>
+
+        <Button type="submit" value="Reset Password"></Button>
+      </form>
+      <div className="flex flex-col mt-4 items-center justify-center text-sm">
+        <h3 className="text-primary-label">
+          Remember your password?
+          <Link href="/login" className="group text-blue-400 transition-all duration-100 ease-in-out">
+            <span className="bg-left-bottom bg-gradient-to-r from-blue-400 to-blue-400 bg-[length:0%_2px] bg-no-repeat group-hover:bg-[length:100%_2px] transition-all duration-500 ease-out">Login</span>
+          </Link>
+        </h3>
+      </div>
+    </>
+  );
 };
 
 export default ForgetPassword;

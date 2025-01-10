@@ -2,7 +2,6 @@
 import { toast } from "react-toastify";
 import Link from "next/link";
 import { useForm } from "react-hook-form";
-import { signUp } from "@/lib/auth";
 import { Button, InputValidator, Modal } from "@/components/ui";
 import { useHasMounted } from "@/hooks/custom";
 import { zodResolver } from "@hookform/resolvers/zod";
@@ -12,6 +11,7 @@ import { useState } from "react";
 import Verify from "../verify";
 import { RegisterData } from "@/types/auth";
 import { registerSchema } from "@/lib/schemas";
+import { signUp } from "@/lib/api/auth";
 
 const Signup = () => {
   const hasMounted = useHasMounted();

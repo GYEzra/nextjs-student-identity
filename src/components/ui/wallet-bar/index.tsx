@@ -1,5 +1,5 @@
 import { useAccount } from "@/hooks/web3";
-import Button from "../button";
+import Button from "../button/default-button";
 
 const Walletbar = () => {
   const { account } = useAccount();

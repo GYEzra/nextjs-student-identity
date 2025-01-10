@@ -2,7 +2,8 @@ import { z } from "zod";
 import { emailSchema } from "./email-schema";
 import { passwordSchema } from "./password-schema";
 
-export const loginSchema = z.object({
+export const forgetPasswordSchema = z.object({
   email: emailSchema,
-  password: z.string().min(1, { message: "Password is required" }),
+  codeId: z.string().min(1, { message: "Code is required" }),
+  password: passwordSchema,
 });

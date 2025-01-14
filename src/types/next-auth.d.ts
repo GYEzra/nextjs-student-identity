@@ -2,12 +2,12 @@ import NextAuth, { DefaultSession } from "next-auth";
 import { JWT } from "next-auth/jwt";
 
 interface IUser {
-  _id?: string;
-  name?: string;
-  email?: string;
+  _id: string;
+  name: string;
+  email: string;
   accountType: string;
+  walletAddress: string;
   image?: string;
-  walletAddress?: string;
 }
 declare module "next-auth/jwt" {
   interface JWT {

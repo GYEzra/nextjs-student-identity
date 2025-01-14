@@ -1,13 +1,13 @@
 import { getNfts } from "@/lib/api/nft";
 import { EthereumHookFactory } from "@/types/hooks";
-import { INft, INftMeta } from "@/types/nft";
+import { INft } from "@/types/nft";
 import { ethers } from "ethers";
 import { useCallback } from "react";
 import { toast } from "react-toastify";
 import useSWR from "swr";
 
 type UseListedNftsResponse = {
-  buyNft: (tokenId: number, value: number) => Promise<void>;
+  buyNft: (tokenId: number, price: number) => Promise<void>;
 };
 type ListedNftsHookFactory = EthereumHookFactory<INft[], UseListedNftsResponse>;
 

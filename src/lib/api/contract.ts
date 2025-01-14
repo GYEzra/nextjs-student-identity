@@ -1,3 +1,4 @@
+"use server";
 import { IArtifact } from "@/types/web3";
 import { BACKEND_URL, sendRequest } from "@/utils/api";
 import { MetaMaskInpageProvider } from "@metamask/providers";

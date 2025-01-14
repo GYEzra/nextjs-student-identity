@@ -22,7 +22,7 @@ const Navbar = () => {
     return navigationItems.map((item) => (
       <li key={item.label}>
         <Link href={item.href}>
-          <span className="text-base text-black">{item.label}</span>
+          <span className="text-base text-white">{item.label}</span>
         </Link>
       </li>
     ));

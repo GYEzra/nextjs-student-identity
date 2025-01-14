@@ -11,8 +11,9 @@ import { toast } from "react-toastify";
 import { useWeb3 } from "@/providers/web3";
 import { ethers } from "ethers";
 import { useRouter } from "next/navigation";
-import { ZERO_ADDRESS } from "@/utils";
+import { DEFAULT_ETH_ADDRESS } from "@/utils";
 import { NftData } from "@/types/nft";
+import { useSession } from "next-auth/react";
 
 type MintNftFormProps = {
   tokenURI?: string;
@@ -20,7 +21,8 @@ type MintNftFormProps = {
 
 const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
   const router = useRouter();
-  const { account } = useAccount();
+  const { data: session } = useSession();
+  const { walletAddress } = session!.user;
   const { update } = usePreviewNft();
   const { contract } = useWeb3();
   const {
@@ -40,22 +42,14 @@ const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
     try {
       const { addressTo, tokenURI, price, isListed } = data;
       const priceBn = ethers.parseEther(price.toString());
-      // const mintNftPromise = contract!.mint(addressTo, tokenURI, priceBn, isListed, { from: account.data! });
-      // const mintNftRes = await toast.promise(mintNftPromise, {
-      //   pending: "Minting NFT",
-      // });
 
-      const tx = await contract!.mint(addressTo, tokenURI, priceBn, isListed, { from: account.data! });
-      const receipt = await tx.wait();
+      const tx = await contract!.mint(addressTo, tokenURI, priceBn, isListed, { from: walletAddress });
+      await toast.promise(tx.wait(), {
+        pending: "Minting NFT",
+      });
 
-      const parsedLogs = receipt!.logs.map((log) => contract!.interface.parseLog(log));
-
-      // console.log("Minted NFT hash: ", JSON.stringify(result, null, 2));
-
-      // if (mintNftRes.hash != null) {
-      //   router.push(`/`);
-      //   toast.success("NFT minted successfully");
-      // }
+      router.push(`/`);
+      toast.success("NFT minted successfully");
     } catch (error: any) {
       if (error.code != null) {
         toast.error(error.reason);
@@ -65,7 +59,7 @@ const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
     }
   });
 
-  const toogleYourAddress = () => setValue("addressTo", watch("addressTo") === account.data ? ZERO_ADDRESS : account.data!);
+  const toogleYourAddress = () => setValue("addressTo", watch("addressTo") === walletAddress ? DEFAULT_ETH_ADDRESS : walletAddress);
 
   const toogleListed = () => setValue("isListed", !watch("isListed"));
 
@@ -97,7 +91,7 @@ const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
           </div>
           <div className="w-full lg:w-1/4">
             <button type="button" className="mt-2 px-2 py-1 text-sm btn btn-warning w-full" onClick={toogleYourAddress}>
-              {watch("addressTo") === account.data ? "Clear Address" : "Use My Address"}
+              {watch("addressTo") === walletAddress ? "Clear Address" : "Use My Address"}
             </button>
           </div>
         </div>

@@ -1,10 +1,14 @@
 "use client";
 import { useListedNfts } from "@/hooks/web3";
 import NftItem from "../item";
+import { useHasMounted } from "@/hooks/custom";
+import Loader from "@/app/loader";
 
 const NftList = () => {
+  const hasMounted = useHasMounted();
   const { nfts } = useListedNfts();
-  console.log("Check nfts", nfts);
+
+  if (!hasMounted) return <Loader />;
 
   return (
     <div className="mt-12 max-w-lg mx-auto grid gap-8 grid-cols-1 md:grid-cols-2 lg:grid-cols-4 lg:max-w-none">

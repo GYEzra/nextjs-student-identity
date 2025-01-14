@@ -35,6 +35,8 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
           ethereum: ethereum,
           contract: contract as unknown as NftMarketplace,
           provider,
+          session,
+          isLoggedIn: !!session,
           isLoading: false,
         })
       );

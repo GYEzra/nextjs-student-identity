@@ -6,7 +6,6 @@ import { Session } from "next-auth";
 
 export type SessionDependencies = {
   session: Session | null;
-  isLoggedIn: boolean;
 };
 
 export type Web3Dependencies = {

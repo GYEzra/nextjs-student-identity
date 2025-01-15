@@ -6,7 +6,7 @@ const Walletbar = () => {
 
   if (!account.isInstalled) return <Button className="btn border-0 special-button" type="button" value="Install Wallet" onClick={() => window.open("https://metamask.io", "_blank")} />;
 
-  if (!account.data) return <Button className="btn border-0 special-button" type="button" value="Connect Wallet" onClick={() => account.connect()} />;
+  if (!account.isConnectedWallet) return <Button className="btn border-0 special-button" type="button" value="Connect Wallet" onClick={() => account.connect()} />;
 
   return null;
 };

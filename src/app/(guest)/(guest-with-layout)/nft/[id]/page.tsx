@@ -10,7 +10,7 @@ import { useRouter } from "next/navigation";
 import { useHasMounted } from "@/hooks/custom";
 import Image from "next/image";
 import { getPinataCid } from "@/utils";
-import { ExpandableText } from "@/components/ui";
+import { Button, ExpandableText } from "@/components/ui";
 
 const DetailNftPage = ({ params }: { params: { id: string } }) => {
   const id = params.id;
@@ -85,14 +85,6 @@ const DetailNftPage = ({ params }: { params: { id: string } }) => {
     },
   ];
 
-  const [isExpanded, setIsExpanded] = useState(false);
-  const maxLength = 200;
-  const text = `Lorem ipsum dolor sit amet consectetur adipisicing elit. Mollitia
-    distinctio exercitationem minima natus quia. Nam quasi dolorem
-    enim, quod saepe aspernatur numquam facere repellat aut ratione
-    fugit excepturi, temporibus officia quam voluptates aliquam omnis
-    atque provident, animi modi dolores iusto.`;
-
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handlePrev = () => {
@@ -155,7 +147,7 @@ const DetailNftPage = ({ params }: { params: { id: string } }) => {
               <p className="text-xs lg:text-base font-semibold">Created by</p>
               <div className="flex gap-2 items-center">
                 <img className="w-6 h-6 lg:w-10 lg:h-10 rounded-full" src="/images/nft.jpg" alt="Created by" />
-                <p className="text-sm lg:text-base font-semibold">Olivia Samantha</p>
+                <p className="text-sm lg:text-base font-semibold">{nft.owner.name}</p>
               </div>
             </div>
             <div className="w-full lg:w-1/2 flex flex-col gap-3">
@@ -173,11 +165,11 @@ const DetailNftPage = ({ params }: { params: { id: string } }) => {
             <div className="flex gap-2 items-center">
               <img className="w-8 h-8 rounded-xl" src="/images/eth.png" alt="ether icon" />
               <p className="text-3xl font-bold">
-                13.2595 <span className="font-medium text-gray-500 text-xl">($37,334.51)</span>
+                {nft.price} <span className="font-medium text-gray-500 text-xl">({nft.price + 2})</span>
               </p>
             </div>
             <div className="flex gap-3 mt-4">
-              <button className="w-full bg-green-500 py-3 text-base font-semibold rounded-lg">Buy now</button>
+              <Button type="button" value="Buy now" />
             </div>
           </div>
         </div>
@@ -185,27 +177,13 @@ const DetailNftPage = ({ params }: { params: { id: string } }) => {
       <div className="flex flex-col gap-3">
         <p className="font-semibold">Properties</p>
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
-          <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
-            <p className="text-sm text-green-400">Type</p>
-            <p className="text-base font-medium">Legendary</p>
-            <p className="text-xs text-gray-400">12.6% rarity</p>
-          </div>
-
-          <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
-            <p className="text-sm text-green-400">Body</p>
-            <p className="text-base font-medium">Legendary</p>
-            <p className="text-xs text-gray-400">12.6% rarity</p>
-          </div>
-          <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
-            <p className="text-sm text-green-400">Hair</p>
-            <p className="text-base font-medium">Legendary</p>
-            <p className="text-xs text-gray-400">12.6% rarity</p>
-          </div>
-          <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
-            <p className="text-sm text-green-400">Eyes</p>
-            <p className="text-base font-medium">Legendary</p>
-            <p className="text-xs text-gray-400">12.6% rarity</p>
-          </div>
+          {nft.meta.properties?.map((property) => (
+            <div className="flex flex-col gap-1 p-3 border border-zinc-800 rounded-lg text-center">
+              <p className="text-sm text-green-400">Type</p>
+              <p className="text-base font-medium">{property.key}</p>
+              <p className="text-xs text-gray-400">{property.value}</p>
+            </div>
+          ))}
         </div>
       </div>
       <div className="flex flex-col gap-6">

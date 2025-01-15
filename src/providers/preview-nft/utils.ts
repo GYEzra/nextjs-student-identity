@@ -1,15 +1,16 @@
-import { PreviewNftData, PreviewNftState } from "@/types/nft";
+import { IPreviewNftData, IPreviewNftState } from "@/types/nft";
 
-export const createDefaultPreviewNftData = (): PreviewNftData => {
+export const createDefaultPreviewNftData = (): IPreviewNftData => {
   return {
     name: "",
     description: "",
     image: "",
     price: 0,
+    properties: [],
   };
 };
 
-export const createDefaultPreviewNftState = (): PreviewNftState => {
+export const createDefaultPreviewNftState = (): IPreviewNftState => {
   return {
     data: createDefaultPreviewNftData(),
     update: () => {},

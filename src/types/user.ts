@@ -8,6 +8,7 @@ export type UserM = {
   _id: string;
   name: string;
   email: string;
+  walletAddress: string;
   image?: string;
   bio?: string;
   role: RoleType;

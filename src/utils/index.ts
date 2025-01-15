@@ -1,6 +1,7 @@
 import { AddressLike, ethers } from "ethers";
 import moment from "moment";
 import { BACKEND_URL, PINATA_DOMAIN } from "./api";
+import { toast, ToastPromiseParams } from "react-toastify";
 
 export const DEFAULT_ETH_ADDRESS = "0x0000000000000000000000000000000000000000";
 export const imageLoader = ({ src }: { src: string }) => `${BACKEND_URL}/${src}`;

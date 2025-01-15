@@ -22,12 +22,7 @@ export interface INft {
   meta: INftMeta;
 }
 
-export interface IPreviewNftData {
-  image: string;
-  name: string;
-  description: string;
-  price: number;
-}
+export type IPreviewNftData = INftMeta & Pick<INft, "price">;
 
 export interface IPreviewNftState {
   data: IPreviewNftData;

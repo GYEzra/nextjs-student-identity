@@ -1,16 +1,18 @@
-import { Carousel, Navbar } from "@/components/ui";
+"use client";
+import { Carousel, Navbar, NftList } from "@/components/ui";
 import { carouselImgSrc } from "../../public/meta";
 import { FaLongArrowAltRight } from "react-icons/fa";
-import { NftList } from "@/components/nft";
-import { Benefit, Introduce, Partner, Ranking, Subscribe, Blog, Adv, Guide } from "@/components/home";
+import { Benefit, Introduce, Partner, Ranking, Subscribe, Blog, Adv, Guide } from "@/components/home-page";
 import { Footer } from "@/components/layouts";
 import "../app/styles/animation.css";
+import { useListedNfts } from "@/hooks/web3";
 
 export default function Home() {
+  const { nfts } = useListedNfts();
+
   return (
     <>
       <Navbar />
-
       <div
         className="w-full px-4 lg:px-16 py-4 lg:py-10 relative"
         style={{
@@ -19,7 +21,6 @@ export default function Home() {
           backgroundPosition: "center",
         }}
       >
-        {/* Phần tử chứa hình nền mờ */}
         <div
           className="absolute top-0 left-0 w-full h-full"
           style={{
@@ -31,7 +32,6 @@ export default function Home() {
           }}
         ></div>
 
-        {/* Khung nằm đè lên hình nền */}
         <div
           className="w-full relative flex flex-col lg:flex-row p-4 lg:p-14 rounded-lg bg-opacity-50 bg-black shadow-lg"
           style={{
@@ -76,9 +76,9 @@ export default function Home() {
         </div>
       </div>
 
-      <div className="w-full mx-auto px-4 pt-10 sm:px-6 lg:pt-24 bg-orange-400">
+      <div className="w-full mx-auto px-4 pt-10 sm:px-6 lg:pt-24">
         <div className="mx-auto text-center flex justify-center">
-          <NftList />
+          <NftList items={nfts.data ?? []} buyNft={nfts.buyNft} />
         </div>
       </div>
 

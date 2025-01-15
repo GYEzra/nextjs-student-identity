@@ -47,7 +47,7 @@ const Navbar = () => {
                 <div className="w-12 rounded-full">
                   <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
                 </div>
-                {account.data ? (
+                {account.isConnectedWallet ? (
                   <>
                     <span className="absolute inline-flex rounded-full h-3 w-3 bg-green-500"></span>
                     <span className="absolute inline-flex rounded-full h-3 w-3 bg-success animate-ping"></span>
@@ -84,6 +84,13 @@ const Navbar = () => {
     );
   };
 
+  const renderNetworkStatus = () => {
+    if (network.isLoading) return "Loading...";
+    if (account.isConnectedWallet) return network.data;
+
+    return "Not connected";
+  };
+
   return (
     <div className="navbar bg-black">
       <div className="navbar-start">
@@ -110,7 +117,7 @@ const Navbar = () => {
             <svg className="-ml-0.5 mr-1.5 h-2 w-2 text-indigo-400" fill="currentColor" viewBox="0 0 8 8">
               <circle cx={4} cy={4} r={3} />
             </svg>
-            {network.isLoading ? "Loading..." : account ? network.data : "Not connected"}
+            {renderNetworkStatus()}
           </span>
         </div>
         {renderUserDropdown()}

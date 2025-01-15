@@ -17,7 +17,10 @@ export const hookFactory: ListedNftsHookFactory =
   ({ contract }) =>
   () => {
     const { data, ...swr } = useSWR("web3/useListedNfts", async () => {
-      const { data } = await getNfts();
+      const queryParams = {
+        "filter[isListed]": true,
+      };
+      const { data } = await getNfts(queryParams);
       return data;
     });
 
@@ -25,12 +28,11 @@ export const hookFactory: ListedNftsHookFactory =
       async (tokenId: number, price: number) => {
         try {
           const convertValue = ethers.parseEther(price.toString());
-          const tx = await contract!.buy(tokenId, { value: BigInt(convertValue) });
+          const promise = contract!.buy(tokenId, { value: BigInt(convertValue) }).then((tx) => tx.wait());
 
-          await toast.promise(tx.wait(), {
-            pending: "Đang mua NFT",
-            success: "Mua thành công",
-            error: "Đã xảy ra lỗi khi mua",
+          await toast.promise(promise, {
+            pending: "Processing the transaction",
+            success: "Buy successfully",
           });
         } catch (error: any) {
           toast.error(error.shortMessage || error.message);

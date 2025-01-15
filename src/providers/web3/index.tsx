@@ -21,31 +21,32 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
   const [web3, setWeb3] = useState<Web3State>(createDefaultWeb3State());
   const { data: session } = useSession();
 
-  const initWeb3 = async () => {
-    try {
-      const ethereum = window.ethereum;
-      const provider = new BrowserProvider(ethereum);
-
-      const { address, abi } = await getArtifact();
-      const contract = new ethers.Contract(address, abi, provider);
-
-      setTimeout(() => setListeners(ethereum, contract, provider), 500);
-      setWeb3(
-        createWeb3State({
-          ethereum: ethereum,
-          contract: contract as unknown as NftMarketplace,
-          provider,
-          session,
-          isLoggedIn: !!session,
-          isLoading: false,
-        })
-      );
-    } catch (error: any) {
-      setWeb3((api: any) => createWeb3State({ ...(api as any), isLoading: false }));
-    }
-  };
-
   useEffect(() => {
+    const initWeb3 = async () => {
+      try {
+        const ethereum = window.ethereum;
+        const provider = new BrowserProvider(ethereum);
+
+        const { address, abi } = await getArtifact();
+        const contract = new ethers.Contract(address, abi, provider);
+
+        setTimeout(() => setListeners(ethereum, contract, provider), 500);
+        setWeb3(
+          createWeb3State({
+            ethereum: ethereum,
+            contract: contract as unknown as NftMarketplace,
+            provider,
+            session,
+            isLoading: false,
+          })
+        );
+
+        handleSignedContract(contract, provider);
+      } catch (error: any) {
+        setWeb3((api: any) => createWeb3State({ ...(api as any), isLoading: false, session }));
+      }
+    };
+
     initWeb3();
     return () => removeListeners(window.ethereum);
   }, []);
@@ -55,7 +56,8 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
 
     if (accounts.length === 0) return;
 
-    const signer = await provider?.getSigner();
+    const signer = await provider?.getSigner(session?.user.walletAddress);
+    console.log("Check signer: ", signer);
     const signedContract = contract?.connect(signer);
 
     setWeb3((api: any) => createWeb3State({ ...(api as any), contract: signedContract as unknown as NftMarketplace }));

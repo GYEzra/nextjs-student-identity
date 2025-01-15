@@ -7,18 +7,18 @@ import { toast } from "react-toastify";
 import { InputValidator, TextAreaValidator } from "@/components/ui";
 import { usePreviewNft } from "@/providers/preview-nft";
 import { useFieldArray, useForm } from "react-hook-form";
-import { getSignature, uploadNftImage, uploadNftMeta, verifySignature } from "@/lib/api/nft";
+import { uploadNftImage, uploadNftMeta } from "@/lib/api/nft";
 import { getPinataCid } from "@/utils";
 import { NftMetaData } from "@/types/nft";
 import { nftMetaSchema } from "@/lib/schemas";
-import { ISigned } from "@/types/response";
+import { useSession } from "next-auth/react";
+import { handleVerifySignature } from "@/helpers/signature";
 
 type UploadNftMetaProps = {
   setTokenURI: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
-  const { ethereum } = useWeb3();
   const { data: previewNftData, update } = usePreviewNft();
   const {
     register,
@@ -81,34 +81,9 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
     }
   };
 
-  const handleVerifySignature = async () => {
-    const signature = await getSignature();
-    const signedData = await requestToSignature(signature);
-    const verifySignaturePromise = verifySignature(signedData);
-
-    await toast.promise(verifySignaturePromise, {
-      pending: "Waiting for verifying signature...",
-      success: "Signature verified successfully",
-    });
-  };
-
   const onChangeValue = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
     update({ [name]: value });
-  };
-
-  const requestToSignature = async (signature: ISigned) => {
-    try {
-      const accounts = (await ethereum!.request({ method: "eth_requestAccounts" })) as string[];
-      const account = accounts[0];
-      const signedData = (await ethereum!.request({
-        method: "personal_sign",
-        params: [JSON.stringify(signature), account, signature.id],
-      })) as string;
-      return { account, signedData };
-    } catch (error: any) {
-      throw new Error(error.reason || "Error signing transaction");
-    }
   };
 
   return (

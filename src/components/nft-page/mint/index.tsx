@@ -4,7 +4,6 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { InputValidator } from "@/components/ui";
 import { ChangeEvent } from "react";
-import { useAccount } from "@/hooks/web3";
 import { nftSchema } from "@/lib/schemas";
 import { usePreviewNft } from "@/providers/preview-nft";
 import { toast } from "react-toastify";
@@ -51,11 +50,7 @@ const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
       router.push(`/`);
       toast.success("NFT minted successfully");
     } catch (error: any) {
-      if (error.code != null) {
-        toast.error(error.reason);
-      } else {
-        toast.error(error.message);
-      }
+      toast.error(error.reason || error.message);
     }
   });
 

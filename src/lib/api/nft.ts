@@ -1,73 +1,53 @@
-"use client";
+"use server";
+import { getAuthSession } from "@/auth";
 import { INft, INftMeta } from "@/types/nft";
-import { IMessageResponse, IPinata, ISigned } from "@/types/response";
-import { ISignedData } from "@/types/web3";
+import { IPinata } from "@/types/response";
 import { BACKEND_URL, sendRequest, sendRequestFile } from "@/utils/api";
-import { MetaMaskInpageProvider } from "@metamask/providers";
 
-export const getNfts = async (qs?: string): Promise<IModelPaginate<INft[]>> => {
+export const getNfts = async (queryParams?: Object): Promise<IModelPaginate<INft[]>> => {
   const response = await sendRequest<IBackendRes<IModelPaginate<INft[]>>>({
     method: "GET",
-    url: `${BACKEND_URL}/api/v1/nfts${qs ? `?${qs}` : ""}`,
+    url: `${BACKEND_URL}/api/v1/nfts`,
+    queryParams: queryParams,
   });
 
   if (response.statusCode === 200) return response.data!;
   throw new Error(response.message);
 };
 
-export const getSignature = async (token: string): Promise<ISigned> => {
-  const signatureResponse = await sendRequest<IBackendRes<ISigned>>({
+export const getNftById = async (id: string): Promise<INft> => {
+  const response = await sendRequest<IBackendRes<INft>>({
     method: "GET",
-    url: `${BACKEND_URL}/api/v1/nfts/message-signature`,
-    headers: {
-      Authorization: `Bearer ${token}`,
-    },
-    useCredentials: true,
+    url: `${BACKEND_URL}/api/v1/nfts/${id}`,
   });
 
-  if (signatureResponse.statusCode === 200) return signatureResponse.data!;
-  throw new Error(signatureResponse.message);
+  if (response.statusCode === 200) return response.data!;
+  throw new Error(response.message);
 };
 
-export const verifySignature = async (signedData: ISignedData, token: string): Promise<IMessageResponse> => {
-  const signatureResponse = await sendRequest<IBackendRes<IMessageResponse>>({
-    method: "POST",
-    url: `${BACKEND_URL}/api/v1/nfts/verify-signature`,
-    body: {
-      signature: signedData.signedData,
-      signerAddress: signedData.account,
-    },
+export const getOwnedNfts = async (): Promise<INft[]> => {
+  const session = await getAuthSession();
+  const response = await sendRequest<IBackendRes<INft[]>>({
+    method: "GET",
+    url: `${BACKEND_URL}/api/v1/nfts/owned-nfts`,
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${session?.access_token}`,
     },
-    useCredentials: true,
   });
 
-  if (signatureResponse.statusCode === 201) return signatureResponse.data!;
-  throw new Error(signatureResponse.message);
+  if (response.statusCode === 200) return response.data!;
+  throw new Error(response.message);
 };
 
-export const requestToSignature = async (signature: ISigned, ethereum: MetaMaskInpageProvider): Promise<ISignedData> => {
-  try {
-    const accounts = (await ethereum.request({ method: "eth_requestAccounts" })) as string[];
-    const account = accounts[0];
-    const signedData = (await ethereum.request({
-      method: "personal_sign",
-      params: [JSON.stringify(signature), account, signature.id],
-    })) as string;
-    return { account, signedData };
-  } catch (error: any) {
-    throw new Error(error.reason || "Error signing transaction");
-  }
-};
-
-export const uploadNftImage = async (formData: FormData, token: string): Promise<IPinata> => {
+export const uploadNftImage = async (formData: FormData): Promise<IPinata> => {
+  const session = await getAuthSession();
   const response = await sendRequestFile<IBackendRes<IPinata>>({
     method: "POST",
     url: `${BACKEND_URL}/api/v1/nfts/upload-image`,
     body: formData,
     headers: {
-      Authorization: `Bearer ${token}`,
+      ContentType: "application/form-data",
+      Authorization: `Bearer ${session?.access_token}`,
     },
     useCredentials: true,
   });
@@ -76,13 +56,14 @@ export const uploadNftImage = async (formData: FormData, token: string): Promise
   throw new Error(response.message);
 };
 
-export const uploadNftMeta = async (nftMeta: INftMeta, token: string): Promise<IPinata> => {
+export const uploadNftMeta = async (nftMeta: INftMeta): Promise<IPinata> => {
+  const session = await getAuthSession();
   const uploadResponse = await sendRequest<IBackendRes<IPinata>>({
     method: "POST",
     url: `${BACKEND_URL}/api/v1/nfts/upload-metadata`,
     body: nftMeta,
     headers: {
-      Authorization: `Bearer ${token}`,
+      Authorization: `Bearer ${session?.access_token}`,
     },
   });
 

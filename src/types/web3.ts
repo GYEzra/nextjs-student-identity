@@ -1,6 +1,7 @@
 import { Web3Hooks } from "@/hooks/web3/setupHooks";
 import { Web3Dependencies } from "@/types/hooks";
 import { MetaMaskInpageProvider } from "@metamask/providers";
+import { Session } from "next-auth";
 
 declare global {
   interface Window {

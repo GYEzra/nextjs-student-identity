@@ -25,7 +25,7 @@ declare global {
       totalPages: number;
       totalItems: number;
     };
-    data: T[];
+    data: T;
   }
 
   interface ILogin {

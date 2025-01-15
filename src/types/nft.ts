@@ -1,5 +1,6 @@
 import { nftMetaSchema, nftPropertiesSchema, nftSchema } from "@/lib/schemas";
 import { z } from "zod";
+import { IUser } from "./next-auth";
 
 export interface INftProperties {
   key: string;
@@ -16,17 +17,12 @@ export interface INftMeta {
 export interface INft {
   tokenId: number;
   price: number;
-  owner: string;
+  owner: IUser;
   isListed: boolean;
   meta: INftMeta;
 }
 
-export interface IPreviewNftData {
-  image: string;
-  name: string;
-  description: string;
-  price: number;
-}
+export type IPreviewNftData = INftMeta & Pick<INft, "price">;
 
 export interface IPreviewNftState {
   data: IPreviewNftData;

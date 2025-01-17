@@ -1,7 +1,9 @@
 import queryString from "query-string";
 
-export const BACKEND_URL = process.env.NEXT_PUBLIC_BACKEND_URL as string;
-export const PINATA_DOMAIN = process.env.NEXT_PUBLIC_PINATA_DOMAIN as string;
+// export const BACKEND_URL = process.env.BACKEND_URL as string;
+// export const PINATA_DOMAIN = process.env.PINATA_DOMAIN as string;
+export const BACKEND_URL = "https://nestjs-student-identity.onrender.com";
+export const PINATA_DOMAIN = "https://gateway.pinata.cloud";
 
 export const sendRequest = async <T>(props: IRequest) => {
   let { url, method, body, queryParams = {}, useCredentials = false, headers = {}, nextOption = {} } = props;

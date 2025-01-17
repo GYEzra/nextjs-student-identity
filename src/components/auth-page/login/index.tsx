@@ -7,7 +7,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useHasMounted } from "@/hooks/custom";
 import Loader from "@/app/loader";
-import { LoginData } from "@/types/auth";
+import { LoginData } from "@/types/schemas";
 import { loginSchema } from "@/lib/schemas";
 import { useState } from "react";
 import ForgetPassword from "../forget";

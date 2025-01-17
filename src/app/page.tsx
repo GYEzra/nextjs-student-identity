@@ -14,7 +14,7 @@ export default function Home() {
     <>
       <Navbar />
       <div
-        className="w-full px-4 lg:px-16 py-4 lg:py-10 relative"
+        className="w-full px-4 lg:px-16 py-4 lg:py-10 relative bg-"
         style={{
           backgroundImage: "url('/images/bg.png')",
           backgroundSize: "cover",
@@ -77,7 +77,8 @@ export default function Home() {
       </div>
 
       <div className="w-full mx-auto px-4 pt-10 sm:px-6 lg:pt-24">
-        <div className="mx-auto text-center flex justify-center">
+        <p className="text-2xl uppercase text-white font-semibold text-center special-text">NFT Marketplace</p>
+        <div className="mx-auto text-center flex justify-center min-h-[500px]">
           <NftList items={nfts.data ?? []} buyNft={nfts.buyNft} />
         </div>
       </div>

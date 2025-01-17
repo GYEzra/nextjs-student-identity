@@ -57,7 +57,6 @@ const Web3Provider: FunctionComponent<Web3ProviderProps> = ({ children }) => {
     if (accounts.length === 0) return;
 
     const signer = await provider?.getSigner(session?.user.walletAddress);
-    console.log("Check signer: ", signer);
     const signedContract = contract?.connect(signer);
 
     setWeb3((api: any) => createWeb3State({ ...(api as any), contract: signedContract as unknown as NftMarketplace }));

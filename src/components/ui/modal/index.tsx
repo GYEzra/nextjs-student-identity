@@ -14,7 +14,7 @@ const Modal: React.FC<ModalProps> = ({ isOpen, onClose, children }) => {
     <div className="modal modal-open modal-bottom sm:modal-middle">
       <div className="modal-box rounded-md">
         {onClose && (
-          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2" onClick={onClose}>
+          <button className="btn btn-sm btn-circle btn-ghost absolute right-2 top-2 text-black" onClick={onClose}>
             ✕
           </button>
         )}

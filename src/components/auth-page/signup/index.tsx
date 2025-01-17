@@ -9,7 +9,7 @@ import { AccountType } from "@/types/user";
 import Loader from "@/app/loader";
 import { useState } from "react";
 import Verify from "../verify";
-import { RegisterData } from "@/types/auth";
+import { RegisterData } from "@/types/schemas";
 import { registerSchema } from "@/lib/schemas";
 import { signUp } from "@/lib/api/auth";
 

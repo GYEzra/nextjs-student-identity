@@ -21,14 +21,14 @@ const InputValidator = <FormData extends FieldValues>({ label, name, errors, reg
   }
 
   return (
-    <div className="flex flex-col flex-1">
+    <div className="flex flex-col flex-1 text-left">
       <label className="block text-primary-label text-md font-bold mb-2" htmlFor={rest.id}>
         {label}
         {required && <span className="text-red-500 mx-1">*</span>}
       </label>
       <input
         type="text"
-        className={`h-12 border p-3 shadow-md dark:bg-indigo-700 dark:text-gray-300  dark:border-gray-700 placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full text-md
+        className={`h-12 border p-3 shadow-md placeholder:text-base focus:scale-105 ease-in-out duration-300 border-gray-300 rounded-lg w-full text-md
         ${error ? "border-red-500" : "border-zinc-300"}`}
         {...rest}
         {...register(name, { onChange: rest.onChange })}

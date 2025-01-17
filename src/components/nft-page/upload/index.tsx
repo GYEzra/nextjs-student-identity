@@ -1,5 +1,4 @@
 "use client";
-import { useWeb3 } from "@/providers/web3";
 import { PlusIcon, XMarkIcon } from "@heroicons/react/16/solid";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { ChangeEvent } from "react";
@@ -9,10 +8,9 @@ import { usePreviewNft } from "@/providers/preview-nft";
 import { useFieldArray, useForm } from "react-hook-form";
 import { uploadNftImage, uploadNftMeta } from "@/lib/api/nft";
 import { getPinataCid } from "@/utils";
-import { NftMetaData } from "@/types/nft";
 import { nftMetaSchema } from "@/lib/schemas";
-import { useSession } from "next-auth/react";
 import { handleVerifySignature } from "@/helpers/signature";
+import { NftMetaData } from "@/types/schemas";
 
 type UploadNftMetaProps = {
   setTokenURI: React.Dispatch<React.SetStateAction<string | undefined>>;
@@ -65,8 +63,6 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
         const formData = new FormData();
 
         formData.append("file", files[0]);
-
-        console.log("Check  formdata: ", formData);
 
         const uploadImagePromise = uploadNftImage(formData);
         const uploadImageResponse = await toast.promise(uploadImagePromise, {

@@ -1,5 +1,5 @@
 import { BACKEND_URL, sendRequest } from "@/utils/api";
-import type { NextAuthOptions } from "next-auth";
+import type { NextAuthOptions, Session } from "next-auth";
 import { getServerSession } from "next-auth";
 import Credentials from "next-auth/providers/credentials";
 
@@ -40,8 +40,17 @@ const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   callbacks: {
-    jwt({ token, user }) {
+    jwt({ token, user, trigger, session }) {
       if (user) return { ...token, ...user };
+      const jwtSession = session as Session;
+
+      if (trigger === "update") {
+        if (jwtSession?.user?.name) {
+          token.user.name = session.user.name;
+        }
+
+        if (jwtSession?.user?.image) token.user.image = session.user.image;
+      }
 
       if (new Date() < token.expiresIn) {
         return token;
@@ -58,6 +67,11 @@ const authOptions: NextAuthOptions = {
   },
 };
 
+const reloadSession = () => {
+  const event = new Event("visibilitychange");
+  document.dispatchEvent(event);
+};
+
 const getAuthSession = () => getServerSession(authOptions);
 
-export { authOptions, getAuthSession };
+export { authOptions, getAuthSession, reloadSession };

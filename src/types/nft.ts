@@ -1,5 +1,3 @@
-import { nftMetaSchema, nftPropertiesSchema, nftSchema } from "@/lib/schemas";
-import { z } from "zod";
 import { IUser } from "./next-auth";
 
 export interface INftProperties {
@@ -28,7 +26,3 @@ export interface IPreviewNftState {
   data: IPreviewNftData;
   update(newData: Partial<IPreviewNftData>): void;
 }
-
-export type NftData = z.output<typeof nftSchema>;
-export type NftMetaData = z.output<typeof nftMetaSchema>;
-export type NftPropertiesData = z.output<typeof nftPropertiesSchema>;

@@ -3,7 +3,7 @@ import { toast } from "react-toastify";
 import { useState } from "react";
 import { Button, CountdownButton, InputValidator } from "@/components/ui";
 import { useForm } from "react-hook-form";
-import { ForgetPasswordData } from "@/types/auth";
+import { ForgetPasswordData } from "@/types/schemas";
 import { forgetPasswordSchema } from "@/lib/schemas";
 import { zodResolver } from "@hookform/resolvers/zod";
 import Link from "next/link";

@@ -4,6 +4,7 @@ import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
 import Button from "../button/default-button";
 import Walletbar from "../wallet-bar";
+import UserAvatar from "../user-avatar";
 
 const navigationItems = [
   { label: "Create NFT", href: "/nft/create" },
@@ -37,7 +38,7 @@ const Navbar = () => {
       <div className="dropdown dropdown-end">
         <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
           <div className="w-10 rounded-full">
-            <img alt="User profile picture" src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+            <UserAvatar image={session.user.image} name={session.user.name} />
           </div>
         </div>
         <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-120 p-2 shadow">
@@ -45,7 +46,7 @@ const Navbar = () => {
             <div className="flex items-center">
               <div className="avatar relative">
                 <div className="w-12 rounded-full">
-                  <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" />
+                  <UserAvatar image={session.user.image} name={session.user.name} />
                 </div>
                 {account.isConnectedWallet ? (
                   <>
@@ -65,7 +66,7 @@ const Navbar = () => {
             <hr />
           </li>
           <li>
-            <Link href={`/profile/${session.user._id}`} className="justify-between">
+            <Link href={`/users/${session.user._id}`} className="justify-between">
               Information
               <span className="badge">New</span>
             </Link>

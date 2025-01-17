@@ -1,4 +1,4 @@
-import { ForgetPasswordData, LoginData, RegisterData, VerifyAccountData } from "@/types/auth";
+import { ForgetPasswordData, LoginData, RegisterData, VerifyAccountData } from "@/types/schemas";
 import { IMessageResponse, ISignUpRes, IVerifyRes } from "@/types/response";
 import { BACKEND_URL, sendRequest } from "@/utils/api";
 import { signIn, SignInResponse } from "next-auth/react";

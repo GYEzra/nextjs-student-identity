@@ -11,8 +11,8 @@ import { useWeb3 } from "@/providers/web3";
 import { ethers } from "ethers";
 import { useRouter } from "next/navigation";
 import { DEFAULT_ETH_ADDRESS } from "@/utils";
-import { NftData } from "@/types/nft";
 import { useSession } from "next-auth/react";
+import { NftData } from "@/types/schemas";
 
 type MintNftFormProps = {
   tokenURI?: string;
@@ -97,7 +97,7 @@ const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
       <div className="form-control">
         <label className="flex gap-x-2 flex-nowrap cursor-pointer text-md font-medium text-neutral-400">
           <span>Do you want the product to be listed on the floor?</span>
-          <InputValidator type="checkbox" checked={true} readOnly name="isListed" className="toggle toggle-primary" register={register} errors={errors} onClick={toogleListed} />
+          <InputValidator type="checkbox" readOnly name="isListed" className="toggle toggle-primary" register={register} errors={errors} onClick={toogleListed} />
         </label>
       </div>
       <div className="mt-4 px-4 py-3 sm:px-6 text-center">

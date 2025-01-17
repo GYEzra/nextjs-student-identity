@@ -21,3 +21,7 @@ export interface ISignUpRes {
 export interface IVerifyRes {
   isBeforeCheck: boolean;
 }
+
+export interface IUploadFile {
+  filename: string;
+}

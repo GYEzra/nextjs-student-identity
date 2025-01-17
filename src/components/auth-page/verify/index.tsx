@@ -4,7 +4,7 @@ import { Button, InputValidator } from "@/components/ui";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { toast } from "react-toastify";
 import { useRouter } from "next/navigation";
-import { VerifyAccountData } from "@/types/auth";
+import { VerifyAccountData } from "@/types/schemas";
 import { verifyAccountSchema } from "@/lib/schemas";
 import { checkCode } from "@/lib/api/auth";
 

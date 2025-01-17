@@ -9,3 +9,6 @@ export { default as Modal } from "./modal";
 export { Button, CountdownButton } from "./button";
 export { NftList, NftItem } from "./nft";
 export { default as ExpandableText } from "./expandable-text";
+export { default as AvatarPlaceholder } from "./avatar-placeholder";
+export { default as UserAvatar } from "./user-avatar";
+export { default as AnimatedCounter } from "./animated-counter";

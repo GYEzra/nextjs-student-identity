@@ -1,5 +1,4 @@
 import React from "react";
-import Image from "next/image";
 const Introduce = () => {
   return (
     <div className=" mt-5">
@@ -22,8 +21,8 @@ const Introduce = () => {
         </div>
         <div className="w-full mt-5 lg:w-1/2">
           <img
-            src="https://wpsmartnft.com/wp-content/uploads/2024/10/61d4b23e0885ed1a0c13bb42_nft-collectibles-hero.png"
-            alt=""
+            src="/images/w1.png"
+            alt="nft"
             className="object-cover animate-float"
           />
         </div>

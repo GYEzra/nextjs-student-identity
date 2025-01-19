@@ -11,7 +11,7 @@ const Blogs = () => {
         "After six months, the Nigerian government has dropped all money laundering charges against Binance executive Tigran Gambaryan.",
       date: "October 23, 2024",
       category: "Market",
-      imageUrl: "https://wpsmartnft.com/wp-content/uploads/2024/10/blog01.jpg",
+      imageUrl: "/images/blog01.jpg",
     },
     {
       id: 2,
@@ -20,7 +20,7 @@ const Blogs = () => {
         "Europe is set to introduce new cryptocurrency regulations aimed at enhancing transparency and security in the market.",
       date: "October 22, 2024",
       category: "Finance",
-      imageUrl: "https://wpsmartnft.com/wp-content/uploads/2024/10/blog06.webp",
+      imageUrl: "/images/blog02.webp",
     },
     {
       id: 3,
@@ -29,7 +29,7 @@ const Blogs = () => {
         "Blockchain technology sees massive adoption in supply chain industries, revolutionizing logistics.",
       date: "October 21, 2024",
       category: "Technology",
-      imageUrl: "https://wpsmartnft.com/wp-content/uploads/2024/10/blog04.webp",
+      imageUrl: "/images/blog03.webp",
     },
     {
       id: 4,
@@ -38,7 +38,7 @@ const Blogs = () => {
         "The NFT market achieved record-breaking sales this month, highlighting growing interest in digital assets.",
       date: "October 20, 2024",
       category: "Art",
-      imageUrl: "https://wpsmartnft.com/wp-content/uploads/2024/10/blog05.jpg",
+      imageUrl: "/images/blog04.jpg",
     },
     {
       id: 5,
@@ -47,7 +47,7 @@ const Blogs = () => {
         "A new blockchain interoperability standard promises to connect different chains seamlessly.",
       date: "October 19, 2024",
       category: "Innovation",
-      imageUrl: "https://wpsmartnft.com/wp-content/uploads/2024/10/blog03.jpg",
+      imageUrl: "/images/blog05.jpg",
     },
   ];
 

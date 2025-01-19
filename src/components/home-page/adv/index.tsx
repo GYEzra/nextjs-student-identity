@@ -5,39 +5,39 @@ const Advs = () => {
 
   const imageData = [
     {
-      src: "https://wpsmartnft.com/wp-content/uploads/2024/10/Meta-Legend-8452-1024x1024.avif",
+      src: "/images/f1.png",
       alt: "Meta Legend 8452",
     },
     {
-      src: "https://wpsmartnft.com/wp-content/uploads/2024/10/2-Geez-Instrumental.webp",
+      src: "/images/f2.webp",
       alt: "Geez Instrumental",
     },
     {
-      src: "https://wpsmartnft.com/wp-content/uploads/2024/10/e990fc1fbea016fd2850678c1d4d10d7_profile.jpeg",
+      src: "/images/f3.jpeg",
       alt: "Profile Image",
     },
     {
-      src: "https://wpsmartnft.com/wp-content/uploads/2024/10/Metapuffer-05-ETH-Lord.avif",
+      src: "/images/f4.png",
       alt: "Metapuffer ETH Lord",
     },
     {
-      src: "https://media.istockphoto.com/id/1417736827/vi/anh/ch%C3%A2n-dung-android-deep-learning-n%E1%BB%81n-tr%C3%AD-tu%E1%BB%87-nh%C3%A2n-t%E1%BA%A1o.jpg?s=612x612&w=0&k=20&c=BmaadTCtRJpB8byEk7C89N9JRry70rge2hu3DZAuiP0=",
+      src: "/images/f5.jpg",
       alt: "AI Deep Learning",
     },
     {
-      src: "https://wpsmartnft.com/wp-content/uploads/2024/10/Captainz-1560.gif",
+      src: "/images/f6.gif",
       alt: "Captainz 1560",
     },
     {
-      src: "https://wpsmartnft.com/wp-content/uploads/2024/10/PUNKS-2-X-Marks-the-Drop.avif",
+      src: "/images/f7.png",
       alt: "Punks X Marks",
     },
     {
-      src: "https://cdn.pixabay.com/photo/2022/11/02/16/04/digital-art-7565263_1280.jpg",
+      src: "/images/f8.jpg",
       alt: "Digital Art",
     },
     {
-      src: "https://wpsmartnft.com/wp-content/uploads/2024/10/Metapuffer-587-Inmerse-1024x1024.avif",
+      src: "/images/f9.png",
       alt: "Metapuffer Inmerse",
     },
   ];

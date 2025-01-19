@@ -1,10 +1,9 @@
 import React from "react";
-import { ArrowPathIcon, CloudArrowUpIcon, FingerPrintIcon, LockClosedIcon } from "@heroicons/react/24/outline";
 const Benefits = () => {
   const items = [
     {
       id: "1",
-      url: "https://cdn.pixabay.com/photo/2022/01/30/13/05/mystical-6980839_1280.jpg",
+      url: "/images/hinh1.webp",
       title: "There are no platform fees",
       description: "We will not charge any platform fees when you buy or sell any NFTs.",
       tags: ["Floral", "Highlands", "Wildflowers", "Colorful", "Resilience"],
@@ -12,46 +11,24 @@ const Benefits = () => {
 
     {
       id: "2",
-      url: "https://cdn.pixabay.com/photo/2022/02/02/11/45/outer-space-6988255_1280.jpg",
+      url: "/images/hinh2.jpg",
       title: "High security and a user-friendly interface.",
       description: "Our platform ensures high-level security to protect your transactions, while offering an intuitive, user-friendly interface for a seamless experience.",
       tags: ["Twilight", "Peaks", "Silhouette", "Evening Sky", "Peaceful"],
     },
     {
       id: "3",
-      url: "https://cdn.pixabay.com/photo/2022/02/02/11/45/outer-space-6988250_1280.jpg",
+      url: "/images/hinh3.jpg",
       title: "Variety of features",
       description: "Our platform offers a wide range of diverse functions, catering to various needs and enhancing the user experience.",
       tags: ["Rocky", "Ridges", "Contrast", "Adventure", "Clouds"],
     },
     {
       id: "4",
-      url: "https://cdn.pixabay.com/photo/2021/11/17/14/09/outer-space-6803696_1280.jpg",
+      url: "/images/hinh4.jpg",
       title: "Cost-effective",
       description: "More affordable pricing with access to all features without excessive costs.",
       tags: ["Rocky", "Ridges", "Contrast", "Adventure", "Clouds"],
-    },
-  ];
-  const features = [
-    {
-      name: "There are no platform fees",
-      description: "We will not charge any platform fees when you buy or sell any NFTs.",
-      icon: CloudArrowUpIcon,
-    },
-    {
-      name: "High security and a user-friendly interface.",
-      description: "Our platform ensures high-level security to protect your transactions, while offering an intuitive, user-friendly interface for a seamless experience.",
-      icon: LockClosedIcon,
-    },
-    {
-      name: "Variety of features",
-      description: "Our platform offers a wide range of diverse functions, catering to various needs and enhancing the user experience.",
-      icon: ArrowPathIcon,
-    },
-    {
-      name: "Cost-effective",
-      description: "More affordable pricing with access to all features without excessive costs.",
-      icon: FingerPrintIcon,
     },
   ];
 

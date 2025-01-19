@@ -18,7 +18,5 @@ COPY . .
 # Creates a "dist" folder with the production build
 RUN npm run build
 
-EXPOSE 3000
-
 # Start the server using the production build
 CMD [ "npm", "run", "build" ]

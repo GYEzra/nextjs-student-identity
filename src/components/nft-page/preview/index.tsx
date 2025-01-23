@@ -1,6 +1,7 @@
 import { FormLayout } from "@/components/layouts";
 import { usePreviewNft } from "@/providers/preview-nft";
 import { getPinataCid } from "@/utils";
+import { HiBadgeCheck } from "react-icons/hi";
 import clsx from "clsx";
 
 const PreviewNft = () => {
@@ -9,45 +10,92 @@ const PreviewNft = () => {
   const imageSrc = data.image ? getPinataCid(data.image) : "/images/nft.jpg";
 
   return (
-    <div className="box flex-shrink-0 flex-grow basis-2/12">
-      <div className="border-b border-white/60 px-4 py-2">
-        <h2 className="text-xl font-semibold text-white">Xem trước</h2>
+    <div className="w-full box basis-2/12 ">
+      <div className="border-b border-white/60  px-2 lg:px-4 py-2">
+        <h2 className="w-full text-xl font-semibold text-white">Xem trước</h2>
       </div>
-      <div className="p-10">
+      <div className="w-full p-2">
         <FormLayout>
-          <div className="relative flex justify-center">
+          <div className=" flex justify-center">
             <div className="aspect-square">
-              <img className="w-full h-full object-cover rounded-md" src={imageSrc} alt={data.name || "New NFT preview"} />
-            </div>
-            <div className="avatar absolute -top-1 -left-1">
-              <div className="w-10 h-10 ring-white/40 ring-offset-base-100 rounded-full ring-1 ring-offset-2 ">
-                <img src="https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp" alt="Creator avatar" className="w-full h-full object-cover" />
-              </div>
+              <img
+                className="w-full object-cover rounded-md"
+                src={imageSrc}
+                alt={data.name || "New NFT preview"}
+              />
             </div>
           </div>
           <div className="flex-1 bg-transparent pt-6 flex flex-col justify-between">
-            <div>
-              <p className="text-base font-medium special-text">Creatures NFT</p>
-              <div className="mt-1">
-                <p className="text-xl font-semibold text-white">{data.name || "Siêu cấp NFT"}</p>
-                <p className="mt-2 mb-3 text-base text-white/80 line-clamp-2">{data.description || "Đây là một sản phẩm độc đáo của chúng tôi"}</p>
+            <div className="flex flex-col gap-2">
+              <div className="flex gap-1 items-center">
+                <p className="uppercase text-xs text-gray-400">Tên người tạo</p>
+                <HiBadgeCheck className="text-blue-500 size-4" />
               </div>
-            </div>
-            <div className="overflow-hidden mb-6">
-              <dl className="-mx-4 -mt-4 flex flex-wrap">
-                {[
-                  { label: "Giá", value: data.price, icon: "/images/eth.png" },
-                  { label: "Số lượng", value: `1 trên 1` },
-                ].map(({ label, value, icon }, idx) => (
-                  <div key={idx} className="flex flex-col px-4 pt-4">
-                    <dt className="order-2 text-base text-white/80">{label}</dt>
-                    <dd className="order-1 text-lg font-semibold special-text flex items-center">
-                      {value}
-                      {icon && <img className="h-6 ml-1" src={icon} alt={`${label} icon`} />}
-                    </dd>
-                  </div>
-                ))}
-              </dl>
+
+              <p className="text-2xl font-bold text-white">
+                {data.name || "Name NFT"}
+              </p>
+              <div className="bg-zinc-800 rounded-lg p-3 px-4">
+                <p className="text-white text-base font-medium">
+                  Price:
+                  <span className="font-bold text-xl text-orange-400">
+                    {" "}
+                    9876 ETH
+                  </span>
+                </p>
+              </div>
+              <div className="flex flex-col gap-1 text-white mt-3">
+                <p className="font-semibold text-white">Description</p>
+                <p className="mb-3 text-sm text-white/80 line-clamp-2">
+                  {data.description ||
+                    "Đây là một sản phẩm độc đáo của chúng tôi"}
+                </p>
+              </div>
+              <p className="text-white font-medium">Properties</p>
+              <div className="grid grid-cols-4 gap-3 pb-4 p-2 lg:p-4 max-h-52 overflow-y-auto">
+                <div className="col-span-2 flex flex-col gap-1 border border-zinc-500 rounded-lg text-white p-2 text-center">
+                  <p className="font-normal text-xs text-green-400">
+                    Properties
+                  </p>
+                  <p className="text-sm font-bold">Value</p>
+                  <p className="text-sm">12.6% rarity</p>
+                </div>
+                <div className="col-span-2 flex flex-col gap-1 border border-zinc-500 rounded-lg text-white p-2 text-center">
+                  <p className="font-normal text-xs text-green-400">
+                    Properties
+                  </p>
+                  <p className="text-sm font-bold">Value</p>
+                  <p className="text-sm">12.6% rarity</p>
+                </div>
+                <div className="col-span-2 flex flex-col gap-1 border border-zinc-500 rounded-lg text-white p-2 text-center">
+                  <p className="font-normal text-xs text-green-400">
+                    Properties
+                  </p>
+                  <p className="text-sm font-bold">Value</p>
+                  <p className="text-sm">12.6% rarity</p>
+                </div>
+                <div className="col-span-2 flex flex-col gap-1 border border-zinc-500 rounded-lg text-white p-2 text-center">
+                  <p className="font-normal text-xs text-green-400">
+                    Properties
+                  </p>
+                  <p className="text-sm font-bold">Value</p>
+                  <p className="text-sm">12.6% rarity</p>
+                </div>
+                <div className="col-span-2 flex flex-col gap-1 border border-zinc-500 rounded-lg text-white p-2 text-center">
+                  <p className="font-normal text-xs text-green-400">
+                    Properties
+                  </p>
+                  <p className="text-sm font-bold">Value</p>
+                  <p className="text-sm">12.6% rarity</p>
+                </div>
+                <div className="col-span-2 flex flex-col gap-1 border border-zinc-500 rounded-lg text-white p-2 text-center">
+                  <p className="font-normal text-xs text-green-400">
+                    Properties
+                  </p>
+                  <p className="text-sm font-bold">Value</p>
+                  <p className="text-sm">12.6% rarity</p>
+                </div>
+              </div>
             </div>
           </div>
         </FormLayout>

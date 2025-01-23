@@ -8,7 +8,13 @@ import { MdMoreHoriz, MdOutlineContentCopy } from "react-icons/md";
 import { HiBadgeCheck } from "react-icons/hi";
 import { FaShare } from "react-icons/fa6";
 import { RiEdit2Fill } from "react-icons/ri";
-import { DEFAULT_ETH_ADDRESS, formatNftListedStatus, formatShortEthAddress, getPinataCid } from "@/utils";
+import Image from "next/image";
+import {
+  DEFAULT_ETH_ADDRESS,
+  formatNftListedStatus,
+  formatShortEthAddress,
+  getPinataCid,
+} from "@/utils";
 import { useOwnedNfts } from "@/hooks/web3";
 import { NftList } from "@/components/ui";
 
@@ -38,10 +44,37 @@ const ProfilePage = ({ params }: { params: { id: string } }) => {
     <div className="flex flex-col gap-2 lg:gap-6 text-white">
       <div className="pb-5">
         <div className="flex justify-center">
-          <img src={user.image ?? "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} className="rounded-full w-24 lg:w-32 absolute top-1/2 p-1 bg-white" />
-        </div>
+          <img
+            src={
+              user.image ??
+              "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+            }
+            className="rounded-full w-24 lg:w-32 absolute top-1/2 p-1 bg-white"
+          />
 
-        <img src={user.image ?? "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"} className="object-cover w-full h-80 rounded-md" />
+          {/* <Image
+            className="rounded-full w-24 lg:w-32 absolute top-1/2 p-1 bg-white"
+            src={user.image ?? "/images/avatar.webp"}
+            alt="Avatar"
+            width={960}
+            height={480}
+          /> */}
+        </div>
+        
+        <img
+          src={
+            user.image ??
+            "https://img.daisyui.com/images/stock/photo-1534528741775-53994a69daeb.webp"
+          }
+          className="object-cover w-full h-80 rounded-md"
+        />
+        {/* <Image
+          className="object-cover w-full h-80 rounded-md"
+          src={user.image ?? "/images/avatar.webp"}
+          alt="Banner"
+          width={960}
+          height={480}
+        /> */}
       </div>
       <div className="flex flex-col gap-2 lg:gap-4 py-4">
         <div className=" flex gap-2 items-center justify-center">
@@ -61,7 +94,9 @@ const ProfilePage = ({ params }: { params: { id: string } }) => {
           </div>
         </div>
 
-        <p className="text-center w-full lg:w-3/4 mx-auto text-gray-400 text-sm lg:text-base">{user.bio || "Chưa có thông tin"}</p>
+        <p className="text-center w-full lg:w-3/4 mx-auto text-gray-400 text-sm lg:text-base">
+          {user.bio || "Chưa có thông tin"}
+        </p>
         <div className="flex gap-2 justify-center items-center">
           <p className="font-normal text-gray-300 text-sm lg:text-base">
             <span className="font-bold text-white">2.4K </span>followers
@@ -72,8 +107,12 @@ const ProfilePage = ({ params }: { params: { id: string } }) => {
         </div>
 
         <div className="flex gap-2 justify-center items-center">
-          <button className="bg-green-500 text-white text-xs lg:text-sm font-medium p-2 rounded-md">Follow</button>
-          <button className="border border-zinc-700 p-2 rounded-md text-xs lg:text-sm font-medium">Send Messege</button>
+          <button className="bg-green-500 text-white text-xs lg:text-sm font-medium p-2 rounded-md">
+            Follow
+          </button>
+          <button className="border border-zinc-700 p-2 rounded-md text-xs lg:text-sm font-medium">
+            Send Messege
+          </button>
           <div className="flex items-center border border-zinc-700 rounded-md">
             <div className="tooltip" data-tip="Share">
               <button className="p-2.5">

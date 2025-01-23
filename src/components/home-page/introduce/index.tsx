@@ -21,15 +21,15 @@ const Introduce = () => {
           </button>
         </div>
         <div className="w-full mt-5 lg:w-1/2">
-          <img
-            src="https://wpsmartnft.com/wp-content/uploads/2024/10/61d4b23e0885ed1a0c13bb42_nft-collectibles-hero.png"
-            alt=""
+          <Image
             className="object-cover animate-float"
+            src="/images/introduce.png"
+            alt="Image 01"
+            width={960}
+            height={480}
           />
         </div>
       </div>
-
-      
     </div>
   );
 };

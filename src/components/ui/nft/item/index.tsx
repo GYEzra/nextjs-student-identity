@@ -1,5 +1,6 @@
 import { INft } from "@/types/nft";
 import Link from "next/link";
+import Image from "next/image";
 import { HiBadgeCheck } from "react-icons/hi";
 import { NftPurchaseButtons } from "@/components/ui/button";
 import { getPinataCid } from "@/utils";
@@ -13,7 +14,7 @@ const NftItem = ({ item, buyNft }: NftItemProps) => {
   return (
     <Link href={`/nft/${item.tokenId}`}>
       <div className="p-2 rounded-lg border border-zinc-800 transition-transform transform hover:scale-105 hover:shadow-lg">
-        <img src={getPinataCid(item.meta.image)} alt="Nft Image" className="w-full rounded-lg object-cover" />
+        <Image unoptimized src={getPinataCid(item.meta.image)} alt="Nft Image" className="w-full rounded-lg object-cover" width={0} height={0}/>
         <div className="p-3 flex flex-col gap-2 text-start">
           <div className="flex gap-1 items-center">
             <p className="text-xs font-medium text-gray-50">{item.owner.name}</p>

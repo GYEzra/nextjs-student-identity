@@ -1,5 +1,4 @@
-import { Signup } from "@/components/auth";
-import { BaseLayout } from "@/components/layouts";
+import { Signup } from "@/components/auth-page";
 
 const SignupPage = () => {
   return <Signup />;

@@ -1,5 +1,4 @@
 export {};
-// https://bobbyhadz.com/blog/typescript-make-types-global#declare-global-types-in-typescript
 
 declare global {
   interface IRequest {
@@ -21,12 +20,12 @@ declare global {
 
   interface IModelPaginate<T> {
     meta: {
-      current: number;
-      pageSize: number;
-      pages: number;
-      total: number;
+      page: number;
+      limit: number;
+      totalPages: number;
+      totalItems: number;
     };
-    result: T[];
+    data: T;
   }
 
   interface ILogin {
@@ -34,8 +33,9 @@ declare global {
       _id: string;
       name: string;
       email: string;
-      image: string;
       accountType: string;
+      image?: string;
+      walletAddress?: string;
     };
     access_token: string;
     expiresIn: Date;

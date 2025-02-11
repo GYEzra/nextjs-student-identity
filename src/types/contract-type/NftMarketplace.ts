@@ -24,14 +24,14 @@ import type {
 } from "./common";
 
 export declare namespace NftMarketplace {
-  export type NFTStruct = {
+  export type NftStruct = {
     tokenId: BigNumberish;
     price: BigNumberish;
     owner: AddressLike;
     isListed: boolean;
   };
 
-  export type NFTStructOutput = [
+  export type NftStructOutput = [
     tokenId: bigint,
     price: bigint,
     owner: string,
@@ -50,8 +50,8 @@ export interface NftMarketplaceInterface extends Interface {
       | "cancelNftSale"
       | "getAllNftsOnSale"
       | "getApproved"
-      | "getNFT"
-      | "getOwnedNfts"
+      | "getNftById"
+      | "getNftsOfOwner"
       | "isApprovedForAll"
       | "mint"
       | "name"
@@ -70,7 +70,6 @@ export interface NftMarketplaceInterface extends Interface {
       | "tokenURIExists"
       | "totalSupply"
       | "transferFrom"
-      | "transferNft"
       | "transferOwnership"
   ): FunctionFragment;
 
@@ -101,10 +100,7 @@ export interface NftMarketplaceInterface extends Interface {
     functionFragment: "balanceOf",
     values: [AddressLike]
   ): string;
-  encodeFunctionData(
-    functionFragment: "buy",
-    values: [AddressLike, BigNumberish]
-  ): string;
+  encodeFunctionData(functionFragment: "buy", values: [BigNumberish]): string;
   encodeFunctionData(
     functionFragment: "cancelNftSale",
     values: [AddressLike, BigNumberish]
@@ -118,11 +114,11 @@ export interface NftMarketplaceInterface extends Interface {
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getNFT",
+    functionFragment: "getNftById",
     values: [BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "getOwnedNfts",
+    functionFragment: "getNftsOfOwner",
     values: [AddressLike]
   ): string;
   encodeFunctionData(
@@ -189,10 +185,6 @@ export interface NftMarketplaceInterface extends Interface {
     values: [AddressLike, AddressLike, BigNumberish]
   ): string;
   encodeFunctionData(
-    functionFragment: "transferNft",
-    values: [AddressLike, AddressLike, BigNumberish]
-  ): string;
-  encodeFunctionData(
     functionFragment: "transferOwnership",
     values: [AddressLike]
   ): string;
@@ -220,9 +212,9 @@ export interface NftMarketplaceInterface extends Interface {
     functionFragment: "getApproved",
     data: BytesLike
   ): Result;
-  decodeFunctionResult(functionFragment: "getNFT", data: BytesLike): Result;
+  decodeFunctionResult(functionFragment: "getNftById", data: BytesLike): Result;
   decodeFunctionResult(
-    functionFragment: "getOwnedNfts",
+    functionFragment: "getNftsOfOwner",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -277,10 +269,6 @@ export interface NftMarketplaceInterface extends Interface {
   ): Result;
   decodeFunctionResult(
     functionFragment: "transferFrom",
-    data: BytesLike
-  ): Result;
-  decodeFunctionResult(
-    functionFragment: "transferNft",
     data: BytesLike
   ): Result;
   decodeFunctionResult(
@@ -461,11 +449,7 @@ export interface NftMarketplace extends BaseContract {
 
   balanceOf: TypedContractMethod<[owner: AddressLike], [bigint], "view">;
 
-  buy: TypedContractMethod<
-    [from: AddressLike, tokenId: BigNumberish],
-    [void],
-    "payable"
-  >;
+  buy: TypedContractMethod<[tokenId: BigNumberish], [void], "payable">;
 
   cancelNftSale: TypedContractMethod<
     [owner: AddressLike, tokenId: BigNumberish],
@@ -475,21 +459,21 @@ export interface NftMarketplace extends BaseContract {
 
   getAllNftsOnSale: TypedContractMethod<
     [],
-    [NftMarketplace.NFTStructOutput[]],
+    [NftMarketplace.NftStructOutput[]],
     "view"
   >;
 
   getApproved: TypedContractMethod<[tokenId: BigNumberish], [string], "view">;
 
-  getNFT: TypedContractMethod<
+  getNftById: TypedContractMethod<
     [tokenId: BigNumberish],
-    [NftMarketplace.NFTStructOutput],
+    [NftMarketplace.NftStructOutput],
     "view"
   >;
 
-  getOwnedNfts: TypedContractMethod<
+  getNftsOfOwner: TypedContractMethod<
     [owner: AddressLike],
-    [NftMarketplace.NFTStructOutput[]],
+    [NftMarketplace.NftStructOutput[]],
     "view"
   >;
 
@@ -570,12 +554,6 @@ export interface NftMarketplace extends BaseContract {
     "nonpayable"
   >;
 
-  transferNft: TypedContractMethod<
-    [from: AddressLike, to: AddressLike, tokenId: BigNumberish],
-    [void],
-    "nonpayable"
-  >;
-
   transferOwnership: TypedContractMethod<
     [newOwner: AddressLike],
     [void],
@@ -604,11 +582,7 @@ export interface NftMarketplace extends BaseContract {
   ): TypedContractMethod<[owner: AddressLike], [bigint], "view">;
   getFunction(
     nameOrSignature: "buy"
-  ): TypedContractMethod<
-    [from: AddressLike, tokenId: BigNumberish],
-    [void],
-    "payable"
-  >;
+  ): TypedContractMethod<[tokenId: BigNumberish], [void], "payable">;
   getFunction(
     nameOrSignature: "cancelNftSale"
   ): TypedContractMethod<
@@ -618,22 +592,22 @@ export interface NftMarketplace extends BaseContract {
   >;
   getFunction(
     nameOrSignature: "getAllNftsOnSale"
-  ): TypedContractMethod<[], [NftMarketplace.NFTStructOutput[]], "view">;
+  ): TypedContractMethod<[], [NftMarketplace.NftStructOutput[]], "view">;
   getFunction(
     nameOrSignature: "getApproved"
   ): TypedContractMethod<[tokenId: BigNumberish], [string], "view">;
   getFunction(
-    nameOrSignature: "getNFT"
+    nameOrSignature: "getNftById"
   ): TypedContractMethod<
     [tokenId: BigNumberish],
-    [NftMarketplace.NFTStructOutput],
+    [NftMarketplace.NftStructOutput],
     "view"
   >;
   getFunction(
-    nameOrSignature: "getOwnedNfts"
+    nameOrSignature: "getNftsOfOwner"
   ): TypedContractMethod<
     [owner: AddressLike],
-    [NftMarketplace.NFTStructOutput[]],
+    [NftMarketplace.NftStructOutput[]],
     "view"
   >;
   getFunction(
@@ -722,13 +696,6 @@ export interface NftMarketplace extends BaseContract {
   ): TypedContractMethod<[], [bigint], "view">;
   getFunction(
     nameOrSignature: "transferFrom"
-  ): TypedContractMethod<
-    [from: AddressLike, to: AddressLike, tokenId: BigNumberish],
-    [void],
-    "nonpayable"
-  >;
-  getFunction(
-    nameOrSignature: "transferNft"
   ): TypedContractMethod<
     [from: AddressLike, to: AddressLike, tokenId: BigNumberish],
     [void],

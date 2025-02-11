@@ -356,11 +356,6 @@ const _abi = [
   {
     inputs: [
       {
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
         internalType: "uint256",
         name: "tokenId",
         type: "uint256",
@@ -416,7 +411,7 @@ const _abi = [
             type: "bool",
           },
         ],
-        internalType: "struct NftMarketplace.NFT[]",
+        internalType: "struct NftMarketplace.Nft[]",
         name: "",
         type: "tuple[]",
       },
@@ -451,7 +446,7 @@ const _abi = [
         type: "uint256",
       },
     ],
-    name: "getNFT",
+    name: "getNftById",
     outputs: [
       {
         components: [
@@ -476,7 +471,7 @@ const _abi = [
             type: "bool",
           },
         ],
-        internalType: "struct NftMarketplace.NFT",
+        internalType: "struct NftMarketplace.Nft",
         name: "",
         type: "tuple",
       },
@@ -492,7 +487,7 @@ const _abi = [
         type: "address",
       },
     ],
-    name: "getOwnedNfts",
+    name: "getNftsOfOwner",
     outputs: [
       {
         components: [
@@ -517,7 +512,7 @@ const _abi = [
             type: "bool",
           },
         ],
-        internalType: "struct NftMarketplace.NFT[]",
+        internalType: "struct NftMarketplace.Nft[]",
         name: "",
         type: "tuple[]",
       },
@@ -872,29 +867,6 @@ const _abi = [
       },
     ],
     name: "transferFrom",
-    outputs: [],
-    stateMutability: "nonpayable",
-    type: "function",
-  },
-  {
-    inputs: [
-      {
-        internalType: "address",
-        name: "from",
-        type: "address",
-      },
-      {
-        internalType: "address",
-        name: "to",
-        type: "address",
-      },
-      {
-        internalType: "uint256",
-        name: "tokenId",
-        type: "uint256",
-      },
-    ],
-    name: "transferNft",
     outputs: [],
     stateMutability: "nonpayable",
     type: "function",

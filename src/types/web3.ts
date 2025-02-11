@@ -1,6 +1,7 @@
 import { Web3Hooks } from "@/hooks/web3/setupHooks";
 import { Web3Dependencies } from "@/types/hooks";
 import { MetaMaskInpageProvider } from "@metamask/providers";
+import { Session } from "next-auth";
 
 declare global {
   interface Window {
@@ -17,16 +18,14 @@ export type Web3State = {
   isLoading: boolean;
 } & Nullable<Web3Dependencies>;
 
-export type SignedRes = {
-  id: string;
-  timestamp: Date;
-};
-
-export type SignedData = {
+export interface ISignedData {
   account: string;
   signedData: string;
-};
+}
 
-export type VerifyRes = {
-  message: string;
-};
+export interface IArtifact {
+  chainId: string;
+  contractName: string;
+  address: string;
+  abi: any[];
+}

@@ -1,31 +1,28 @@
-export interface NftProperties {
+import { IUser } from "./next-auth";
+
+export interface INftProperties {
   key: string;
   value: string;
 }
 
-export interface NftMeta {
+export interface INftMeta {
   name: string;
   image: string;
   description: string;
-  properties?: NftProperties[];
+  properties?: INftProperties[];
 }
 
-export interface Nft {
+export interface INft {
   tokenId: number;
   price: number;
-  owner: string;
+  owner: IUser;
   isListed: boolean;
-  meta: NftMeta;
+  meta: INftMeta;
 }
 
-export interface PreviewNftData {
-  image: string;
-  name: string;
-  description: string;
-  price: number;
-}
+export type IPreviewNftData = INftMeta & Pick<INft, "price">;
 
-export interface PreviewNftState {
-  data: PreviewNftData;
-  update(newData: Partial<PreviewNftData>): void;
+export interface IPreviewNftState {
+  data: IPreviewNftData;
+  update(newData: Partial<IPreviewNftData>): void;
 }

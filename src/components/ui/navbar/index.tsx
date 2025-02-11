@@ -1,18 +1,99 @@
 "use client";
+import { useAccount, useNetwork } from "@/hooks/web3";
+import { signIn, signOut, useSession } from "next-auth/react";
 import Link from "next/link";
+import Button from "../button/default-button";
 import Walletbar from "../wallet-bar";
+import UserAvatar from "../user-avatar";
 
-const navigation = [
-  { label: "Create NFT", href: "/nft/create", activeClass: "" },
-  { label: "Edit Profile", href: "/profile/edit", activeClass: "" },
-  { label: "Detail NFT", href: "/nft/detail", activeClass: "" },
-  { label: "Blog", href: "/blog", activeClass: "" },
-  { label: "About", href: "/about", activeClass: "" },
+const navigationItems = [
+  { label: "Create NFT", href: "/nft/create" },
+  { label: "Edit Profile", href: "/profile/edit" },
+  { label: "Detail NFT", href: "/nft/detail" },
+  { label: "Blog", href: "/blog" },
+  { label: "About", href: "/about" },
 ];
 
 const Navbar = () => {
+  const { data: session } = useSession();
+  const { account } = useAccount();
+  const { network } = useNetwork();
+
+  const renderNavigationItems = () => {
+    return navigationItems.map((item) => (
+      <li key={item.label}>
+        <Link href={item.href}>
+          <span className="text-base text-white">{item.label}</span>
+        </Link>
+      </li>
+    ));
+  };
+
+  const renderUserDropdown = () => {
+    if (!session) {
+      return <Button type="button" value="Login" onClick={() => signIn()} className="btn border-0 special-button" />;
+    }
+
+    return (
+      <div className="dropdown dropdown-end">
+        <div tabIndex={0} role="button" className="btn btn-ghost btn-circle avatar">
+          <div className="w-10 rounded-full">
+            <UserAvatar image={session.user.image} name={session.user.name} />
+          </div>
+        </div>
+        <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-120 p-2 shadow">
+          <li>
+            <div className="flex items-center">
+              <div className="avatar relative">
+                <div className="w-12 rounded-full">
+                  <UserAvatar image={session.user.image} name={session.user.name} />
+                </div>
+                {account.isConnectedWallet ? (
+                  <>
+                    <span className="absolute inline-flex rounded-full h-3 w-3 bg-green-500"></span>
+                    <span className="absolute inline-flex rounded-full h-3 w-3 bg-success animate-ping"></span>
+                  </>
+                ) : (
+                  <span className="absolute inline-flex rounded-full h-3 w-3 bg-red-500"></span>
+                )}
+              </div>
+              <div className="ml-2">
+                <p className="text-sm font-medium text-neutral-800">{session.user.name}</p>
+                <p className="text-sm text-neutral-600">{session.user.email}</p>
+                <p className="text-sm italic text-neutral-500">{session.user.accountType}</p>
+              </div>
+            </div>
+            <hr />
+          </li>
+          <li>
+            <Link href={`/users/${session.user._id}`} className="justify-between">
+              Information
+              <span className="badge">New</span>
+            </Link>
+          </li>
+          <li>
+            <a>Setting</a>
+          </li>
+          <li>
+            <a onClick={() => signOut()}>Logout</a>
+          </li>
+          <li className="mt-2">
+            <Walletbar />
+          </li>
+        </ul>
+      </div>
+    );
+  };
+
+  const renderNetworkStatus = () => {
+    if (network.isLoading) return "Loading...";
+    if (account.isConnectedWallet) return network.data;
+
+    return "Not connected";
+  };
+
   return (
-    <div className="navbar bg-black h-[80px] z-50">
+    <div className="navbar bg-black">
       <div className="navbar-start">
         <div className="dropdown">
           <div tabIndex={0} role="button" className="btn btn-ghost lg:hidden">
@@ -21,13 +102,7 @@ const Navbar = () => {
             </svg>
           </div>
           <ul tabIndex={0} className="menu menu-sm dropdown-content bg-base-100 rounded-box z-[1] mt-3 w-52 p-2 shadow">
-            {navigation.map((item) => (
-              <li key={item.label}>
-                <Link href={item.href}>
-                  <span className="text-base text-black">{item.label}</span>
-                </Link>
-              </li>
-            ))}
+            {renderNavigationItems()}
           </ul>
         </div>
         <Link href="/">
@@ -35,18 +110,18 @@ const Navbar = () => {
         </Link>
       </div>
       <div className="navbar-center hidden lg:flex">
-        <ul className="menu menu-horizontal px-1">
-          {navigation.map((item) => (
-            <li key={item.label}>
-              <Link href={item.href}>
-                <span className="text-neutral-400 text-base hover:text-neutral-200">{item.label}</span>
-              </Link>
-            </li>
-          ))}
-        </ul>
+        <ul className="menu menu-horizontal px-1">{renderNavigationItems()}</ul>
       </div>
       <div className="navbar-end">
-        <Walletbar />
+        <div className="text-gray-300 self-center mr-2">
+          <span className="inline-flex items-center px-2.5 py-0.5 rounded-md text-sm font-medium bg-purple-100 text-purple-800">
+            <svg className="-ml-0.5 mr-1.5 h-2 w-2 text-indigo-400" fill="currentColor" viewBox="0 0 8 8">
+              <circle cx={4} cy={4} r={3} />
+            </svg>
+            {renderNetworkStatus()}
+          </span>
+        </div>
+        {renderUserDropdown()}
       </div>
     </div>
   );

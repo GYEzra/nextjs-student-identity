@@ -1,38 +1,21 @@
+import { getOwnedNfts } from "@/lib/api/nft";
 import { EthereumHookFactory } from "@/types/hooks";
-import { Nft } from "@/types/nft";
+import { INft } from "@/types/nft";
 import { useCallback } from "react";
 import useSWR from "swr";
 
 type UseOwnedNftsResponse = {
   listNft: (tokenId: number, price: number) => Promise<void>;
 };
-type OwnedNftsHookFactory = EthereumHookFactory<Nft[], UseOwnedNftsResponse>;
+type OwnedNftsHookFactory = EthereumHookFactory<INft[], UseOwnedNftsResponse>;
 
 export type UseOwnedNftsHook = ReturnType<OwnedNftsHookFactory>;
 
 export const hookFactory: OwnedNftsHookFactory =
-  ({ contract }) =>
+  ({ session }) =>
   () => {
-    const { data, ...swr } = useSWR(contract ? "web3/useOwnedNfts" : null, async () => {
-      const nfts: Nft[] = [];
-      //   const nftsContract = await contract!.getOwnedNfts();
-      //   const nftsContractLength = nftsContract.length;
-
-      //   for (let i = 0; i < nftsContractLength; i++) {
-      //     const item = nftsContract[i];
-      //     const tokenURI = await contract!.tokenURI(item.tokenId);
-      //     const metaResponse = await fetch(tokenURI);
-      //     const meta: NftMeta = await metaResponse.json();
-
-      //     nfts.push({
-      //       tokenId: Number(item.tokenId),
-      //       price: Number(item.price),
-      //       owner: item.owner,
-      //       isListed: item.isListed,
-      //       meta,
-      //     });
-      //   }
-
+    const { data, ...swr } = useSWR(session ? "web3/useOwnedNfts" : null, async () => {
+      const nfts = await getOwnedNfts();
       return nfts;
     });
 

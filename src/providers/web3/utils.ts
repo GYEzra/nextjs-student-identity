@@ -9,15 +9,17 @@ export const createDefaultWeb3State = (): Web3State => {
     contract: null,
     provider: null,
     hooks: setupHooks({ isLoading: true } as any),
+    session: null,
   };
 };
 
-export const createWeb3State = ({ ethereum, provider, contract, isLoading }: Web3Dependencies): Web3State => {
+export const createWeb3State = ({ ethereum, provider, contract, session, isLoading }: Web3Dependencies): Web3State => {
   return {
     isLoading,
     ethereum,
     contract,
     provider,
-    hooks: setupHooks({ ethereum, provider, contract, isLoading }),
+    hooks: setupHooks({ ethereum, provider, contract, isLoading, session }),
+    session,
   };
 };

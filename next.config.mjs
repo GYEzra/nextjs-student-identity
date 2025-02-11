@@ -4,16 +4,16 @@ const nextConfig = {
     images: {
         remotePatterns: [
             {
-                hostname: 'localhost',
-                protocol: 'http',
-                port: '3000',
-                pathname: ''
+                hostname: 'nestjs-student-identity.onrender.com',
+                protocol: 'https',
+                port: '',
+                pathname: '/images/**'
             },
             {
                 hostname: 'gateway.pinata.cloud',
                 protocol: 'https',
                 port: '',
-                pathname: '/ipfs'
+                pathname: '/ipfs/**'
             },
             {
                 hostname: 'img.daisyui.com',

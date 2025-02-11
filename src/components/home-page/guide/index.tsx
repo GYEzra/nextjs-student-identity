@@ -1,5 +1,4 @@
-import React from "react";
-
+import Image from "next/image";
 const Guides = () => {
   return (
     <div className="flex flex-col gap-4 lg:gap-12 my-4 py-4">
@@ -26,16 +25,17 @@ const Guides = () => {
               </p>
             </div>
             <div className="relative group-hover:-translate-y-2 transition-transform duration-500 ease-in-out ">
-              <img
+              <Image
                 className="group-hover:opacity-0 transition-opacity duration-500  object-cover h-full m-0 p-0"
-                src="/images/q1.webp"
+                src="/images/intro-1-1.webp"
                 alt="Card image 01"
                 width={350}
                 height={240}
               />
-              <img
+
+              <Image
                 className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity  object-contain duration-300  h-full  m-0 p-0"
-                src="/images/q2.webp"
+                src="/images/intro-1-2.webp"
                 width={350}
                 height={240}
                 alt="Card image 01 displaying on hover"
@@ -62,16 +62,16 @@ const Guides = () => {
               </p>
             </div>
             <div className="relative group-hover:-translate-y-2 transition-transform duration-500 ease-in-out">
-              <img
+              <Image
                 className="group-hover:opacity-0 transition-opacity duration-500"
-                src="/images/q3.webp"
+                src="/images/intro-2-1.webp"
                 width={350}
                 height={240}
                 alt="Card image 01"
               />
-              <img
+              <Image
                 className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                src="/images/q4.webp"
+                src="/images/intro-2-2.webp"
                 width={350}
                 height={240}
                 alt="Card image 01 displaying on hover"
@@ -98,16 +98,17 @@ const Guides = () => {
               </p>
             </div>
             <div className="relative group-hover:-translate-y-2 transition-transform duration-500 ease-in-out">
-              <img
+              <Image
                 className="group-hover:opacity-0 transition-opacity duration-500"
-                src="/images/q5.webp"
+                src="/images/intro-3-1.webp"
                 width={350}
                 height={240}
                 alt="Card image 01"
               />
-              <img
+
+              <Image
                 className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                src="/images/q6.webp"
+                src="/images/intro-3-2.webp"
                 width={350}
                 height={240}
                 alt="Card image 01 displaying on hover"
@@ -134,16 +135,17 @@ const Guides = () => {
               </p>
             </div>
             <div className="relative group-hover:-translate-y-2 transition-transform duration-500 ease-in-out">
-              <img
+              <Image
                 className="group-hover:opacity-0 transition-opacity duration-500"
-                src="/images/q1.webp"
+                src="/images/intro-1-2.webp"
                 width={350}
                 height={240}
                 alt="Card image 01"
               />
-              <img
+
+              <Image
                 className="absolute top-0 left-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                src="/images/q2.webp"
+                src="/images/intro-1-1.webp"
                 width={350}
                 height={240}
                 alt="Card image 01 displaying on hover"

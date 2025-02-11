@@ -84,11 +84,11 @@ export default function Home() {
       </div>
 
       <Introduce />
-      {/* <Ranking /> */}
+      <Ranking />
       <Adv />
       <Guide />
       <Benefit />
-      {/* <Subscribe /> */}
+      <Subscribe />
       <Blog />
       <Partner />
       <Footer />

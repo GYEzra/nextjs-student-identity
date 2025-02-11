@@ -1,4 +1,5 @@
 import React from "react";
+import Image from "next/image";
 const Introduce = () => {
   return (
     <div className=" mt-5">
@@ -20,17 +21,18 @@ const Introduce = () => {
           </button>
         </div>
         <div className="w-full mt-5 lg:w-1/2">
-          <img
-            src="/images/w1.png"
-            alt="nft"
+          <Image
             className="object-cover animate-float"
+            src="/images/introduce.png"
+            alt="Image 01"
+            width={960}
+            height={480}
           />
         </div>
       </div>
-
-      
     </div>
   );
 };
 
 export default Introduce;
+

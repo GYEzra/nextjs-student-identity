@@ -75,7 +75,7 @@ const Advs = () => {
             >
               <img
                 src={image.src}
-                alt={image.alt}
+alt={image.alt}
                 className="object-cover rounded-lg w-full border border-zinc-600"
               />
             </div>

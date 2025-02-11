@@ -38,7 +38,7 @@ const Partner = () => {
           "/images/logo-cty/cty5.png",
         ].map((src, index) => (
           <div
-            key={index + 5}
+            key={index + 5} // Ensure unique keys for the duplicated logos
             className="flex gap-10 justify-center items-center transition-transform duration-300 hover:scale-105"
           >
             <Image

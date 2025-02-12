@@ -1,9 +1,10 @@
+"use server";
 import { getAuthSession } from "@/auth";
-import { INft, INftMeta } from "@/types/nft";
+import { INft, INftMeta, QueryParams } from "@/types/nft";
 import { IPinata } from "@/types/response";
 import { BACKEND_URL, sendRequest, sendRequestFile } from "@/utils/api";
 
-export const getNfts = async (queryParams?: Object): Promise<IModelPaginate<INft[]>> => {
+export const getNfts = async (queryParams?: QueryParams): Promise<IModelPaginate<INft[]>> => {
   const response = await sendRequest<IBackendRes<IModelPaginate<INft[]>>>({
     method: "GET",
     url: `${BACKEND_URL}/api/v1/nfts`,

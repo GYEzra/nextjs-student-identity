@@ -7,11 +7,7 @@ import { MetaMaskInpageProvider } from "@metamask/providers";
 import { useSession } from "next-auth/react";
 import { toast } from "react-toastify";
 
-export const handleVerifySignature = async () => {
-  const { ethereum } = useWeb3();
-  const { data: session } = useSession();
-  const access_token = session!.access_token;
-
+export const handleVerifySignature = async (ethereum: MetaMaskInpageProvider, access_token: string) => {
   const signature = await getSignature(access_token);
   const signedData = await requestToSignature(signature, ethereum!);
   const verifySignaturePromise = verifySignature(signedData, access_token);

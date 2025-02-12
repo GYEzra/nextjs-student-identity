@@ -20,9 +20,16 @@ export interface INft {
   meta: INftMeta;
 }
 
-export type IPreviewNftData = INftMeta & Pick<INft, "price">;
+export type IPreviewNftData = INftMeta & Pick<INft, "price" | "isListed"> & { creator: string };
 
 export interface IPreviewNftState {
   data: IPreviewNftData;
   update(newData: Partial<IPreviewNftData>): void;
+}
+
+export type QueryParams = {
+  page?: number;
+  limit?: number;
+  filter?: Record<string, string>;
+  sort?: string;
 }

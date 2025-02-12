@@ -4,17 +4,16 @@ import { useHasMounted } from "@/hooks/custom";
 import { getNfts } from "@/lib/api/nft";
 import { INft } from "@/types/nft";
 import { getPinataCid } from "@/utils";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { HiBadgeCheck } from "react-icons/hi";
-import useSWR from "swr";
 
 const Ranking = () => {
   const hasMounted = useHasMounted();
   const [activeTab, setActiveTab] = useState<boolean>(true);
   const [nfts, setNfts] = useState<INft[]>([]);
 
-  const fetchNfts = async () => {
-    let queryParams = {
+  const fetchNfts = useCallback(async () => {
+    const queryParams = {
       page: 1,
       limit: 12,
       "filter[isListed]": activeTab,
@@ -23,16 +22,13 @@ const Ranking = () => {
 
     const response = await getNfts(queryParams);
     setNfts(response.data);
-  };
+  }, [activeTab])
 
   useEffect(() => {
     fetchNfts();
-  });
+  }, [fetchNfts]);
 
-  const toogleTab = async () => {
-    setActiveTab(!activeTab);
-    await fetchNfts();
-  };
+  const toogleTab = () => setActiveTab(!activeTab);
 
   if (!hasMounted) return <Loader />;
 

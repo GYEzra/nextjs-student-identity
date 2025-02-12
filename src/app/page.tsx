@@ -6,7 +6,7 @@ import { Benefit, Introduce, Partner, Ranking, Subscribe, Blog, Adv, Guide } fro
 import { Footer } from "@/components/layouts";
 import "../app/styles/animation.css";
 import { useListedNfts } from "@/hooks/web3";
-
+import Link from "next/link";
 export default function Home() {
   const { nfts } = useListedNfts();
 
@@ -57,12 +57,14 @@ export default function Home() {
                 <p className="text-xs font-medium text-gray-600">Artists</p>
               </div>
             </div>
-            <button className="group animate-float cursor-pointer special-text slide-anime px-6 mt-4 py-3 text-sm border border-zinc-700  rounded-full w-[180px] bg-base-dark text-white hover:text-pink-500 flex justify-between items-center font-semibold ">
-              Discover Now
-              <div className="group-hover:translate-x-2 transition-all">
-                <FaLongArrowAltRight />
-              </div>
-            </button>
+            <Link href="/nft/create">
+              <button className="group animate-float cursor-pointer special-text slide-anime px-6 mt-4 py-3 text-sm border border-zinc-700 rounded-full w-[180px] bg-base-dark text-white hover:text-pink-500 flex justify-between items-center font-semibold">
+                Discover Now
+                <div className="group-hover:translate-x-2 transition-all">
+                  <FaLongArrowAltRight />
+                </div>
+              </button>
+            </Link>
           </div>
           <div className="w-full lg:w-1/2">
             <div className="hidden lg:flex justify-center">

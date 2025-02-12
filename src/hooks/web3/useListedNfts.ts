@@ -2,7 +2,7 @@ import { getNfts } from "@/lib/api/nft";
 import { EthereumHookFactory } from "@/types/hooks";
 import { INft, QueryParams } from "@/types/nft";
 import { ethers } from "ethers";
-import { useCallback, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { toast } from "react-toastify";
 import useSWR, { mutate } from "swr";
 
@@ -24,8 +24,10 @@ const DEFAULT_QUERY_PARAMS = {
 export const hookFactory: ListedNftsHookFactory =
   ({ contract }) =>
     () => {
-      const { data, ...swr } = useSWR("web3/useListedNfts", async () => {
-        const data = await getNfts(DEFAULT_QUERY_PARAMS);
+      const [queryParams, setQueryParams] = useState<QueryParams>(DEFAULT_QUERY_PARAMS);
+
+      const { data, mutate, ...swr } = useSWR("web3/useListedNfts", async () => {
+        const data = await getNfts(queryParams);
         return data;
       }, {
         revalidateOnFocus: false,
@@ -53,15 +55,16 @@ export const hookFactory: ListedNftsHookFactory =
       );
 
       const query = async (queryParams: QueryParams) => {
-        const data = await getNfts({
-          ...DEFAULT_QUERY_PARAMS,
-          ...queryParams
-        });
-        mutate(data);
+        setQueryParams(prevQueryParams => ({ ...prevQueryParams, ...queryParams }));
       }
+
+      useEffect(() => {
+        mutate();
+      }, [queryParams])
 
       return {
         ...swr,
+        mutate,
         data: data,
         buyNft,
         query

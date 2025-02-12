@@ -3,18 +3,7 @@ import Loader from "@/app/loader";
 import { NftList } from "@/components/ui";
 import { useHasMounted } from "@/hooks/custom";
 import { useListedNfts } from "@/hooks/web3";
-import { getNfts } from "@/lib/api/nft";
-import { INft } from "@/types/nft";
-import React, { useCallback, useEffect, useState } from "react";
-import { HiBadgeCheck } from "react-icons/hi";
-
-
-const DEFAULT_PAGE = 1;
-const ITEMS_PER_PAGE = 6;
-const DEFAULT_QUERY_PARAMS = {
-  page: DEFAULT_PAGE,
-  limit: ITEMS_PER_PAGE
-};
+import React from "react";
 
 enum SORT_TYPE {
   "Name ASC" = "name",
@@ -28,7 +17,7 @@ const List = () => {
   const { nfts } = useListedNfts();
 
   const handlePageChange = async (newPage: number) => {
-
+    nfts.query({ page: newPage });
   };
 
   const handleSortChange = (e: React.MouseEvent<HTMLButtonElement>) => {

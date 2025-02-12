@@ -11,12 +11,16 @@ import { getPinataCid } from "@/utils";
 import { nftMetaSchema } from "@/lib/schemas";
 import { handleVerifySignature } from "@/helpers/signature";
 import { NftMetaData } from "@/types/schemas";
+import { useWeb3 } from "@/providers/web3";
+import { useSession } from "next-auth/react";
 
 type UploadNftMetaProps = {
   setTokenURI: React.Dispatch<React.SetStateAction<string | undefined>>;
 };
 
 const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
+  const { ethereum } = useWeb3();
+  const { data: session } = useSession();
   const { data: previewNftData, update } = usePreviewNft();
   const {
     register,
@@ -27,6 +31,12 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
     formState: { errors },
   } = useForm<NftMetaData>({
     resolver: zodResolver(nftMetaSchema),
+    defaultValues: {
+      name: previewNftData.name,
+      image: previewNftData.image,
+      description: previewNftData.description,
+      properties: previewNftData.properties
+    }
   });
 
   const { fields, append, remove } = useFieldArray({
@@ -57,7 +67,7 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
       const isValidImage = await trigger("image");
 
       if (isValidImage) {
-        await handleVerifySignature();
+        await handleVerifySignature(ethereum!, session!.access_token);
 
         const files = watch("image");
         const formData = new FormData();
@@ -79,8 +89,36 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
 
   const onChangeValue = (e: ChangeEvent<HTMLInputElement> | ChangeEvent<HTMLTextAreaElement>) => {
     const { name, value } = e.target;
-    update({ [name]: value });
+    const nameStrings = name.split('.');
+
+    if (nameStrings.length === 1)
+      update({ [name]: value });
+    else {
+      const index = Number(nameStrings[1]);
+      const label = nameStrings[2];
+
+      const properties = previewNftData.properties!;
+      properties[index] = {
+        ...properties[index],
+        [label]: value
+      };
+
+      update({ properties: properties });
+    }
   };
+
+  const onAddProperty = () => {
+    const property = { key: "", value: "" };
+    append(property);
+    previewNftData.properties?.push(property);
+    update({ properties: previewNftData.properties });
+  }
+
+  const onRemoveProperty = (index: number) => {
+    remove(index);
+    previewNftData.properties?.splice(index, 1);
+    update({ properties: previewNftData.properties });
+  }
 
   return (
     <form className="mx-0 my-auto" onSubmit={onSubmit}>
@@ -101,16 +139,16 @@ const UploadNftMetaForm: React.FC<UploadNftMetaProps> = ({ setTokenURI }) => {
           {fields?.map((property, index) => {
             return (
               <div key={index} className="mt-2 flex gap-4">
-                <InputValidator type="text" name={`properties.${index}.key`} placeholder="Key" register={register} errors={errors} />
-                <InputValidator type="text" name={`properties.${index}.value`} placeholder="Value" register={register} errors={errors} />
-                <button type="button" onClick={() => remove(index)}>
+                <InputValidator type="text" name={`properties.${index}.key`} placeholder="Key" register={register} errors={errors} onChange={onChangeValue} />
+                <InputValidator type="text" name={`properties.${index}.value`} placeholder="Value" register={register} errors={errors} onChange={onChangeValue} />
+                <button type="button" onClick={() => onRemoveProperty(index)}>
                   <XMarkIcon width={20} className="text-red-700" />
                 </button>
               </div>
             );
           })}
 
-          <button type="button" className="btn btn-sm btn-outline rounded-full mt-4 text-white" onClick={() => append({ key: "", value: "" })}>
+          <button type="button" className="btn btn-sm btn-outline rounded-full mt-4 text-white" onClick={() => onAddProperty()}>
             <PlusIcon className="w-5 text-green-500" /> Thêm
           </button>
         </div>

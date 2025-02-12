@@ -22,7 +22,7 @@ const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
   const router = useRouter();
   const { data: session } = useSession();
   const { walletAddress } = session!.user;
-  const { update } = usePreviewNft();
+  const { data: previewNftData, update } = usePreviewNft();
   const { contract } = useWeb3();
   const {
     register,
@@ -34,6 +34,8 @@ const MintNftForm: React.FC<MintNftFormProps> = ({ tokenURI }) => {
     resolver: zodResolver(nftSchema),
     defaultValues: {
       tokenURI: tokenURI,
+      isListed: previewNftData.isListed,
+      price: previewNftData.price
     },
   });
 

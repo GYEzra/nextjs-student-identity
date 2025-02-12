@@ -79,7 +79,7 @@ export default function Home() {
       <div className="w-full mx-auto px-4 pt-10 sm:px-6 lg:pt-24">
         <p className="text-2xl uppercase text-white font-semibold text-center special-text">NFT Marketplace</p>
         <div className="mx-auto text-center flex justify-center min-h-[500px]">
-          <NftList items={nfts.data ?? []} buyNft={nfts.buyNft} />
+          <NftList items={nfts.data?.data ?? []} buyNft={nfts.buyNft} />
         </div>
       </div>
 

@@ -1,34 +1,38 @@
 import { getNfts } from "@/lib/api/nft";
 import { EthereumHookFactory } from "@/types/hooks";
-import { INft } from "@/types/nft";
+import { INft, QueryParams } from "@/types/nft";
 import { ethers } from "ethers";
-import { useCallback } from "react";
+import { useCallback, useState } from "react";
 import { toast } from "react-toastify";
-import useSWR from "swr";
+import useSWR, { mutate } from "swr";
 
 type UseListedNftsResponse = {
   buyNft: (tokenId: number, price: number) => Promise<void>;
+  query: (queryParams: QueryParams) => void;
 };
-type ListedNftsHookFactory = EthereumHookFactory<INft[], UseListedNftsResponse>;
+type ListedNftsHookFactory = EthereumHookFactory<IModelPaginate<INft[]>, UseListedNftsResponse>;
 
 export type UseListedNftsHook = ReturnType<ListedNftsHookFactory>;
+
+const DEFAULT_PAGE = 1;
+const ITEMS_PER_PAGE = 6;
+const DEFAULT_QUERY_PARAMS = {
+  page: DEFAULT_PAGE,
+  limit: ITEMS_PER_PAGE
+};
 
 export const hookFactory: ListedNftsHookFactory =
   ({ contract }) =>
     () => {
       const { data, ...swr } = useSWR("web3/useListedNfts", async () => {
-        const queryParams = {
-          "filter[isListed]": true,
-        };
-        const { data } = await getNfts(queryParams);
+        const data = await getNfts(DEFAULT_QUERY_PARAMS);
         return data;
       }, {
         revalidateOnFocus: false,
-        revalidateOnMount: false,
+        revalidateOnMount: true,
         revalidateOnReconnect: false,
         refreshWhenOffline: false,
         refreshWhenHidden: false,
-        refreshInterval: 1
       });
 
       const buyNft = useCallback(
@@ -48,9 +52,18 @@ export const hookFactory: ListedNftsHookFactory =
         [contract]
       );
 
+      const query = async (queryParams: QueryParams) => {
+        const data = await getNfts({
+          ...DEFAULT_QUERY_PARAMS,
+          ...queryParams
+        });
+        mutate(data);
+      }
+
       return {
         ...swr,
-        data: data || [],
+        data: data,
         buyNft,
+        query
       };
     };

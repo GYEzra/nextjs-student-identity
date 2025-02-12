@@ -1,5 +1,6 @@
 import React from 'react'
 import { CalendarDaysIcon, HandRaisedIcon } from '@heroicons/react/24/outline'
+import Link from "next/link";
 const Subscribe = () => {
     return (
         <div className="relative isolate text-gray-600 body-font py-10 ">
@@ -24,12 +25,14 @@ const Subscribe = () => {
                                 autoComplete="email"
                                 className="min-w-0 flex-auto rounded-md border-0 bg-white/5 px-3.5 py-2 text-white shadow-sm ring-1 ring-inset ring-white/10 focus:ring-2 focus:ring-inset focus:ring-indigo-500 sm:text-sm/6"
                             />
+                           <Link href='/about'>
                             <button
                                 type="submit"
                                 className="btn border-0 special-button"
                             >
                                 Subscribe
                             </button>
+                            </Link>
                         </div>
                     </div>
                     <dl className="grid grid-cols-1 gap-x-8 gap-y-10 sm:grid-cols-2 lg:pt-2">

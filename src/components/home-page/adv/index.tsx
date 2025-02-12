@@ -1,5 +1,5 @@
 import React from "react";
-
+import Link from "next/link";
 const Advs = () => {
  
 
@@ -46,6 +46,7 @@ const Advs = () => {
     <div className="flex flex-col gap-10 my-10">
       <div className="flex flex-col gap-10">
         <div className="flex flex-col gap-2 lg:gap-2">
+       
           <h1 className="uppercase text-white font-extrabold text-4xl lg:text-6xl text-center">
             Buy & Sell
           </h1>
@@ -56,12 +57,16 @@ const Advs = () => {
             Discover, Buy & Sell Everything DeFi, NFT and Gaming
           </p>
           <div className="flex gap-2 lg:gap-4 justify-center">
+          <Link href="/nft/create">
             <button className="group py-2 px-4 lg:px-6 uppercase relative inline-flex items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#36ff32] to-[#f6fff5] border-2 border-[#41db33] bg-transparent text-xs lg:text-sm font-bold text-black transition-all duration-100 hover:[box-shadow:5px_5px_rgb(38_129_51)] translate-x-[3px] hover:translate-x-[0px] translate-y-[3px] hover:translate-y-[0px] [box-shadow:0px_0px_rgb(38_129_51)] active:[box-shadow:0px_0px_rgb(38_129_51)] active:translate-y-[3px] active:translate-x-[3px]">
               Create NFT
             </button>
-
+            </Link>
+            
             <button className="group uppercase px-4 lg:px-6 relative inline-flex items-center justify-center overflow-hidden rounded-md bg-gradient-to-r from-[#fff6fc] to-[#ff01d0] border-2 border-[#ff34c2] bg-transparent text-xs lg:text-sm font-bold text-black transition-all duration-100 hover:[box-shadow:5px_5px_rgb(255_34_194)] translate-x-[3px] hover:translate-x-[0px] translate-y-[3px] hover:translate-y-[0px] [box-shadow:0px_0px_rgb(255_34_194)] active:[box-shadow:0px_0px_rgb(255_34_194)] active:translate-y-[3px] active:translate-x-[3px]">
-              Get a free demo
+            <Link href="/list">
+              Get a detail</Link>
+
             </button>
           </div>
         </div>

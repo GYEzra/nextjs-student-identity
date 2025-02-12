@@ -1,4 +1,3 @@
-"use server";
 import { getAuthSession } from "@/auth";
 import { INft, INftMeta, QueryParams } from "@/types/nft";
 import { IPinata } from "@/types/response";

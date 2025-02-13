@@ -6,7 +6,7 @@ import { Benefit, Introduce, Partner, Ranking, Subscribe, Blog, Adv, Guide } fro
 import { Footer } from "@/components/layouts";
 import "../app/styles/animation.css";
 import { useListedNfts } from "@/hooks/web3";
-
+import Link from "next/link";
 export default function Home() {
   const { nfts } = useListedNfts();
 

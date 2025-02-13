@@ -12,6 +12,8 @@ import { useHasMounted } from "@/hooks/custom";
 import Loader from "@/app/loader";
 import { useRouter } from "next/navigation";
 
+const COUNTDOWN_SECONDS = 60;
+
 const ForgetPassword = () => {
   const hasMounted = useHasMounted();
   const router = useRouter();
@@ -54,7 +56,7 @@ const ForgetPassword = () => {
         pending: "Waiting for send mail..",
       });
 
-      setSeconds(30);
+      setSeconds(COUNTDOWN_SECONDS);
       toast.success(response.message);
     } catch (error: any) {
       toast.error(error.message);

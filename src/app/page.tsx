@@ -57,6 +57,7 @@ export default function Home() {
                 <p className="text-xs font-medium text-gray-600">Artists</p>
               </div>
             </div>
+
             <button className="group animate-float cursor-pointer special-text slide-anime px-6 mt-4 py-3 text-sm border border-zinc-700  rounded-full w-[180px] bg-base-dark text-white hover:text-pink-500 flex justify-between items-center font-semibold ">
               Discover Now
               <div className="group-hover:translate-x-2 transition-all">

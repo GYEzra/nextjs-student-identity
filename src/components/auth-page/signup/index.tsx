@@ -15,7 +15,7 @@ import { signUp } from "@/lib/api/auth";
 
 const Signup = () => {
   const hasMounted = useHasMounted();
-  const [id, setId] = useState<string | null>(null);
+  const [id, setId] = useState<string>();
   const {
     register,
     handleSubmit,

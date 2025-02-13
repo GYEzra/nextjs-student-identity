@@ -23,7 +23,7 @@ const CountdownButton = ({ value, seconds, setSeconds, className, onClick, ...re
 
   if (seconds === 0) return <Button type="button" className={className} {...rest} value={value} onClick={onClick} />;
 
-  return <Button type="button" className={`${className} !bg-gray-500`} {...rest} value={`${seconds}s`} disabled />;
+  return <Button type="button" className={`${className} bg-gray-500`} {...rest} value={`${seconds}s`} disabled />;
 };
 
 export default CountdownButton;

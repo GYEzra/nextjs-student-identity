@@ -23,14 +23,24 @@ export const signUp = async (data: RegisterData): Promise<ISignUpRes> => {
   throw new Error(response.message);
 };
 
-export const checkCode = async (data: VerifyAccountData): Promise<IVerifyRes> => {
-  const response = await sendRequest<IBackendRes<IVerifyRes>>({
+export const checkCode = async (data: VerifyAccountData): Promise<IMessageResponse> => {
+  const response = await sendRequest<IBackendRes<IMessageResponse>>({
     method: "POST",
     url: `${BACKEND_URL}/api/v1/auth/check-code`,
     body: data,
   });
 
   if (response.statusCode === 201) return response.data!;
+  throw new Error(response.message);
+};
+
+export const sendRetryActive = async (id: string): Promise<IMessageResponse> => {
+  const response = await sendRequest<IBackendRes<IMessageResponse>>({
+    method: "GET",
+    url: `${BACKEND_URL}/api/v1/auth/retry-active/${id}`,
+  });
+
+  if (response.statusCode === 200) return response.data!;
   throw new Error(response.message);
 };
 
